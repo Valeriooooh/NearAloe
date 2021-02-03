@@ -1,5 +1,6 @@
 extends Node2D
 
+
 const GrassDestroy = preload("res://Effects/GrassDestroy.tscn")
     
 func create_grass_effect():
