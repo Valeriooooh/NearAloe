@@ -3,9 +3,8 @@
 [ext_resource path="res://World/Tree.png" type="Texture" id=1]
 [ext_resource path="res://Shadows/LargeShadow.png" type="Texture" id=2]
 
-[sub_resource type="CapsuleShape2D" id=1]
-radius = 10.6474
-height = 6.6716
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 12.3959 )
 
 [node name="Tree" type="StaticBody2D"]
 

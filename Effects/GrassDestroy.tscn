@@ -31,7 +31,7 @@ animations = [ {
 "speed": 15.0
 } ]
 
-[node name="GrassDestroy" type="AnimatedSprite"]
+[node name="AnimatedSprite" type="AnimatedSprite"]
 frames = SubResource( 6 )
 animation = "Animate"
 script = ExtResource( 2 )

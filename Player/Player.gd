@@ -5,6 +5,7 @@ const ACCELERATION = 500
 const MAX_SPEED = 80
 const ROLL_SPEED = MAX_SPEED * 1.5
 const FRICTION = 500
+const playerHurtSound = preload("res://Player/PlayerHurtSound.tscn")
 
 enum {
 	MOVE,
@@ -16,17 +17,19 @@ var state = MOVE
 var velocity = Vector2.ZERO
 var roll_vector = Vector2.DOWN
 var stats = PlayerStats
-
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 onready var swordHitbox = $SwordPivot/SwordHitbox
 onready var hurtBox = $Hurtbox
+onready var hurtAnimation = $HurtAnimation
+
 
 func _ready():
 	stats.connect("no_health", self, "queue_free")
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
+	randomize()
 
 func _physics_process(delta):
 	match state:
@@ -74,8 +77,17 @@ func back_to_run():
 
 func move():
 	velocity = move_and_slide(velocity)
+	
 func _on_Hurtbox_area_entered(area):
-	stats.health -= 1
+	stats.health -= area.damage
 	hurtBox.start_invincibility(0.5)
 	hurtBox.create_hit_effect()
-	
+	var PlayerHurtSounds = playerHurtSound.instance()
+	get_tree().current_scene.add_child(PlayerHurtSounds)
+
+
+func _on_Hurtbox_invincibility_ended() -> void:
+	hurtAnimation.play("Stop")
+
+func _on_Hurtbox_invincibility_started() -> void:
+	hurtAnimation.play("Start")
