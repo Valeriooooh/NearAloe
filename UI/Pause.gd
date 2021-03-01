@@ -5,5 +5,17 @@ func _input(event):
 		var pause_state = not get_tree().paused
 		get_tree().paused = pause_state
 		visible = pause_state
+
+
+func _on_Button_pressed():
+	var pause_state = not get_tree().paused
+	get_tree().paused = pause_state
+	visible = pause_state
+
+
+func _on_Button3_pressed():
+    get_tree().quit()
+	
+
 #TODO menu system 
 

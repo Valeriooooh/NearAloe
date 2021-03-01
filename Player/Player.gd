@@ -12,7 +12,7 @@ enum {
 	ROLL,
 	ATTACK
 	}
-
+	
 var state = MOVE
 var velocity = Vector2.ZERO
 var roll_vector = Vector2.DOWN
@@ -91,3 +91,6 @@ func _on_Hurtbox_invincibility_ended() -> void:
 
 func _on_Hurtbox_invincibility_started() -> void:
 	hurtAnimation.play("Start")
+
+
+#TODO Animação não parece fluida, Braços precisam de ser melhorados a andar

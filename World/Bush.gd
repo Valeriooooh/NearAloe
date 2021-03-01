@@ -1,13 +1,17 @@
-extends Node2D
+extends Area2D
+onready var animation = $AnimatedSprite
 
-
-const GrassDestroy = preload("res://Effects/GrassDestroy.tscn")
+# func _on_Bush_area_entered():
+# 	animation.play("Collide")
 	
-func create_grass_effect():
-	var grass_destroy = GrassDestroy.instance()
-	get_parent().add_child(grass_destroy)
-	grass_destroy.global_position = global_position
 
-func _on_Hurtbox_area_entered(_area):
-	create_grass_effect()
-	queue_free()
+func _on_Bush_body_entered(body) -> void:
+	animation.play("Collide")
+	pass # Replace with function body.
+
+
+func _on_Bush_body_exited(body) -> void:
+	animation.playing = false
+	animation.frame = 0
+
+#DONE bush collide animation 

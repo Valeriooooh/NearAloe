@@ -1,7 +1,7 @@
 extends Control
 
 onready var hearths = 4 setget set_hearths
-var max_hearths = 4 setget set_max_hearths
+onready var max_hearths = 4 setget set_max_hearths
 onready var hearthUIFull = $HearthUiFull
 onready var hearthUIEmpty = $HearthUiEmpty
 

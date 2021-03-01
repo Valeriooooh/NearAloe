@@ -1,0 +1,71 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://World/Bush1-sheet.png" type="Texture" id=1]
+[ext_resource path="res://World/Bush_colide.tres" type="Animation" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Bush_idle"
+length = 0.109
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bush:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 8.0
+height = 15.0
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "Bush_colide"
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "Bush_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=5]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=6]
+
+[sub_resource type="AnimationNodeStateMachine" id=7]
+states/Bush_colide/node = SubResource( 3 )
+states/Bush_colide/position = Vector2( 439, 127 )
+states/Bush_idle/node = SubResource( 4 )
+states/Bush_idle/position = Vector2( 127, 127 )
+transitions = [ "Bush_colide", "Bush_idle", SubResource( 5 ), "Bush_idle", "Bush_colide", SubResource( 6 ) ]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=8]
+
+[node name="bush" type="Area2D"]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Bush" type="Sprite" parent="."]
+position = Vector2( 0, -4 )
+texture = ExtResource( 1 )
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Bush_colide = ExtResource( 2 )
+anims/Bush_idle = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -1.5708
+shape = SubResource( 2 )
+one_way_collision_margin = 0.0
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 7 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 8 )
