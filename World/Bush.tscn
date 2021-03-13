@@ -55,6 +55,5 @@ position = Vector2( 0, -2.16911 )
 rotation = 1.5708
 shape = SubResource( 7 )
 
-[connection signal="area_entered" from="." to="." method="_on_Bush_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_Bush_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_Bush_body_exited"]

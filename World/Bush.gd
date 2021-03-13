@@ -1,16 +1,15 @@
 extends Area2D
 onready var animation = $AnimatedSprite
 
-# func _on_Bush_area_entered():
-# 	animation.play("Collide")
+var nameCheck = "bush"
 	
 
-func _on_Bush_body_entered(body) -> void:
+func _on_Bush_body_entered(_body) -> void:
 	animation.play("Collide")
 	pass # Replace with function body.
 
 
-func _on_Bush_body_exited(body) -> void:
+func _on_Bush_body_exited(_body) -> void:
 	animation.playing = false
 	animation.frame = 0
 

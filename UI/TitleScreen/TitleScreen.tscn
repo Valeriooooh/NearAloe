@@ -1,0 +1,80 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://UI/Theme/DefaultTheme.tres" type="Theme" id=1]
+[ext_resource path="res://UI/TitleScreen/TitleScreen.gd" type="Script" id=2]
+[ext_resource path="res://UI/Logo/NearAloeLogo.png" type="Texture" id=3]
+
+[sub_resource type="AnimatedTexture" id=1]
+
+[node name="TitleScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.707108
+margin_bottom = -0.707108
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Logo" type="TextureRect" parent="."]
+margin_left = 209.104
+margin_top = -2.33083
+margin_right = 305.104
+margin_bottom = 79.6692
+size_flags_horizontal = 5
+size_flags_vertical = 5
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 197.0
+margin_top = 68.0
+margin_right = -1.0
+margin_bottom = 3.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Menu"]
+margin_right = 122.0
+margin_bottom = 32.0
+theme = ExtResource( 1 )
+action_mode = 0
+text = "Continue"
+
+[node name="Button2" type="Button" parent="Menu"]
+margin_top = 36.0
+margin_right = 122.0
+margin_bottom = 68.0
+theme = ExtResource( 1 )
+action_mode = 0
+text = "Options"
+
+[node name="Button3" type="Button" parent="Menu"]
+margin_top = 72.0
+margin_right = 122.0
+margin_bottom = 104.0
+theme = ExtResource( 1 )
+action_mode = 0
+text = "Quit"
+
+[connection signal="pressed" from="Menu/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Menu/Button2" to="." method="_on_Button2_pressed"]
+[connection signal="pressed" from="Menu/Button3" to="." method="_on_Button3_pressed"]

@@ -8,18 +8,53 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "BaseComponent",
+"class": "ArrowList",
+"language": "GDScript",
+"path": "res://src/base_components/arrow_list/arrow_list.gd"
+}, {
+"base": "HBoxContainer",
+"class": "BaseComponent",
+"language": "GDScript",
+"path": "res://src/base_components/base_component.gd"
+}, {
+"base": "BaseComponent",
+"class": "BoolSetting",
+"language": "GDScript",
+"path": "res://src/base_components/bool_setting/bool_setting.gd"
+}, {
+"base": "BaseComponent",
+"class": "DropDownList",
+"language": "GDScript",
+"path": "res://src/base_components/dropdown_list/dropdown_list.gd"
+}, {
+"base": "BaseComponent",
+"class": "SliderSetting",
+"language": "GDScript",
+"path": "res://src/base_components/slider_setting/slider_setting.gd"
+} ]
+_global_script_class_icons={
+"ArrowList": "",
+"BaseComponent": "",
+"BoolSetting": "",
+"DropDownList": "",
+"SliderSetting": ""
+}
+
 [application]
 
 config/name="Near Aloe"
-run/main_scene="res://TitleScreen/TitleScreen.tscn"
+run/main_scene="res://UI/TitleScreen/TitleScreen.tscn"
 run/flush_stdout_on_print=true
-boot_splash/image="res://UI/NearAloeIcon.png"
+run/low_processor_mode=true
+boot_splash/image="res://UI/Logo/NearAloeIcon.png"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
-boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
-config/icon="res://UI/NearAloeIcon.png"
-config/macos_native_icon="res://UI/NearAloeIcon.png"
-config/windows_native_icon="res://UI/NearAloeIcon.png"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
+config/icon="res://UI/Logo/NearAloeIcon.png"
+config/macos_native_icon="res://UI/Logo/NearAloeIcon.png"
+config/windows_native_icon="res://UI/Logo/NearAloeIcon.png"
 
 [audio]
 
@@ -27,7 +62,7 @@ enable_audio_input=true
 
 [autoload]
 
-PlayerStats="*res://Player/PlayerStats.tscn"
+PlayerStats="*res://Player/Stats/PlayerStats.tscn"
 
 [debug]
 
@@ -162,18 +197,18 @@ common/physics_jitter_fix=1.0
 [rendering]
 
 quality/driver/fallback_to_gles2=true
-quality/2d/use_nvidia_rect_flicker_workaround=true
 quality/intended_usage/framebuffer_allocation=0
 quality/intended_usage/framebuffer_allocation.mobile=0
-quality/2d/use_pixel_snap=true
 threads/thread_model=2
 quality/filters/use_nearest_mipmap_filter=true
-quality/2d/ninepatch_mode=1
 gles2/compatibility/disable_half_float=true
 gles2/compatibility/enable_high_float.Android=true
 quality/subsurface_scattering/quality=2
 quality/filters/use_fxaa=true
 environment/default_environment="res://default_env.tres"
+quality/2d/use_nvidia_rect_flicker_workaround=true
+quality/2d/use_pixel_snap=true
+quality/2d/ninepatch_mode=1
 
 [world]
 

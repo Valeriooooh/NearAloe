@@ -5,12 +5,13 @@ const ACCELERATION = 500
 const MAX_SPEED = 80
 const ROLL_SPEED = MAX_SPEED * 1.5
 const FRICTION = 500
-const playerHurtSound = preload("res://Player/PlayerHurtSound.tscn")
-
+const playerHurtSound = preload("res://Player/Sounds/PlayerHurtSound.tscn")
+const HeartSound = preload("res://Player/Sounds/HeartSound.tscn")
 enum {
 	MOVE,
 	ROLL,
-	ATTACK
+	ATTACK,
+	FIREBALL
 	}
 	
 var state = MOVE
@@ -31,6 +32,7 @@ func _ready():
 	swordHitbox.knockback_vector = roll_vector
 	randomize()
 
+	
 func _physics_process(delta):
 	match state:
 		MOVE:
@@ -39,7 +41,10 @@ func _physics_process(delta):
 			roll_state()
 		ATTACK:
 			attack_state()
+		FIREBALL:
+			pass
 			
+
 func move_state(delta):
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -63,31 +68,50 @@ func move_state(delta):
 	if Input.is_action_just_pressed("Roll"):
 		state = ROLL
 
+
 func roll_state():
 	velocity = roll_vector * ROLL_SPEED
 	animationState.travel("roll")
 	move()
 		
+
+func fireball_state():
+	velocity = Vector2.ZERO
+
+
 func attack_state():
 	velocity = Vector2.ZERO
 	animationState.travel("attack")
 
+
 func back_to_run():
 	state = MOVE
+
 
 func move():
 	velocity = move_and_slide(velocity)
 	
+
 func _on_Hurtbox_area_entered(area):
-	stats.health -= area.damage
-	hurtBox.start_invincibility(0.5)
-	hurtBox.create_hit_effect()
-	var PlayerHurtSounds = playerHurtSound.instance()
-	get_tree().current_scene.add_child(PlayerHurtSounds)
+	if area.nameCheck == "enemy":
+		stats.health -= area.damage
+		hurtBox.start_invincibility(0.5)
+		hurtBox.create_hit_effect()
+		var PlayerHurtSounds = playerHurtSound.instance()
+		get_tree().current_scene.add_child(PlayerHurtSounds)
+	elif area.nameCheck == "heart":
+		stats.health -= area.damage
+		var HeartSounds = HeartSound.instance()
+		get_tree().current_scene.add_child(HeartSounds)
+		hurtBox.start_invincibility(0.5)
+	else:
+		pass
+		
 
 
 func _on_Hurtbox_invincibility_ended() -> void:
 	hurtAnimation.play("Stop")
+
 
 func _on_Hurtbox_invincibility_started() -> void:
 	hurtAnimation.play("Start")

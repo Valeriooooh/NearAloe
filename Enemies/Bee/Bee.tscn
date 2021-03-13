@@ -1,11 +1,11 @@
 [gd_scene load_steps=25 format=2]
 
-[ext_resource path="res://Player/Hitbox.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Player/Hurtbox.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Enemies/Enemy.gd" type="Script" id=3]
+[ext_resource path="res://Player/Hitbox/HitboxEnemy.gd" type="Script" id=1]
+[ext_resource path="res://Player/Hurtbox/Hurtbox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemies/Bee/Bee.gd" type="Script" id=3]
 [ext_resource path="res://Shadows/SmallShadow.png" type="Texture" id=4]
 [ext_resource path="res://Enemies/Bee/bee.png" type="Texture" id=5]
-[ext_resource path="res://Player/Stats.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Player/Stats/Stats.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Enemies/SoftCollision.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Enemies/WanderControl.tscn" type="PackedScene" id=9]
@@ -79,7 +79,7 @@ tracks/0/keys = {
 resource_name = "Stop"
 length = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Bee:use_parent_material")
+tracks/0/path = NodePath("Bee:material:shader_param/active")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -101,6 +101,7 @@ script = ExtResource( 3 )
 material = SubResource( 1 )
 frames = SubResource( 7 )
 animation = "Fly"
+frame = 2
 playing = true
 offset = Vector2( 0, -12 )
 
@@ -117,7 +118,6 @@ visible = false
 collision_layer = 8
 
 [node name="CollisionShape2D" parent="Bee/Hurtbox" index="0"]
-visible = false
 position = Vector2( 0, -15.714 )
 shape = SubResource( 9 )
 
@@ -132,14 +132,14 @@ visible = false
 self_modulate = Color( 1, 1, 1, 0.321569 )
 shape = SubResource( 10 )
 
-[node name="Hitbox" parent="Bee" instance=ExtResource( 1 )]
-visible = false
+[node name="Hitbox" type="Area2D" parent="Bee"]
+collision_layer = 0
 collision_mask = 4
+script = ExtResource( 1 )
 damage = 1
 
-[node name="CollisionShape2D" parent="Bee/Hitbox" index="0"]
-visible = false
-position = Vector2( 0.8909, -16.3703 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bee/Hitbox"]
+position = Vector2( -0.149658, -7.15392 )
 shape = SubResource( 11 )
 
 [node name="SoftCollision" parent="Bee" instance=ExtResource( 7 )]
@@ -155,6 +155,7 @@ shape = SubResource( 12 )
 [node name="WanderControl" parent="Bee" instance=ExtResource( 9 )]
 
 [node name="HurtAnimation" type="AnimationPlayer" parent="Bee"]
+playback_process_mode = 0
 anims/Start = SubResource( 13 )
 anims/Stop = SubResource( 14 )
 
@@ -165,5 +166,4 @@ anims/Stop = SubResource( 14 )
 
 [editable path="Bee/Hurtbox"]
 [editable path="Bee/PlayerDetectionZone"]
-[editable path="Bee/Hitbox"]
 [editable path="Bee/SoftCollision"]
