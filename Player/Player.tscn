@@ -763,7 +763,6 @@ rotation = 1.5708
 position = Vector2( 17.5797, -0.589916 )
 collision_mask = 8
 script = ExtResource( 11 )
-nameCheck = "heart"
 
 [node name="CollisionShape2D" parent="SwordPivot/SwordHitbox" index="0"]
 position = Vector2( 0.0488589, 1.75197 )
@@ -802,10 +801,10 @@ volume_db = 0.575
 [node name="PauseNode" parent="." instance=ExtResource( 18 )]
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-[connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_ended" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_ended"]
-[connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
+[connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_started" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_started"]
+[connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
 [connection signal="timeout" from="Hurtbox/Timer" to="Hurtbox" method="_on_Timer_timeout"]
 
 [editable path="SwordPivot/SwordHitbox"]

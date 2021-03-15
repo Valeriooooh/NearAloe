@@ -100,10 +100,9 @@ func _on_Hurtbox_area_entered(area):
 		var PlayerHurtSounds = playerHurtSound.instance()
 		get_tree().current_scene.add_child(PlayerHurtSounds)
 	elif area.nameCheck == "heart":
-		stats.health -= area.damage
-		var HeartSounds = HeartSound.instance()
-		get_tree().current_scene.add_child(HeartSounds)
-		hurtBox.start_invincibility(0.5)
+		if stats.MaxHealth > stats.health:
+			stats.health -= area.damage
+			hurtBox.start_invincibility(0.5)
 	else:
 		pass
 		
