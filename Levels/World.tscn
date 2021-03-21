@@ -1,17 +1,20 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=65 format=2]
 
-[ext_resource path="res://World/Tree.tscn" type="PackedScene" id=1]
-[ext_resource path="res://World/flower.tscn" type="PackedScene" id=2]
-[ext_resource path="res://World/DirtTileset.png" type="Texture" id=3]
-[ext_resource path="res://World/CliffTileset.png" type="Texture" id=4]
-[ext_resource path="res://World/Grass.tscn" type="PackedScene" id=5]
-[ext_resource path="res://World/GrassBackground.png" type="Texture" id=6]
+[ext_resource path="res://World/Tree/Tree.tscn" type="PackedScene" id=1]
+[ext_resource path="res://World/Flower/flower.tscn" type="PackedScene" id=2]
+[ext_resource path="res://World/Tileset/DirtTileset.png" type="Texture" id=3]
+[ext_resource path="res://World/Tileset/CliffTileset.png" type="Texture" id=4]
+[ext_resource path="res://World/Grass/Grass.tscn" type="PackedScene" id=5]
+[ext_resource path="res://World/Tileset/GrassBackground.png" type="Texture" id=6]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://UI/Logo/NearAloeLogo.png" type="Texture" id=8]
-[ext_resource path="res://World/Bush.tscn" type="PackedScene" id=9]
+[ext_resource path="res://World/Bush/Bush.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Enemies/Bee/Bee.tscn" type="PackedScene" id=10]
 [ext_resource path="res://World/Hearts/Heart.tscn" type="PackedScene" id=11]
 [ext_resource path="res://World/NPC.tscn" type="PackedScene" id=12]
+[ext_resource path="res://World/Hearts/GoldenHeart.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Enemies/bug/Bug.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Enemies/Spike/Spike.tscn" type="PackedScene" id=15]
 
 [sub_resource type="TileSet" id=1]
 0/name = "DirtTileset.png 0"
@@ -625,20 +628,11 @@ position = Vector2( 164.365, 397.928 )
 [node name="Bee" parent="Ground/Bushes" instance=ExtResource( 10 )]
 position = Vector2( -67.6563, 118.035 )
 
-[node name="Bee2" parent="Ground/Bushes" instance=ExtResource( 10 )]
-position = Vector2( -201.491, 179.628 )
+[node name="Bug" parent="Ground/Bushes" instance=ExtResource( 14 )]
+position = Vector2( 136.379, 96.8123 )
 
-[node name="Bee3" parent="Ground/Bushes" instance=ExtResource( 10 )]
-position = Vector2( -114.059, 180.963 )
-
-[node name="Bee4" parent="Ground/Bushes" instance=ExtResource( 10 )]
-position = Vector2( -80.0202, 223.678 )
-
-[node name="Bee5" parent="Ground/Bushes" instance=ExtResource( 10 )]
-position = Vector2( -79.3528, 263.723 )
-
-[node name="Bee6" parent="Ground/Bushes" instance=ExtResource( 10 )]
-position = Vector2( 15.9785, 629.946 )
+[node name="Spike" parent="Ground/Bushes" instance=ExtResource( 15 )]
+position = Vector2( 23.9729, 73.7916 )
 
 [node name="Trees" type="YSort" parent="Ground"]
 
@@ -652,7 +646,7 @@ position = Vector2( 305.195, 120.884 )
 position = Vector2( 305.57, 139.238 )
 
 [node name="Heart" parent="Ground" instance=ExtResource( 11 )]
-position = Vector2( 72.4609, 61.3704 )
+position = Vector2( 73.0221, 61.0898 )
 
 [node name="Heart2" parent="Ground" instance=ExtResource( 11 )]
 position = Vector2( 372.228, 392.933 )
@@ -662,6 +656,9 @@ position = Vector2( 436.655, 718.066 )
 
 [node name="NPC" parent="Ground" instance=ExtResource( 12 )]
 position = Vector2( 207.745, 36.4901 )
+
+[node name="GoldenHeart" parent="Ground" instance=ExtResource( 13 )]
+position = Vector2( 155.741, 20.1298 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 329.942, 989.689 )

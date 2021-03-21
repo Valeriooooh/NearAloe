@@ -6,7 +6,7 @@ const MAX_SPEED = 80
 const ROLL_SPEED = MAX_SPEED * 1.5
 const FRICTION = 500
 const playerHurtSound = preload("res://Player/Sounds/PlayerHurtSound.tscn")
-const HeartSound = preload("res://Player/Sounds/HeartSound.tscn")
+
 enum {
 	MOVE,
 	ROLL,
@@ -27,7 +27,7 @@ onready var hurtAnimation = $HurtAnimation
 
 
 func _ready():
-	stats.connect("no_health", self, "queue_free")
+	stats.connect("no_health", self, 'die')
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
 	randomize()
@@ -91,6 +91,12 @@ func back_to_run():
 func move():
 	velocity = move_and_slide(velocity)
 	
+func die():
+	print("dead")
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://Levels/World.tscn")
+	stats.health = stats.MaxHealth
+
 
 func _on_Hurtbox_area_entered(area):
 	if area.nameCheck == "enemy":
@@ -99,6 +105,10 @@ func _on_Hurtbox_area_entered(area):
 		hurtBox.create_hit_effect()
 		var PlayerHurtSounds = playerHurtSound.instance()
 		get_tree().current_scene.add_child(PlayerHurtSounds)
+	elif area.nameCheck == "golden":	
+		stats.MaxHealth += 1
+		stats.health = stats.MaxHealth
+		hurtBox.start_invincibility(0.5)
 	elif area.nameCheck == "heart":
 		if stats.MaxHealth > stats.health:
 			stats.health -= area.damage

@@ -1,0 +1,174 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Enemies/WanderControl.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player/Hurtbox/Hurtbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player/Hitbox/HitboxEnemy.gd" type="Script" id=4]
+[ext_resource path="res://Shadows/SmallShadow.png" type="Texture" id=5]
+[ext_resource path="res://Effects/whiteShader.shader" type="Shader" id=6]
+[ext_resource path="res://Player/Stats/Stats.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Enemies/bug/bug.png" type="Texture" id=8]
+[ext_resource path="res://Enemies/bug/Bug.gd" type="Script" id=9]
+[ext_resource path="res://Enemies/SoftCollision.tscn" type="PackedScene" id=10]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 6 )
+shader_param/active = false
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 8 )
+region = Rect2( 32, 0, 16, 24 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 16, 24 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 8 )
+region = Rect2( 16, 0, 16, 24 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 12 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"loop": false,
+"name": "walk",
+"speed": 1.0
+} ]
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 5.91637
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 8.79211
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 63.1788
+
+[sub_resource type="CircleShape2D" id=8]
+radius = 6.11381
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 4.78548
+
+[sub_resource type="Animation" id=10]
+resource_name = "Start"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bug:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ true, false, true, false, true, false ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Stop"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bug:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[node name="Bug" type="Node2D"]
+
+[node name="Bug" type="KinematicBody2D" parent="."]
+collision_layer = 16
+script = ExtResource( 9 )
+MAX_SPEED = 37
+FRICTION = 125
+
+[node name="Bug" type="AnimatedSprite" parent="Bug"]
+material = SubResource( 1 )
+position = Vector2( -0.0787468, 0.0787449 )
+frames = SubResource( 4 )
+animation = "idle"
+playing = true
+offset = Vector2( 0, -12 )
+
+[node name="BugShadow" type="Sprite" parent="Bug"]
+position = Vector2( 0, -4.20448 )
+texture = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bug"]
+visible = false
+position = Vector2( -0.140305, 0.14031 )
+shape = SubResource( 5 )
+
+[node name="Hurtbox" parent="Bug" instance=ExtResource( 3 )]
+visible = false
+collision_layer = 8
+
+[node name="CollisionShape2D" parent="Bug/Hurtbox" index="0"]
+position = Vector2( 0, -15.714 )
+shape = SubResource( 6 )
+
+[node name="Stats" parent="Bug" instance=ExtResource( 7 )]
+MaxHealth = 8
+
+[node name="PlayerDetectionZone" parent="Bug" instance=ExtResource( 1 )]
+visible = false
+
+[node name="CollisionShape2D" parent="Bug/PlayerDetectionZone" index="0"]
+visible = false
+self_modulate = Color( 1, 1, 1, 0.321569 )
+shape = SubResource( 7 )
+
+[node name="Hitbox" type="Area2D" parent="Bug"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource( 4 )
+damage = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bug/Hitbox"]
+position = Vector2( -0.0969274, -7.94208 )
+shape = SubResource( 8 )
+
+[node name="SoftCollision" parent="Bug" instance=ExtResource( 10 )]
+visible = false
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="Bug/SoftCollision" index="0"]
+visible = false
+position = Vector2( -0.280624, 0.280609 )
+shape = SubResource( 9 )
+
+[node name="WanderControl" parent="Bug" instance=ExtResource( 2 )]
+wr = 10
+
+[node name="Timer" parent="Bug/WanderControl" index="0"]
+wait_time = 4096.0
+
+[node name="HurtAnimation" type="AnimationPlayer" parent="Bug"]
+playback_process_mode = 0
+anims/Start = SubResource( 10 )
+anims/Stop = SubResource( 11 )
+
+[connection signal="area_entered" from="Bug/Hurtbox" to="Bug" method="_on_Hurtbox_area_entered"]
+[connection signal="invincibility_ended" from="Bug/Hurtbox" to="Bug" method="_on_Hurtbox_invincibility_ended"]
+[connection signal="invincibility_started" from="Bug/Hurtbox" to="Bug" method="_on_Hurtbox_invincibility_started"]
+[connection signal="no_health" from="Bug/Stats" to="Bug" method="_on_Stats_no_health"]
+
+[editable path="Bug/Hurtbox"]
+[editable path="Bug/PlayerDetectionZone"]
+[editable path="Bug/SoftCollision"]
+[editable path="Bug/WanderControl"]

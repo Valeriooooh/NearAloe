@@ -1,6 +1,6 @@
 extends Node
 
-export(int) var MaxHealth = 4 setget set_max_health
+export(int) var MaxHealth = 2 setget set_max_health
 var health = MaxHealth setget set_health
 
 signal no_health

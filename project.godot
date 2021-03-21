@@ -19,10 +19,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/base_components/base_component.gd"
 }, {
+"base": "Node",
+"class": "BaseSetting",
+"language": "GDScript",
+"path": "res://src/manager/base_setting.gd"
+}, {
 "base": "BaseComponent",
 "class": "BoolSetting",
 "language": "GDScript",
 "path": "res://src/base_components/bool_setting/bool_setting.gd"
+}, {
+"base": "Node",
+"class": "Dialogic",
+"language": "GDScript",
+"path": "res://addons/dialogic/Other/dialogic_class.gd"
+}, {
+"base": "Reference",
+"class": "DialogicUtil",
+"language": "GDScript",
+"path": "res://addons/dialogic/Other/DialogicUtil.gd"
 }, {
 "base": "BaseComponent",
 "class": "DropDownList",
@@ -37,7 +52,10 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "ArrowList": "",
 "BaseComponent": "",
+"BaseSetting": "",
 "BoolSetting": "",
+"Dialogic": "",
+"DialogicUtil": "",
 "DropDownList": "",
 "SliderSetting": ""
 }
@@ -84,7 +102,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Todo_Manager/plugin.cfg", "res://addons/open-external-editor/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/Todo_Manager/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/open-external-editor/plugin.cfg" )
 
 [gui]
 
@@ -199,6 +217,7 @@ common/physics_jitter_fix=1.0
 quality/driver/fallback_to_gles2=true
 quality/intended_usage/framebuffer_allocation=0
 quality/intended_usage/framebuffer_allocation.mobile=0
+2d/snapping/use_gpu_pixel_snap=true
 threads/thread_model=2
 quality/filters/use_nearest_mipmap_filter=true
 gles2/compatibility/disable_half_float=true

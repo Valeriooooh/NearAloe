@@ -10,10 +10,10 @@ func update_targetPosition():
 	targetPosition = startPosition + targetVector
 
 func start_wander_timer(duration):
-    timer.start(duration)
+	timer.start(duration)
 	
 func get_time_left():
-    return timer.time_left
+	return timer.time_left
 
 	
 func _on_Timer_timeout():

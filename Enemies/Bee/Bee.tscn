@@ -97,6 +97,9 @@ tracks/0/keys = {
 collision_layer = 16
 script = ExtResource( 3 )
 
+[node name="BeeShadow" type="Sprite" parent="Bee"]
+texture = ExtResource( 4 )
+
 [node name="Bee" type="AnimatedSprite" parent="Bee"]
 material = SubResource( 1 )
 frames = SubResource( 7 )
@@ -104,9 +107,6 @@ animation = "Fly"
 frame = 2
 playing = true
 offset = Vector2( 0, -12 )
-
-[node name="BeeShadow" type="Sprite" parent="Bee"]
-texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bee"]
 visible = false
@@ -122,7 +122,7 @@ position = Vector2( 0, -15.714 )
 shape = SubResource( 9 )
 
 [node name="Stats" parent="Bee" instance=ExtResource( 6 )]
-MaxHealth = 6
+MaxHealth = 4
 
 [node name="PlayerDetectionZone" parent="Bee" instance=ExtResource( 8 )]
 visible = false

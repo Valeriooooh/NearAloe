@@ -1,0 +1,164 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://Player/Hitbox/HitboxEnemy.gd" type="Script" id=1]
+[ext_resource path="res://Player/Hurtbox/Hurtbox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemies/Spike/Spike.gd" type="Script" id=3]
+[ext_resource path="res://Shadows/SmallShadow.png" type="Texture" id=4]
+[ext_resource path="res://Enemies/Spike/spike.png" type="Texture" id=5]
+[ext_resource path="res://Player/Stats/Stats.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Enemies/SoftCollision.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Enemies/WanderControl.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Effects/whiteShader.shader" type="Shader" id=10]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 10 )
+shader_param/active = false
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 5 )
+region = Rect2( 16, 0, 16, 24 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 16, 24 )
+
+[sub_resource type="SpriteFrames" id=12]
+animations = [ {
+"frames": [ SubResource( 11 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 2.0
+}, {
+"frames": [ SubResource( 13 ) ],
+"loop": false,
+"name": "Attack",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 5.91637
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 8.79211
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 63.1788
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 6.11381
+
+[sub_resource type="CircleShape2D" id=8]
+radius = 4.78548
+
+[sub_resource type="Animation" id=9]
+resource_name = "Start"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Spike:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ true, false, true, false, true, false ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Stop"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Spike:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[node name="Spike" type="Node2D"]
+
+[node name="Spike" type="KinematicBody2D" parent="."]
+collision_layer = 16
+script = ExtResource( 3 )
+FRICTION = 0
+
+[node name="SpikeShadow" type="Sprite" parent="Spike"]
+position = Vector2( 0.125, -5.125 )
+texture = ExtResource( 4 )
+
+[node name="Spike" type="AnimatedSprite" parent="Spike"]
+material = SubResource( 1 )
+frames = SubResource( 12 )
+animation = "Idle"
+playing = true
+offset = Vector2( 0, -12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spike"]
+visible = false
+position = Vector2( -0.140305, 0.14031 )
+shape = SubResource( 4 )
+
+[node name="Hurtbox" parent="Spike" instance=ExtResource( 2 )]
+visible = false
+collision_layer = 8
+
+[node name="CollisionShape2D" parent="Spike/Hurtbox" index="0"]
+position = Vector2( 0, -15.714 )
+shape = SubResource( 5 )
+
+[node name="Stats" parent="Spike" instance=ExtResource( 6 )]
+MaxHealth = 8
+
+[node name="PlayerDetectionZone" parent="Spike" instance=ExtResource( 8 )]
+visible = false
+
+[node name="CollisionShape2D" parent="Spike/PlayerDetectionZone" index="0"]
+visible = false
+self_modulate = Color( 1, 1, 1, 0.321569 )
+shape = SubResource( 6 )
+
+[node name="Hitbox" type="Area2D" parent="Spike"]
+visible = false
+collision_layer = 0
+collision_mask = 4
+script = ExtResource( 1 )
+damage = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spike/Hitbox"]
+position = Vector2( -0.149658, -7.15392 )
+shape = SubResource( 7 )
+
+[node name="SoftCollision" parent="Spike" instance=ExtResource( 7 )]
+visible = false
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="Spike/SoftCollision" index="0"]
+visible = false
+position = Vector2( -0.280624, 0.280609 )
+shape = SubResource( 8 )
+
+[node name="WanderControl" parent="Spike" instance=ExtResource( 9 )]
+
+[node name="HurtAnimation" type="AnimationPlayer" parent="Spike"]
+playback_process_mode = 0
+anims/Start = SubResource( 9 )
+anims/Stop = SubResource( 10 )
+
+[connection signal="area_entered" from="Spike/Hurtbox" to="Spike" method="_on_Hurtbox_area_entered"]
+[connection signal="invincibility_ended" from="Spike/Hurtbox" to="Spike" method="_on_Hurtbox_invincibility_ended"]
+[connection signal="invincibility_started" from="Spike/Hurtbox" to="Spike" method="_on_Hurtbox_invincibility_started"]
+[connection signal="no_health" from="Spike/Stats" to="Spike" method="_on_Stats_no_health"]
+
+[editable path="Spike/Hurtbox"]
+[editable path="Spike/PlayerDetectionZone"]
+[editable path="Spike/SoftCollision"]

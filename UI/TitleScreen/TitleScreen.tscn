@@ -55,20 +55,17 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="Menu"]
-anchor_left = 0.184
-anchor_right = 0.184
-margin_right = 76.0
+margin_right = 77.0
 margin_bottom = 32.0
 size_flags_vertical = 2
 theme = ExtResource( 1 )
+disabled = true
 action_mode = 0
 text = "Continue"
 
 [node name="Button4" type="Button" parent="Menu"]
-anchor_left = 0.184
-anchor_right = 0.184
 margin_top = 33.0
-margin_right = 76.0
+margin_right = 77.0
 margin_bottom = 65.0
 size_flags_vertical = 2
 theme = ExtResource( 1 )
@@ -76,10 +73,8 @@ action_mode = 0
 text = "New Game"
 
 [node name="Button2" type="Button" parent="Menu"]
-anchor_left = 0.184
-anchor_right = 0.184
 margin_top = 66.0
-margin_right = 76.0
+margin_right = 77.0
 margin_bottom = 98.0
 size_flags_vertical = 2
 theme = ExtResource( 1 )
@@ -87,10 +82,8 @@ action_mode = 0
 text = "Options"
 
 [node name="Button3" type="Button" parent="Menu"]
-anchor_left = 0.184
-anchor_right = 0.184
 margin_top = 99.0
-margin_right = 76.0
+margin_right = 77.0
 margin_bottom = 131.0
 size_flags_vertical = 2
 theme = ExtResource( 1 )
