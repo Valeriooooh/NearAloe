@@ -16,48 +16,47 @@ resource_local_to_scene = true
 shader = ExtResource( 6 )
 shader_param/active = false
 
-[sub_resource type="AtlasTexture" id=12]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 8 )
 region = Rect2( 32, 0, 16, 24 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 8 )
 region = Rect2( 0, 0, 16, 24 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 8 )
 region = Rect2( 16, 0, 16, 24 )
 
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
-"frames": [ SubResource( 12 ) ],
+"frames": [ SubResource( 2 ) ],
 "loop": true,
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 2 ), SubResource( 3 ) ],
-"loop": false,
+"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
 "name": "walk",
-"speed": 1.0
+"speed": 4.0
 } ]
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=6]
 radius = 5.91637
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=7]
 radius = 8.79211
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=8]
 radius = 63.1788
 
-[sub_resource type="CircleShape2D" id=8]
+[sub_resource type="CircleShape2D" id=9]
 radius = 6.11381
 
-[sub_resource type="CircleShape2D" id=9]
+[sub_resource type="CircleShape2D" id=10]
 radius = 4.78548
 
-[sub_resource type="Animation" id=10]
-resource_name = "Start"
+[sub_resource type="Animation" id=11]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Bug:material:shader_param/active")
@@ -72,8 +71,7 @@ tracks/0/keys = {
 "values": [ true, false, true, false, true, false ]
 }
 
-[sub_resource type="Animation" id=11]
-resource_name = "Stop"
+[sub_resource type="Animation" id=12]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Bug:material:shader_param/active")
@@ -99,7 +97,7 @@ FRICTION = 125
 [node name="Bug" type="AnimatedSprite" parent="Bug"]
 material = SubResource( 1 )
 position = Vector2( -0.0787468, 0.0787449 )
-frames = SubResource( 4 )
+frames = SubResource( 5 )
 animation = "idle"
 playing = true
 offset = Vector2( 0, -12 )
@@ -111,7 +109,7 @@ texture = ExtResource( 5 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bug"]
 visible = false
 position = Vector2( -0.140305, 0.14031 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="Hurtbox" parent="Bug" instance=ExtResource( 3 )]
 visible = false
@@ -119,7 +117,7 @@ collision_layer = 8
 
 [node name="CollisionShape2D" parent="Bug/Hurtbox" index="0"]
 position = Vector2( 0, -15.714 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="Stats" parent="Bug" instance=ExtResource( 7 )]
 MaxHealth = 8
@@ -130,7 +128,7 @@ visible = false
 [node name="CollisionShape2D" parent="Bug/PlayerDetectionZone" index="0"]
 visible = false
 self_modulate = Color( 1, 1, 1, 0.321569 )
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="Hitbox" type="Area2D" parent="Bug"]
 collision_layer = 0
@@ -140,7 +138,7 @@ damage = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bug/Hitbox"]
 position = Vector2( -0.0969274, -7.94208 )
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [node name="SoftCollision" parent="Bug" instance=ExtResource( 10 )]
 visible = false
@@ -150,18 +148,18 @@ collision_mask = 32
 [node name="CollisionShape2D" parent="Bug/SoftCollision" index="0"]
 visible = false
 position = Vector2( -0.280624, 0.280609 )
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 
 [node name="WanderControl" parent="Bug" instance=ExtResource( 2 )]
 wr = 10
 
 [node name="Timer" parent="Bug/WanderControl" index="0"]
-wait_time = 4096.0
+wait_time = 10.0
 
 [node name="HurtAnimation" type="AnimationPlayer" parent="Bug"]
 playback_process_mode = 0
-anims/Start = SubResource( 10 )
-anims/Stop = SubResource( 11 )
+anims/Start = SubResource( 11 )
+anims/Stop = SubResource( 12 )
 
 [connection signal="area_entered" from="Bug/Hurtbox" to="Bug" method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Bug/Hurtbox" to="Bug" method="_on_Hurtbox_invincibility_ended"]

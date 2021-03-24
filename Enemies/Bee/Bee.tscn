@@ -104,7 +104,7 @@ texture = ExtResource( 4 )
 material = SubResource( 1 )
 frames = SubResource( 7 )
 animation = "Fly"
-frame = 2
+frame = 1
 playing = true
 offset = Vector2( 0, -12 )
 

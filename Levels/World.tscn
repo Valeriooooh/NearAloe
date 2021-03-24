@@ -1,20 +1,17 @@
-[gd_scene load_steps=65 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://World/Tree/Tree.tscn" type="PackedScene" id=1]
-[ext_resource path="res://World/Flower/flower.tscn" type="PackedScene" id=2]
+[ext_resource path="res://World/Flower/Flower.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World/Tileset/DirtTileset.png" type="Texture" id=3]
 [ext_resource path="res://World/Tileset/CliffTileset.png" type="Texture" id=4]
 [ext_resource path="res://World/Grass/Grass.tscn" type="PackedScene" id=5]
 [ext_resource path="res://World/Tileset/GrassBackground.png" type="Texture" id=6]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=7]
-[ext_resource path="res://UI/Logo/NearAloeLogo.png" type="Texture" id=8]
+[ext_resource path="res://UI/keyboardKeys/Keyboard.png" type="Texture" id=8]
 [ext_resource path="res://World/Bush/Bush.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Enemies/Bee/Bee.tscn" type="PackedScene" id=10]
 [ext_resource path="res://World/Hearts/Heart.tscn" type="PackedScene" id=11]
 [ext_resource path="res://World/NPC.tscn" type="PackedScene" id=12]
-[ext_resource path="res://World/Hearts/GoldenHeart.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Enemies/bug/Bug.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Enemies/Spike/Spike.tscn" type="PackedScene" id=15]
 
 [sub_resource type="TileSet" id=1]
 0/name = "DirtTileset.png 0"
@@ -528,6 +525,34 @@ resource_local_to_scene = true
 1/shapes = [  ]
 1/z_index = 0
 
+[sub_resource type="AtlasTexture" id=50]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=51]
+atlas = ExtResource( 8 )
+region = Rect2( 128, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=52]
+atlas = ExtResource( 8 )
+region = Rect2( 256, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=53]
+atlas = ExtResource( 8 )
+region = Rect2( 384, 0, 128, 128 )
+
+[sub_resource type="AtlasTexture" id=54]
+atlas = ExtResource( 8 )
+region = Rect2( 512, 0, 128, 128 )
+
+[sub_resource type="SpriteFrames" id=55]
+animations = [ {
+"frames": [ SubResource( 50 ), SubResource( 51 ), SubResource( 50 ), SubResource( 52 ), SubResource( 50 ), SubResource( 53 ), SubResource( 50 ), SubResource( 54 ) ],
+"loop": true,
+"name": "default",
+"speed": 1.0
+} ]
+
 [node name="Level_1" type="Node2D"]
 
 [node name="YSort" type="YSort" parent="."]
@@ -561,16 +586,16 @@ collision/safe_margin = 1.0
 [node name="Grass" type="YSort" parent="Ground"]
 
 [node name="Grass" parent="Ground/Grass" instance=ExtResource( 5 )]
-position = Vector2( 91.9062, 144.205 )
+position = Vector2( 89.0778, 62.1806 )
 
 [node name="Grass2" parent="Ground/Grass" instance=ExtResource( 5 )]
-position = Vector2( 57.148, 141.221 )
+position = Vector2( 107.706, 44.3474 )
 
 [node name="Grass3" parent="Ground/Grass" instance=ExtResource( 5 )]
-position = Vector2( 45.2428, 157.757 )
+position = Vector2( 71.1993, 84.6068 )
 
 [node name="Grass4" parent="Ground/Grass" instance=ExtResource( 5 )]
-position = Vector2( 74.7485, 153.001 )
+position = Vector2( 87.83, 43.0459 )
 
 [node name="Grass8" parent="Ground/Grass" instance=ExtResource( 5 )]
 position = Vector2( -274.312, 13.5103 )
@@ -588,22 +613,13 @@ position = Vector2( -270.308, 60.8971 )
 position = Vector2( -226.258, 72.2432 )
 
 [node name="Grass5" parent="Ground/Grass" instance=ExtResource( 5 )]
-position = Vector2( 142.461, 122.081 )
+position = Vector2( 68.5683, 64.4518 )
 
 [node name="Grass6" parent="Ground/Grass" instance=ExtResource( 5 )]
-position = Vector2( 142.461, 156.568 )
+position = Vector2( 107.459, 61.1086 )
 
 [node name="Grass7" parent="Ground/Grass" instance=ExtResource( 5 )]
-position = Vector2( 142.461, 139.622 )
-
-[node name="flower" parent="Ground/Grass" instance=ExtResource( 2 )]
-position = Vector2( 48, 120 )
-
-[node name="flower2" parent="Ground/Grass" instance=ExtResource( 2 )]
-position = Vector2( 128, 120 )
-
-[node name="flower3" parent="Ground/Grass" instance=ExtResource( 2 )]
-position = Vector2( 80, 160 )
+position = Vector2( 69.9826, 49.4659 )
 
 [node name="Bush" parent="Ground/Grass" instance=ExtResource( 9 )]
 position = Vector2( -64.1135, 100.088 )
@@ -623,16 +639,73 @@ position = Vector2( -238.757, 179.014 )
 [node name="Bush6" parent="Ground/Grass" instance=ExtResource( 9 )]
 position = Vector2( 164.365, 397.928 )
 
+[node name="Flower" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 68.3794, 131.407 )
+
+[node name="Flower2" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 67.7848, 139.137 )
+
+[node name="Flower3" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 68.0821, 148.354 )
+
+[node name="Flower4" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 68.0821, 158.759 )
+
+[node name="Flower5" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 77.2985, 132.597 )
+
+[node name="Flower6" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 76.7039, 140.326 )
+
+[node name="Flower7" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 77.0012, 149.543 )
+
+[node name="Flower8" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 77.0012, 159.948 )
+
+[node name="Flower9" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 84.4337, 131.11 )
+
+[node name="Flower10" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 83.8391, 138.84 )
+
+[node name="Flower11" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 84.1364, 148.056 )
+
+[node name="Flower12" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 84.1364, 158.462 )
+
+[node name="Flower13" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 91.2717, 132.299 )
+
+[node name="Flower14" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 90.6771, 140.029 )
+
+[node name="Flower15" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 90.9743, 149.246 )
+
+[node name="Flower16" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 90.9743, 159.651 )
+
+[node name="Flower17" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 99.8934, 131.705 )
+
+[node name="Flower18" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 99.2988, 139.435 )
+
+[node name="Flower19" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 99.5961, 148.651 )
+
+[node name="Flower20" parent="Ground/Grass" instance=ExtResource( 2 )]
+position = Vector2( 99.5961, 159.056 )
+
 [node name="Bushes" type="YSort" parent="Ground"]
 
 [node name="Bee" parent="Ground/Bushes" instance=ExtResource( 10 )]
-position = Vector2( -67.6563, 118.035 )
+position = Vector2( -67.2837, 118.359 )
 
-[node name="Bug" parent="Ground/Bushes" instance=ExtResource( 14 )]
-position = Vector2( 136.379, 96.8123 )
-
-[node name="Spike" parent="Ground/Bushes" instance=ExtResource( 15 )]
-position = Vector2( 23.9729, 73.7916 )
+[node name="Bee2" parent="Ground/Bushes" instance=ExtResource( 10 )]
+position = Vector2( -220.845, 135.426 )
 
 [node name="Trees" type="YSort" parent="Ground"]
 
@@ -646,7 +719,7 @@ position = Vector2( 305.195, 120.884 )
 position = Vector2( 305.57, 139.238 )
 
 [node name="Heart" parent="Ground" instance=ExtResource( 11 )]
-position = Vector2( 73.0221, 61.0898 )
+position = Vector2( -180.023, 15.4744 )
 
 [node name="Heart2" parent="Ground" instance=ExtResource( 11 )]
 position = Vector2( 372.228, 392.933 )
@@ -655,12 +728,11 @@ position = Vector2( 372.228, 392.933 )
 position = Vector2( 436.655, 718.066 )
 
 [node name="NPC" parent="Ground" instance=ExtResource( 12 )]
-position = Vector2( 207.745, 36.4901 )
+position = Vector2( 269.757, 11.0199 )
 
-[node name="GoldenHeart" parent="Ground" instance=ExtResource( 13 )]
-position = Vector2( 155.741, 20.1298 )
-
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 329.942, 989.689 )
-scale = Vector2( 1.27182, 1.2374 )
-texture = ExtResource( 8 )
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Ground"]
+position = Vector2( 188.814, 34.2418 )
+scale = Vector2( 0.5, 0.5 )
+frames = SubResource( 55 )
+frame = 5
+playing = true
