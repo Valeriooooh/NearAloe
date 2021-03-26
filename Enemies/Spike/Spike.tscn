@@ -16,44 +16,43 @@ resource_local_to_scene = true
 shader = ExtResource( 10 )
 shader_param/active = false
 
-[sub_resource type="AtlasTexture" id=11]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 5 )
 region = Rect2( 16, 0, 16, 24 )
 
-[sub_resource type="AtlasTexture" id=13]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 16, 24 )
 
-[sub_resource type="SpriteFrames" id=12]
+[sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ SubResource( 11 ) ],
+"frames": [ SubResource( 2 ) ],
 "loop": true,
 "name": "Idle",
 "speed": 2.0
 }, {
-"frames": [ SubResource( 13 ) ],
+"frames": [ SubResource( 3 ) ],
 "loop": false,
 "name": "Attack",
 "speed": 5.0
 } ]
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=5]
 radius = 5.91637
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=6]
 radius = 8.79211
 
-[sub_resource type="CircleShape2D" id=6]
-radius = 25.1843
-
 [sub_resource type="CircleShape2D" id=7]
-radius = 6.11381
+radius = 38.4544
 
 [sub_resource type="CircleShape2D" id=8]
+radius = 6.11381
+
+[sub_resource type="CircleShape2D" id=9]
 radius = 4.78548
 
-[sub_resource type="Animation" id=9]
-resource_name = "Start"
+[sub_resource type="Animation" id=10]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Spike:material:shader_param/active")
@@ -68,8 +67,7 @@ tracks/0/keys = {
 "values": [ true, false, true, false, true, false ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "Stop"
+[sub_resource type="Animation" id=11]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Spike:material:shader_param/active")
@@ -99,7 +97,7 @@ texture = ExtResource( 4 )
 material = SubResource( 1 )
 position = Vector2( 0.210224, 5.99139 )
 scale = Vector2( 1, 0.984375 )
-frames = SubResource( 12 )
+frames = SubResource( 4 )
 animation = "Idle"
 playing = true
 offset = Vector2( 0, -12 )
@@ -107,14 +105,14 @@ offset = Vector2( 0, -12 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spike"]
 visible = false
 position = Vector2( -0.140305, 0.14031 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Hurtbox" parent="Spike" instance=ExtResource( 2 )]
 collision_layer = 8
 
 [node name="CollisionShape2D" parent="Spike/Hurtbox" index="0"]
 position = Vector2( 0.105114, -2.15454 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="Stats" parent="Spike" instance=ExtResource( 6 )]
 MaxHealth = 8
@@ -124,7 +122,7 @@ MaxHealth = 8
 [node name="CollisionShape2D" parent="Spike/PlayerDetectionZone" index="0"]
 self_modulate = Color( 1, 1, 1, 0.321569 )
 position = Vector2( 3.8147e-06, 0.210224 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="Hitbox" type="Area2D" parent="Spike"]
 visible = false
@@ -135,7 +133,7 @@ damage = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Spike/Hitbox"]
 position = Vector2( -0.149658, -7.15392 )
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="SoftCollision" parent="Spike" instance=ExtResource( 7 )]
 visible = false
@@ -145,15 +143,15 @@ collision_mask = 32
 [node name="CollisionShape2D" parent="Spike/SoftCollision" index="0"]
 visible = false
 position = Vector2( -0.280624, 0.280609 )
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [node name="WanderControl" parent="Spike" instance=ExtResource( 9 )]
 position = Vector2( 0.198425, 0 )
 
 [node name="HurtAnimation" type="AnimationPlayer" parent="Spike"]
 playback_process_mode = 0
-anims/Start = SubResource( 9 )
-anims/Stop = SubResource( 10 )
+anims/Start = SubResource( 10 )
+anims/Stop = SubResource( 11 )
 
 [connection signal="area_entered" from="Spike/Hurtbox" to="Spike" method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Spike/Hurtbox" to="Spike" method="_on_Hurtbox_invincibility_ended"]

@@ -25,7 +25,7 @@ shader_param/active = false
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 3.90527
-height = 9.53515
+height = 3.79749
 
 [sub_resource type="Animation" id=3]
 resource_name = "Attack_down"
@@ -703,7 +703,7 @@ height = 8.5077
 
 [sub_resource type="CapsuleShape2D" id=43]
 radius = 3.89687
-height = 9.54961
+height = 3.81429
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -721,7 +721,7 @@ hframes = 60
 frame = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.5, -4 )
+position = Vector2( 0.529495, -0.342488 )
 rotation = -6.28319
 shape = SubResource( 2 )
 
@@ -777,7 +777,7 @@ collision_mask = 0
 script = ExtResource( 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2( 0.485009, -4 )
+position = Vector2( 0.544001, -0.371984 )
 shape = SubResource( 43 )
 
 [node name="Timer" type="Timer" parent="Hurtbox"]
