@@ -14,6 +14,7 @@ func _on_Button_pressed():
 
 
 func _on_Button3_pressed():
-	get_tree().quit()
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://UI/TitleScreen/TitleScreen.tscn")
 
 #TODO Save system

@@ -91,79 +91,73 @@ tracks/0/keys = {
 "values": [ false ]
 }
 
-[node name="Bee" type="Node2D"]
-
-[node name="Bee" type="KinematicBody2D" parent="."]
+[node name="Bee" type="KinematicBody2D"]
 collision_layer = 16
 script = ExtResource( 3 )
 
-[node name="BeeShadow" type="Sprite" parent="Bee"]
+[node name="BeeShadow" type="Sprite" parent="."]
 texture = ExtResource( 4 )
 
-[node name="Bee" type="AnimatedSprite" parent="Bee"]
+[node name="Bee" type="AnimatedSprite" parent="."]
 material = SubResource( 1 )
 frames = SubResource( 7 )
 animation = "Fly"
-frame = 4
 playing = true
 offset = Vector2( 0, -12 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bee"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( -0.140305, 0.14031 )
 shape = SubResource( 8 )
 
-[node name="Hurtbox" parent="Bee" instance=ExtResource( 2 )]
-visible = false
+[node name="Hurtbox" parent="." instance=ExtResource( 2 )]
 collision_layer = 8
 
-[node name="CollisionShape2D" parent="Bee/Hurtbox" index="0"]
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2( 0, -15.714 )
 shape = SubResource( 9 )
 
-[node name="Stats" parent="Bee" instance=ExtResource( 6 )]
+[node name="Stats" parent="." instance=ExtResource( 6 )]
 MaxHealth = 4
 
-[node name="PlayerDetectionZone" parent="Bee" instance=ExtResource( 8 )]
-visible = false
+[node name="PlayerDetectionZone" parent="." instance=ExtResource( 8 )]
 
-[node name="CollisionShape2D" parent="Bee/PlayerDetectionZone" index="0"]
-visible = false
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
 self_modulate = Color( 1, 1, 1, 0.321569 )
 shape = SubResource( 10 )
 
-[node name="Hitbox" type="Area2D" parent="Bee"]
+[node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource( 1 )
 damage = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bee/Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2( -0.149658, -7.15392 )
 shape = SubResource( 11 )
 
-[node name="SoftCollision" parent="Bee" instance=ExtResource( 7 )]
+[node name="SoftCollision" parent="." instance=ExtResource( 7 )]
 visible = false
 collision_layer = 32
 collision_mask = 32
 
-[node name="CollisionShape2D" parent="Bee/SoftCollision" index="0"]
+[node name="CollisionShape2D" parent="SoftCollision" index="0"]
 visible = false
 position = Vector2( -0.280624, 0.280609 )
 shape = SubResource( 12 )
 
-[node name="WanderControl" parent="Bee" instance=ExtResource( 9 )]
+[node name="WanderControl" parent="." instance=ExtResource( 9 )]
 
-[node name="HurtAnimation" type="AnimationPlayer" parent="Bee"]
+[node name="HurtAnimation" type="AnimationPlayer" parent="."]
 playback_process_mode = 0
 anims/Start = SubResource( 13 )
 anims/Stop = SubResource( 14 )
 
-[connection signal="area_entered" from="Bee/Hurtbox" to="Bee" method="_on_Hurtbox_area_entered"]
-[connection signal="invincibility_ended" from="Bee/Hurtbox" to="Bee" method="_on_Hurtbox_invincibility_ended"]
-[connection signal="invincibility_started" from="Bee/Hurtbox" to="Bee" method="_on_Hurtbox_invincibility_started"]
-[connection signal="no_health" from="Bee/Stats" to="Bee" method="_on_Stats_no_health"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
+[connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
+[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 
-[editable path="Bee/Hurtbox"]
-[editable path="Bee/PlayerDetectionZone"]
-[editable path="Bee/SoftCollision"]
+[editable path="Hurtbox"]
+[editable path="PlayerDetectionZone"]
+[editable path="SoftCollision"]

@@ -1,12 +1,12 @@
 extends Node2D
-var HeartSounds = preload("res://Player/Sounds/HeartSound.tscn").instance()
+const HeartSounds = preload("res://Player/Sounds/HeartSound.tscn")
 func _on_Heart_body_entered(_body):
-	get_tree().current_scene.add_child(HeartSounds)
+	get_tree().current_scene.add_child(HeartSounds.instance())
 	queue_free()
 	
-func _on_Heart_area_entered(_body):
-	get_tree().current_scene.add_child(HeartSounds)
-	queue_free()
+#func _on_Heart_area_entered(_body):
+#	get_tree().current_scene.add_child(HeartSounds.instance())
+#	queue_free()
 
 
 func _ready() -> void:

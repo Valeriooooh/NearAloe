@@ -82,6 +82,7 @@ func fireball_state():
 func attack_state():
 	velocity = Vector2.ZERO
 	animationState.travel("attack")
+	
 
 
 func back_to_run():

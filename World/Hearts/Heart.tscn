@@ -23,7 +23,7 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Heart"]
-position = Vector2( 0.396396, 1.51444 )
+position = Vector2( 0.957627, 2.39136 )
 texture = ExtResource( 2 )
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -33,8 +33,7 @@ script = ExtResource( 3 )
 damage = -1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2( -0.0741958, 0.0371618 )
+position = Vector2( -0.0680675, 0.00208566 )
 shape = SubResource( 2 )
 
-[connection signal="area_entered" from="Heart" to="." method="_on_Heart_area_entered"]
 [connection signal="body_entered" from="Heart" to="." method="_on_Heart_body_entered"]

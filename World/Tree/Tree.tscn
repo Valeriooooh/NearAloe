@@ -4,7 +4,7 @@
 [ext_resource path="res://Shadows/LargeShadow.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10, 12.3959 )
+extents = Vector2( 13.3648, 12.3959 )
 
 [node name="Tree" type="StaticBody2D"]
 
@@ -19,6 +19,6 @@ position = Vector2( 0.35355, -15.9099 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.353546, -2.56155 )
+position = Vector2( 0.353546, -5.14108 )
 rotation = 1.5708
 shape = SubResource( 1 )

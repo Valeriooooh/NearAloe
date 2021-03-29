@@ -1,7 +1,9 @@
 extends KinematicBody2D
 
 const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
-
+const childBee = preload("res://Enemies/Bee/FighterBee.tscn")
+const heart = preload("res://World/Hearts/Heart.tscn")
+const GoldenHeart = preload("res://World/Hearts/GoldenHeart.tscn")
 enum {
 	IDLE,
 	WANDER,
@@ -24,6 +26,9 @@ onready var softCollision = $SoftCollision
 onready var wanderController = $WanderControl
 onready var animationPlayer = $HurtAnimation
 var nameCheck = "enemy"
+var percent75 = false
+var percent50 = false
+var percent25 = false
 
 func _ready() -> void:
 	print(stats.MaxHealth)
@@ -36,7 +41,8 @@ func _physics_process(delta: float) -> void:
 	knockback = move_and_slide(knockback)
 	sprite.flip_h = velocity.x < 0
 	bar.value = stats.health
-
+	
+	
 	match state:
 		IDLE:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
@@ -74,12 +80,20 @@ func _on_Hurtbox_area_entered(area):
 	stats.health -= area.damage
 	hurtBox.create_hit_effect()
 	hurtBox.start_invincibility(0.4)
-
+	
+	if stats.health <= stats.MaxHealth*0.25 && !percent25:
+		damage25()
+	elif stats.health <= stats.MaxHealth*0.50 && !percent50:
+		damage50()		
+	elif stats.health <= stats.MaxHealth*0.75 && !percent75:
+		damage75()		
 func _on_Stats_no_health():
 	queue_free()
-	var enemyDeathEffect = EnemyDeathEffect.instance()
-	get_parent().add_child(enemyDeathEffect)
-	enemyDeathEffect.global_position = global_position - Vector2(0, 8)
+	get_parent().add_child(EnemyDeathEffect.instance())
+	EnemyDeathEffect.instance().global_position = global_position - Vector2(0, 8)
+	get_parent().add_child(GoldenHeart.instance())
+	GoldenHeart.instance().global_position = global_position
+	
 
 func state_timer():
 	if wanderController.get_time_left() == 0:
@@ -92,3 +106,25 @@ func _on_Hurtbox_invincibility_ended() -> void:
 
 func _on_Hurtbox_invincibility_started() -> void:
 	animationPlayer.play("Start")
+
+func damage75():
+		var Child = childBee.instance()
+		get_parent().add_child(Child)
+		Child.global_position = global_position - Vector2(0,5)
+		percent75=true
+func damage50():
+	for _i in range(0,2):
+		var Child = childBee.instance()
+		get_parent().add_child(Child)
+		Child.global_position = global_position - Vector2(0,5)
+	for _i in range(0,1):
+		var Heart = heart.instance()
+		get_parent().add_child(Heart)
+		Heart.global_position = global_position - Vector2(0,5)
+	percent50=true
+func damage25():
+	for _i in range(0,4):
+		var Child = childBee.instance()
+		get_parent().add_child(Child)
+		Child.global_position = global_position - Vector2(0,5)
+	percent25=true

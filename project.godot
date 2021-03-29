@@ -39,6 +39,66 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/dialogic/Other/DialogicUtil.gd"
 }, {
+"base": "Area2D",
+"class": "Dialogue2D",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/DialogueDialogue2D.gd"
+}, {
+"base": "Area",
+"class": "Dialogue3D",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/DialogueDialogue3D.gd"
+}, {
+"base": "Resource",
+"class": "DialogueActor",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/model/DialogueActor.gd"
+}, {
+"base": "Resource",
+"class": "DialogueData",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/model/DialogueData.gd"
+}, {
+"base": "Resource",
+"class": "DialogueDialogue",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/model/DialogueDialogue.gd"
+}, {
+"base": "EditorProperty",
+"class": "DialogueDialogueInspectorEditor",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/inspectors/DialogueMangerDialoguesInspectorPluginEditor.gd"
+}, {
+"base": "Resource",
+"class": "DialogueEmpty",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/model/DialogueEmpty.gd"
+}, {
+"base": "Reference",
+"class": "DialogueMangerDialogues",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/DialogueMangerDialogues.gd"
+}, {
+"base": "Reference",
+"class": "DialogueMangerEvents",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/DialogueMangerEvents.gd"
+}, {
+"base": "Resource",
+"class": "DialogueNode",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/model/DialogueNode.gd"
+}, {
+"base": "PanelContainer",
+"class": "DialoguePanelSentence",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/scenes/dialogues/nodes_view/nodes/node_sentence/PanelSentence.gd"
+}, {
+"base": "Resource",
+"class": "DialogueSentence",
+"language": "GDScript",
+"path": "res://addons/dialogue_editor/model/DialogueSentence.gd"
+}, {
 "base": "BaseComponent",
 "class": "DropDownList",
 "language": "GDScript",
@@ -56,6 +116,18 @@ _global_script_class_icons={
 "BoolSetting": "",
 "Dialogic": "",
 "DialogicUtil": "",
+"Dialogue2D": "",
+"Dialogue3D": "",
+"DialogueActor": "res://addons/dialogue_editor/icons/Actor.png",
+"DialogueData": "",
+"DialogueDialogue": "res://addons/dialogue_editor/icons/Dialogue.png",
+"DialogueDialogueInspectorEditor": "",
+"DialogueEmpty": "",
+"DialogueMangerDialogues": "",
+"DialogueMangerEvents": "",
+"DialogueNode": "res://addons/dialogue_editor/icons/Node.png",
+"DialoguePanelSentence": "",
+"DialogueSentence": "res://addons/dialogue_editor/icons/Sentence.png",
 "DropDownList": "",
 "SliderSetting": ""
 }
@@ -130,8 +202,8 @@ texture={
 "stream": false,
 "svg/scale": 1.0
 }
-vsync/use_vsync=false
-dpi/allow_hidpi=false
+vsync/use_vsync=true
+dpi/allow_hidpi=true
 enable_audio_input=false
 name="Rpg2d"
 
@@ -209,8 +281,6 @@ pause={
 
 common/physics_fps=120
 common/physics_jitter_fix=1.0
-2d/physics_engine="GodotPhysics"
-2d/thread_model=2
 
 [rendering]
 
@@ -218,7 +288,6 @@ quality/driver/fallback_to_gles2=true
 quality/intended_usage/framebuffer_allocation=0
 quality/intended_usage/framebuffer_allocation.mobile=0
 2d/snapping/use_gpu_pixel_snap=true
-threads/thread_model=2
 quality/filters/use_nearest_mipmap_filter=true
 gles2/compatibility/disable_half_float=true
 gles2/compatibility/enable_high_float.Android=true
