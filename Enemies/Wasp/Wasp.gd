@@ -1,9 +1,13 @@
 extends KinematicBody2D
 
-const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
-const childBee = preload("res://Enemies/Bee/FighterBee.tscn")
-const heart = preload("res://World/Hearts/Heart.tscn")
-const GoldenHeart = preload("res://World/Hearts/GoldenHeart.tscn")
+#const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
+#const childBee = preload("res://Enemies/Bee/FighterBee.tscn")
+#const heart = preload("res://World/Hearts/Heart.tscn")
+#const GoldenHeart = preload("res://World/Hearts/GoldenHeart.tscn")
+export var EnemyDeathEffect:PackedScene
+export var childBee:PackedScene
+export var heart:PackedScene
+export var GoldenHeart:PackedScene
 enum {
 	IDLE,
 	WANDER,

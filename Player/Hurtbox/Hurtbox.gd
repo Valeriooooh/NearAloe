@@ -1,6 +1,7 @@
 extends Area2D
 
-const HitEffect = preload("res://Effects/EnemyHitEffect.tscn")
+#const HitEffect = preload("res://Effects/EnemyHitEffect.tscn")
+export var HitEffect:PackedScene 
 var invincible = false setget set_invincible
 onready var timer = $Timer
 onready var collisionShape = $CollisionShape2D
@@ -8,7 +9,8 @@ onready var collisionShape = $CollisionShape2D
 func create_hit_effect():
 	var effect = HitEffect.instance()
 	var main = get_tree().current_scene
-	main.add_child(effect)
+#	main.add_child(effect)
+	main.call_deferred("add_child",effect)
 	effect.global_position = global_position
 
 

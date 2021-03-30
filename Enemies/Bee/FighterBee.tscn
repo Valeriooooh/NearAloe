@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Player/Hitbox/HitboxEnemy.gd" type="Script" id=1]
 [ext_resource path="res://Player/Hurtbox/Hurtbox.tscn" type="PackedScene" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Enemies/WanderControl.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Effects/whiteShader.shader" type="Shader" id=10]
+[ext_resource path="res://Effects/EnemyDeathEffect.tscn" type="PackedScene" id=11]
+[ext_resource path="res://World/Hearts/Heart.tscn" type="PackedScene" id=12]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -94,6 +96,8 @@ tracks/0/keys = {
 [node name="Bee" type="KinematicBody2D"]
 collision_layer = 16
 script = ExtResource( 3 )
+EnemyDeathEffect = ExtResource( 11 )
+heart = ExtResource( 12 )
 
 [node name="BeeShadow" type="Sprite" parent="."]
 texture = ExtResource( 4 )

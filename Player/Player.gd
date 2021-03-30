@@ -2,11 +2,11 @@ extends KinematicBody2D
 
 
 const ACCELERATION = 500
-const MAX_SPEED = 80
+const MAX_SPEED = 70
 const ROLL_SPEED = MAX_SPEED * 1.5
 const FRICTION = 500
-const playerHurtSound = preload("res://Player/Sounds/PlayerHurtSound.tscn")
-
+#const playerHurtSound = preload("res://Player/Sounds/PlayerHurtSound.tscn")
+export var playerHurtSound:PackedScene
 enum {
 	MOVE,
 	ROLL,
@@ -36,15 +36,12 @@ func _ready():
 func _physics_process(delta):
 	match state:
 		MOVE:
-			move_state(delta)
+			call_deferred("move_state",delta)
 		ROLL:
-			roll_state()
+			call_deferred("roll_state")
 		ATTACK:
-			attack_state()
-		FIREBALL:
-			pass
+			call_deferred("attack_state")
 			
-
 func move_state(delta):
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -53,10 +50,10 @@ func move_state(delta):
 	if input_vector != Vector2.ZERO:
 		roll_vector = input_vector
 		swordHitbox.knockback_vector = input_vector
-		animationTree.set("parameters/idle/blend_position", input_vector)
-		animationTree.set("parameters/run/blend_position", input_vector)
-		animationTree.set("parameters/attack/blend_position", input_vector)
-		animationTree.set("parameters/roll/blend_position", input_vector)
+		animationTree.set_deferred("parameters/idle/blend_position", input_vector)
+		animationTree.set_deferred("parameters/run/blend_position", input_vector)
+		animationTree.set_deferred("parameters/attack/blend_position", input_vector)
+		animationTree.set_deferred("parameters/roll/blend_position", input_vector)
 		animationState.travel("run")
 		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 	else:
@@ -64,6 +61,7 @@ func move_state(delta):
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	move()
 	if Input.is_action_just_pressed("Attack"):
+		velocity = Vector2.ZERO
 		state = ATTACK
 	if Input.is_action_just_pressed("Roll"):
 		state = ROLL
@@ -71,22 +69,20 @@ func move_state(delta):
 
 func roll_state():
 	velocity = roll_vector * ROLL_SPEED
-	animationState.travel("roll")
-	move()
+	animationState.call_deferred("travel","roll")
+	call_deferred("move")
 		
-
-func fireball_state():
-	velocity = Vector2.ZERO
 
 
 func attack_state():
 	velocity = Vector2.ZERO
-	animationState.travel("attack")
+	animationState.call_deferred("travel","attack")
+#	animationState.travel("attack")
 	
 
 
 func back_to_run():
-	state = MOVE
+	set_deferred("state", MOVE)
 
 
 func move():
@@ -95,7 +91,9 @@ func move():
 func die():
 	print("dead")
 	# warning-ignore:return_value_discarded
-	get_tree().change_scene("res://Levels/World.tscn")
+#	get_tree().change_scene("res://Levels/World.tscn")
+#	set_deferred("stats:health","stats:MaxHealth")
+	get_tree().call_deferred("change_scene","res://Levels/World.tscn")
 	stats.health = stats.MaxHealth
 
 
@@ -106,7 +104,7 @@ func _on_Hurtbox_area_entered(area):
 		hurtBox.create_hit_effect()
 		var PlayerHurtSounds = playerHurtSound.instance()
 		get_tree().current_scene.add_child(PlayerHurtSounds)
-	elif area.nameCheck == "golden":	
+	elif area.nameCheck == "golden":
 		stats.MaxHealth += 1
 		stats.health = stats.MaxHealth
 		hurtBox.start_invincibility(0.5)
@@ -117,7 +115,6 @@ func _on_Hurtbox_area_entered(area):
 	else:
 		pass
 		
-
 
 func _on_Hurtbox_invincibility_ended() -> void:
 	hurtAnimation.play("Stop")

@@ -169,6 +169,7 @@ window/size/test_height=720
 window/dpi/allow_hidpi=true
 window/vsync/vsync_via_compositor=true
 window/per_pixel_transparency/allowed=true
+window/per_pixel_transparency/enabled=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
@@ -281,13 +282,18 @@ pause={
 
 common/physics_fps=120
 common/physics_jitter_fix=1.0
+2d/physics_engine="GodotPhysics"
+2d/thread_model=2
 
 [rendering]
 
 quality/driver/fallback_to_gles2=true
+2d/options/use_nvidia_rect_flicker_workaround=true
 quality/intended_usage/framebuffer_allocation=0
 quality/intended_usage/framebuffer_allocation.mobile=0
 2d/snapping/use_gpu_pixel_snap=true
+threads/thread_model=2
+vram_compression/import_bptc=true
 quality/filters/use_nearest_mipmap_filter=true
 gles2/compatibility/disable_half_float=true
 gles2/compatibility/enable_high_float.Android=true

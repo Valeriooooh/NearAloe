@@ -471,7 +471,7 @@ tile_data = PoolIntArray( -458758, 2, 0, -458757, 2, 1, -458756, 2, 1, -458755, 
 [node name="Ground" type="YSort" parent="."]
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( -2.17159, -27.6839 )
+position = Vector2( 1.9409, -0.464569 )
 
 [node name="Wasp" parent="." instance=ExtResource( 5 )]
 position = Vector2( -17.706, -115.203 )
@@ -500,9 +500,11 @@ position = Vector2( -153.871, 584.057 )
 
 [node name="Bee10" parent="." instance=ExtResource( 6 )]
 position = Vector2( -80.8504, 569.77 )
+dropHeart = true
 
 [node name="Bee11" parent="." instance=ExtResource( 6 )]
-position = Vector2( -105.455, 599.137 )
+position = Vector2( -105.455, 597.639 )
+dropHeart = true
 
 [node name="Bee12" parent="." instance=ExtResource( 6 )]
 position = Vector2( -121.329, 580.882 )

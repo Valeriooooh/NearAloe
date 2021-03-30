@@ -1,7 +1,8 @@
 extends KinematicBody2D
 
-const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
-const heart = preload("res://World/Hearts/Heart.tscn")
+export var EnemyDeathEffect:PackedScene
+#const heart = preload("res://World/Hearts/Heart.tscn")
+
 enum {
 	IDLE,
 	WANDER,
@@ -11,6 +12,7 @@ enum {
 export var ACCELERATION = 300
 export var MAX_SPEED = 50
 export(bool) var dropHeart = false
+export var heart:PackedScene
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 export var FRICTION = 200
@@ -74,7 +76,7 @@ func _on_Stats_no_health():
 	enemyDeathEffect.global_position = global_position - Vector2(0, 8)
 	if dropHeart:
 		var Heart = heart.instance()
-		get_parent().add_child(Heart)
+		get_parent().call_deferred("add_child",Heart)
 		Heart.global_position = global_position - Vector2(0,5)
 	
 
@@ -84,8 +86,8 @@ func state_timer():
 		wanderController.start_wander_timer(rand_range(1,3))
 
 func _on_Hurtbox_invincibility_ended() -> void:
-	animationPlayer.play("Stop")
+	animationPlayer.call_deferred("play","Stop")
 
 
 func _on_Hurtbox_invincibility_started() -> void:
-	animationPlayer.play("Start")
+	animationPlayer.call_deferred("play","Start")
