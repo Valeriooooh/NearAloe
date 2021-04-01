@@ -2,8 +2,11 @@ extends Node
 
 export(int) var MaxHealth = 2 setget set_max_health
 var health = MaxHealth setget set_health
-var levelhealth
-var currentLevel = "World" setget set_level
+var InBossLevel = false
+var BossBeeDefeated = false  
+var BossBugDefeated = false
+
+var AloeLeaves = 0
 
 signal no_health
 signal health_changed(value)
@@ -20,9 +23,6 @@ func set_health(value):
 	emit_signal("health_changed", value)
 	if health <= 0:
 		emit_signal("no_health")
-
-func set_level(level):
-	currentLevel = level
 
 func _ready() -> void:
 	self.health = MaxHealth

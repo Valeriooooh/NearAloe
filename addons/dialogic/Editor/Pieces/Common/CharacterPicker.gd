@@ -15,7 +15,7 @@ func _on_Dropdown_about_to_show():
 	popup.set_item_metadata(0, {'file': '', 'color': Color('#ffffff')})
 	
 	var index = 1
-	for c in DialogicUtil.get_character_list():
+	for c in DialogicUtil.get_sorted_character_list():
 		popup.add_item(c['name'])
 		popup.set_item_metadata(index, {'file': c['file'],'color': c['color']})
 		index += 1
@@ -37,7 +37,7 @@ func _on_character_selected(index: int):
 
 func set_data_by_file(file_name):
 	# This method is used when you don't know the character's color
-	var character = DialogicUtil.load_json(DialogicUtil.get_path('CHAR_DIR', file_name))
+	var character = DialogicResources.get_character_json(file_name)
 	set_data(character['name'], Color(character['color']))
 
 

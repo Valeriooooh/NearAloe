@@ -28,40 +28,50 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Pause/BlackOvelay"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-alignment = 1
+[node name="Button" type="Button" parent="CanvasLayer/Pause"]
+margin_left = 120.0
+margin_top = 32.0
+margin_right = 196.0
+margin_bottom = 64.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Continue"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="CanvasLayer/Pause/BlackOvelay/VBoxContainer"]
-margin_left = 122.0
-margin_top = 38.0
-margin_right = 198.0
-margin_bottom = 70.0
-size_flags_horizontal = 4
-size_flags_vertical = 0
-text = "Continue"
-
-[node name="Button2" type="Button" parent="CanvasLayer/Pause/BlackOvelay/VBoxContainer"]
-margin_left = 138.0
-margin_top = 74.0
-margin_right = 182.0
-margin_bottom = 106.0
-size_flags_horizontal = 4
-size_flags_vertical = 0
+[node name="Button2" type="Button" parent="CanvasLayer/Pause"]
+margin_left = 120.0
+margin_top = 72.0
+margin_right = 196.0
+margin_bottom = 104.0
 text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Button3" type="Button" parent="CanvasLayer/Pause/BlackOvelay/VBoxContainer"]
-margin_left = 138.0
-margin_top = 110.0
-margin_right = 182.0
-margin_bottom = 142.0
+[node name="Button3" type="Button" parent="CanvasLayer/Pause"]
+margin_left = 120.0
+margin_top = 112.0
+margin_right = 196.0
+margin_bottom = 144.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[connection signal="pressed" from="CanvasLayer/Pause/BlackOvelay/VBoxContainer/Button" to="CanvasLayer/Pause" method="_on_Button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Pause/BlackOvelay/VBoxContainer/Button3" to="CanvasLayer/Pause" method="_on_Button3_pressed"]
+[node name="Label" type="Label" parent="CanvasLayer/Pause"]
+margin_left = 104.0
+margin_right = 208.0
+margin_bottom = 32.0
+text = "Game Paused"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="CanvasLayer/Pause/Button" to="CanvasLayer/Pause" method="_on_Button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/Button2" to="CanvasLayer/Pause" method="_on_Button2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/Button3" to="CanvasLayer/Pause" method="_on_Button3_pressed"]

@@ -9,30 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "BaseComponent",
-"class": "ArrowList",
-"language": "GDScript",
-"path": "res://src/base_components/arrow_list/arrow_list.gd"
-}, {
-"base": "HBoxContainer",
-"class": "BaseComponent",
-"language": "GDScript",
-"path": "res://src/base_components/base_component.gd"
-}, {
-"base": "Node",
-"class": "BaseSetting",
-"language": "GDScript",
-"path": "res://src/manager/base_setting.gd"
-}, {
-"base": "BaseComponent",
-"class": "BoolSetting",
-"language": "GDScript",
-"path": "res://src/base_components/bool_setting/bool_setting.gd"
-}, {
 "base": "Node",
 "class": "Dialogic",
 "language": "GDScript",
-"path": "res://addons/dialogic/Other/dialogic_class.gd"
+"path": "res://addons/dialogic/Other/DialogicClass.gd"
+}, {
+"base": "Control",
+"class": "DialogicBackgroundMusic",
+"language": "GDScript",
+"path": "res://addons/dialogic/Nodes/BackgroundMusic.gd"
+}, {
+"base": "Node",
+"class": "DialogicDefinitionsUtil",
+"language": "GDScript",
+"path": "res://addons/dialogic/Other/DialogicDefinitionsUtil.gd"
+}, {
+"base": "Reference",
+"class": "DialogicResources",
+"language": "GDScript",
+"path": "res://addons/dialogic/Other/DialogicResources.gd"
 }, {
 "base": "Reference",
 "class": "DialogicUtil",
@@ -98,23 +93,12 @@ _global_script_classes=[ {
 "class": "DialogueSentence",
 "language": "GDScript",
 "path": "res://addons/dialogue_editor/model/DialogueSentence.gd"
-}, {
-"base": "BaseComponent",
-"class": "DropDownList",
-"language": "GDScript",
-"path": "res://src/base_components/dropdown_list/dropdown_list.gd"
-}, {
-"base": "BaseComponent",
-"class": "SliderSetting",
-"language": "GDScript",
-"path": "res://src/base_components/slider_setting/slider_setting.gd"
 } ]
 _global_script_class_icons={
-"ArrowList": "",
-"BaseComponent": "",
-"BaseSetting": "",
-"BoolSetting": "",
 "Dialogic": "",
+"DialogicBackgroundMusic": "",
+"DialogicDefinitionsUtil": "",
+"DialogicResources": "",
 "DialogicUtil": "",
 "Dialogue2D": "",
 "Dialogue3D": "",
@@ -127,9 +111,7 @@ _global_script_class_icons={
 "DialogueMangerEvents": "",
 "DialogueNode": "res://addons/dialogue_editor/icons/Node.png",
 "DialoguePanelSentence": "",
-"DialogueSentence": "res://addons/dialogue_editor/icons/Sentence.png",
-"DropDownList": "",
-"SliderSetting": ""
+"DialogueSentence": "res://addons/dialogue_editor/icons/Sentence.png"
 }
 
 [application]
@@ -153,6 +135,8 @@ enable_audio_input=true
 [autoload]
 
 PlayerStats="*res://Player/Stats/PlayerStats.tscn"
+SaveState="*res://SaveState.gd"
+DialogicSingleton="*res://addons/dialogic/Other/DialogicSingleton.gd"
 
 [debug]
 

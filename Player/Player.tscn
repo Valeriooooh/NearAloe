@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://Player/PlayeFinal.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Player/Animation/Run_up.tres" type="Animation" id=5]
 [ext_resource path="res://Player/Animation/Run_left.tres" type="Animation" id=6]
 [ext_resource path="res://Player/Animation/PlayerIdle_down.tres" type="Animation" id=7]
+[ext_resource path="res://UI/DeathScreen/DeathScreen.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Player/Hitbox/Hitbox.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Player/SwordHitbox.gd" type="Script" id=11]
 [ext_resource path="res://Player/Hurtbox/Hurtbox.gd" type="Script" id=12]
@@ -29,7 +30,7 @@ height = 3.79749
 
 [sub_resource type="Animation" id=3]
 resource_name = "Attack_down"
-length = 0.5
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -49,7 +50,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.5 ),
+"times": PoolRealArray( 0.387921 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -97,7 +98,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "Attack_left"
-length = 0.5
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -117,7 +118,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.479844 ),
+"times": PoolRealArray( 0.38992 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -165,7 +166,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=5]
 resource_name = "Attack_right"
-length = 0.5
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -185,7 +186,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.480851 ),
+"times": PoolRealArray( 0.38914 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -233,7 +234,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=6]
 resource_name = "Attack_up"
-length = 0.5
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -253,7 +254,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.483692 ),
+"times": PoolRealArray( 0.386383 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -801,9 +802,12 @@ height = 8.5077
 radius = 3.89687
 height = 3.81429
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"Saved",
+]]
 collision_layer = 2
 script = ExtResource( 2 )
+DeathScreen = ExtResource( 8 )
 playerHurtSound = ExtResource( 19 )
 
 [node name="Shadow" type="Sprite" parent="."]
@@ -812,8 +816,7 @@ texture = ExtResource( 13 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 1 )
-position = Vector2( 0.823223, -5.41569 )
-scale = Vector2( 1, 0.997413 )
+position = Vector2( 0.823223, -5.47446 )
 texture = ExtResource( 1 )
 hframes = 60
 frame = 18
@@ -857,7 +860,7 @@ parameters/run/blend_position = Vector2( 0, 1 )
 
 [node name="SwordPivot" type="Position2D" parent="."]
 position = Vector2( 0, -4 )
-rotation = 1.5708
+rotation = 4.71239
 
 [node name="SwordHitbox" parent="SwordPivot" instance=ExtResource( 10 )]
 position = Vector2( 17.5797, -0.589916 )
@@ -879,6 +882,7 @@ HitEffect = ExtResource( 20 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( 0.544001, -0.371984 )
 shape = SubResource( 45 )
+disabled = true
 
 [node name="Timer" type="Timer" parent="Hurtbox"]
 process_mode = 0

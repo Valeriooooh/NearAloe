@@ -2,25 +2,34 @@ tool
 extends Control
 
 var last_mouse_mode = null
-var debug_mode = true
 var input_next: String = 'ui_accept'
 var dialog_index: int = 0
 var finished: bool = false
 var text_speed = 0.02 # Higher = lower speed
 var waiting_for_answer: bool = false
 var waiting_for_input: bool = false
-var glossary_visible: bool = false
+var waiting = false
+var preview = false
+var definitions = {}
+var definition_visible = false
+
 var settings
-var glossary
+var current_theme
+var current_timeline := ''
 
-#export(String) var timeline: String # Timeline-var-replace
-
+## The timeline to load when starting the scene
 export(String, "TimelineDropdown") var timeline: String
+## Should we clear saved data (definitions and timeline progress) on start?
+export(bool) var reset_saves = true
+## Should we show debug information when running?
+export(bool) var debug_mode = true
+
+signal event_start(type, event)
+signal event_end(type)
 signal dialogic_signal(value)
 
 var dialog_resource
 var characters
-
 
 onready var ChoiceButton = load("res://addons/dialogic/Nodes/ChoiceButton.tscn")
 onready var Portrait = load("res://addons/dialogic/Nodes/Portrait.tscn")
@@ -28,72 +37,142 @@ var dialog_script = {}
 var questions #for keeping track of the questions answered
 
 func _ready():
-	# Loading the theme first to have the `settings` ready.
-	load_theme()
-	
-	# Loading the glossary
-	glossary = DialogicUtil.load_glossary()
+	# Loading the config files
+	load_config_files()
 	
 	# Checking if the dialog should read the code from a external file
-	if timeline != '':
-		dialog_script = set_current_dialog('/' + timeline + '.json')
+	if not timeline.empty():
+		dialog_script = set_current_dialog(timeline)
+	elif dialog_script.keys().size() == 0:
+		dialog_script = {
+			"events":[{"character":"","portrait":"",
+			"text":"[Dialogic Error] No timeline specified."}]
+		}
 	
 	# Connecting resize signal
 	get_viewport().connect("size_changed", self, "resize_main")
 	resize_main()
-	
+
 	# Setting everything up for the node to be default
 	$TextBubble/NameLabel.text = ''
 	$Background.visible = false
 	$TextBubble/RichTextLabel.meta_underlined = false
-	$GlossaryInfo.visible = false
-	
+	$DefinitionInfo.visible = false
+
 	# Getting the character information
 	characters = DialogicUtil.get_character_list()
-	
-	load_dialog()
+
+	if not Engine.is_editor_hint():
+		load_dialog()
+
+
+func load_config_files():
+	if not Engine.is_editor_hint():
+		if reset_saves:
+			DialogicSingleton.init(reset_saves)
+		definitions = DialogicSingleton.get_definitions()
+	else:
+		definitions = DialogicResources.get_default_definitions()
+	settings = DialogicResources.get_settings_config()
+	var theme_file = 'res://addons/dialogic/Editor/ThemeEditor/default-theme.cfg'
+	if settings.has_section('theme'):
+		theme_file = settings.get_value('theme', 'default')
+	current_theme = load_theme(theme_file)
 
 
 func resize_main():
+	# This function makes sure that the dialog is displayed at the correct
+	# size and position in the screen. 
 	if Engine.is_editor_hint() == false:
 		set_global_position(Vector2(0,0))
-		rect_size = get_viewport().size
+		if ProjectSettings.get_setting("display/window/stretch/mode") != '2d':
+			set_deferred('rect_size', get_viewport().size)
+		dprint("Viewport", get_viewport().size)
+	$TextBubble.rect_position.x = (rect_size.x / 2) - ($TextBubble.rect_size.x / 2)
+	$TextBubble.rect_position.y = (rect_size.y) - ($TextBubble.rect_size.y) - current_theme.get_value('box', 'bottom_gap', 40)
 
 
-func set_current_dialog(dialog_path):
-	var dialog_script = DialogicUtil.load_json(DialogicUtil.get_path('TIMELINE_DIR', dialog_path))
+func set_current_dialog(dialog_path: String):
+	current_timeline = dialog_path
+	var dialog_script = DialogicResources.get_timeline_json(dialog_path)
 	# All this parse events should be happening in the same loop ideally
 	# But until performance is not an issue I will probably stay lazy
 	# And keep adding different functions for each parsing operation.
+	if settings.has_section_key('dialog', 'auto_color_names'):
+		if settings.get_value('dialog', 'auto_color_names'):
+			dialog_script = parse_characters(dialog_script)
+	else:
+		dialog_script = parse_characters(dialog_script)
+	
 	dialog_script = parse_text_lines(dialog_script)
-	dialog_script = parse_glossary(dialog_script)
 	dialog_script = parse_branches(dialog_script)
+	return dialog_script
+
+
+func parse_characters(dialog_script):
+	var names = DialogicUtil.get_character_list()
+	# I should use regex here, but this is way easier :)
+	if names.size() > 0:
+		var index = 0
+		for t in dialog_script['events']:
+			if t.has('text'):
+				for n in names:
+					if n.has('name'):
+						dialog_script['events'][index]['text'] = t['text'].replace(n['name'],
+							'[color=#' + n['color'].to_html() + ']' + n['name'] + '[/color]'
+						)
+			index += 1
 	return dialog_script
 
 
 func parse_text_lines(unparsed_dialog_script: Dictionary) -> Dictionary:
 	var parsed_dialog: Dictionary = unparsed_dialog_script
 	var new_events: Array = []
-	
+	var alignment = 'Left'
+	var split_new_lines = true
+	var remove_empty_messages = true
+
 	# Return the same thing if it doesn't have events
 	if unparsed_dialog_script.has('events') == false:
 		return unparsed_dialog_script
-			
+
+	# Getting extra settings
+	if settings.has_section_key('dialog', 'remove_empty_messages'):
+		remove_empty_messages = settings.get_value('dialog', 'remove_empty_messages')
+	if settings.has_section_key('dialog', 'new_lines'):
+		split_new_lines = settings.get_value('dialog', 'new_lines')
+
+	if current_theme != null:
+		alignment = current_theme.get_value('text', 'alignment', 'Left')
+
+	dprint('preview ', preview)
 	# Parsing
 	for event in unparsed_dialog_script['events']:
 		if event.has('text') and event.has('character') and event.has('portrait'):
-			if '\n' in event['text']:
+			if event['text'] == '' and remove_empty_messages == true:
+				pass
+			elif '\n' in event['text'] and preview == false and split_new_lines == true:
 				var lines = event['text'].split('\n')
 				var i = 0
 				for line in lines:
+					var text = lines[i]
+					if alignment == 'Center':
+						text = '[center]' + lines[i] + '[/center]'
+					elif alignment == 'Right':
+						text = '[right]' + lines[i] + '[/right]'
 					var _e = {
-						'text': lines[i],
+						'text': text,
 						'character': event['character'],
 						'portrait': event['portrait']
 					}
 					new_events.append(_e)
 					i += 1
 			else:
+				var text = event['text']
+				if alignment == 'Center':
+					event['text'] = '[center]' + text + '[/center]'
+				elif alignment == 'Right':
+					event['text'] = '[right]' + text + '[/right]'
 				new_events.append(event)
 		else:
 			new_events.append(event)
@@ -104,7 +183,7 @@ func parse_text_lines(unparsed_dialog_script: Dictionary) -> Dictionary:
 
 
 func parse_branches(dialog_script: Dictionary) -> Dictionary:
-	questions = [] # Resetting the questions 
+	questions = [] # Resetting the questions
 
 	# Return the same thing if it doesn't have events
 	if dialog_script.has('events') == false:
@@ -121,7 +200,7 @@ func parse_branches(dialog_script: Dictionary) -> Dictionary:
 			question_id += 1
 			questions.append(event)
 			parser_queue.append(event)
-		
+
 		if event.has('condition'):
 			event['event_id'] = event_id
 			event['question_id'] = question_id
@@ -129,7 +208,7 @@ func parse_branches(dialog_script: Dictionary) -> Dictionary:
 			question_id += 1
 			questions.append(event)
 			parser_queue.append(event)
-		
+
 		if event.has('choice'):
 			var opened_branch = parser_queue.back()
 			dialog_script['events'][opened_branch['event_id']]['options'].append({
@@ -138,7 +217,7 @@ func parse_branches(dialog_script: Dictionary) -> Dictionary:
 				'event_id': event_id,
 				})
 			event['question_id'] = opened_branch['question_id']
-			
+
 		if event.has('endbranch'):
 			event['event_id'] = event_id
 			var opened_branch = parser_queue.pop_back()
@@ -149,45 +228,62 @@ func parse_branches(dialog_script: Dictionary) -> Dictionary:
 	return dialog_script
 
 
-func parse_glossary(dialog_script):
+func parse_definitions(text: String):
 	var words = []
-	for g in glossary:
-		words.append(glossary[g]['name'])
+	if Engine.is_editor_hint():
+		# Loading variables again to avoid issues in the preview dialog
+		load_config_files()
+
+	var final_text: String;
+	final_text = _insert_variable_definitions(text)
+	final_text = _insert_glossary_definitions(final_text)
+	return final_text
+
+
+func _insert_variable_definitions(text: String):
+	var final_text := text;
+	for d in definitions['variables']:
+		var name : String = d['name'];
+		final_text = final_text.replace('[' + name + ']', d['value'])
+	return final_text;
 	
+	
+func _insert_glossary_definitions(text: String):
+	var color = self.current_theme.get_value('definitions', 'color', '#ffbebebe')
+	var final_text := text;
 	# I should use regex here, but this is way easier :)
-	
-	if words.size() > 0:
-		var index = 0
-		for t in dialog_script['events']:
-			if t.has('text') and t.has('character') and t.has('portrait'):
-				for w in glossary:
-					if glossary[w]['type'] == DialogicUtil.GLOSSARY_EXTRA:
-						dialog_script['events'][index]['text'] = t['text'].replace(glossary[w]['name'],
-							'[url=' + glossary[w]['name'] + ']' +
-								'[color=' + settings['glossary_color'] + ']' + glossary[w]['name'] + '[/color]' +
-							'[/url]'
-						)
-			index += 1
-	return dialog_script
+	for d in definitions['glossary']:
+		final_text = final_text.replace(d['name'],
+			'[url=' + d['id'] + ']' +
+			'[color=' + color + ']' + d['name'] + '[/color]' +
+			'[/url]'
+		)
+	return final_text;
 
 
-func _process(_delta):
+func _process(delta):
 	$TextBubble/NextIndicator.visible = finished
-	if Engine.is_editor_hint() == false:
+	if not Engine.is_editor_hint():
 		# Multiple choices
 		if waiting_for_answer:
 			$Options.visible = finished
 		else:
 			$Options.visible = false
-		
-		if Input.is_action_just_pressed(input_next):
-			if $TextBubble/Tween.is_active():
-				# Skip to end if key is pressed during the text animation
-				$TextBubble/Tween.seek(999)
-				finished = true
-			else:
-				if waiting_for_answer == false and waiting_for_input == false:
-					load_dialog()
+
+
+func _input(event: InputEvent) -> void:
+	if not Engine.is_editor_hint() and event.is_action_pressed(input_next) and not waiting:
+		if $TextBubble/Tween.is_active():
+			# Skip to end if key is pressed during the text animation
+			$TextBubble/Tween.seek(999)
+			finished = true
+		else:
+			if waiting_for_answer == false and waiting_for_input == false:
+				load_dialog()
+		if settings.has_section_key('dialog', 'propagate_input'):
+			var propagate_input: bool = settings.get_value('dialog', 'propagate_input')
+			if not propagate_input:
+				get_tree().set_input_as_handled()
 
 
 func show_dialog():
@@ -204,36 +300,63 @@ func start_text_tween():
 	$TextBubble/Tween.start()
 
 
-func update_name(character, color='#FFFFFF'):
+func update_name(character, color: Color = Color.white) -> void:
 	if character.has('name'):
 		var parsed_name = character['name']
 		if character.has('display_name'):
 			if character['display_name'] != '':
 				parsed_name = character['display_name']
 		if character.has('color'):
-			color = '#' + character['color'].to_html()
-		$TextBubble/NameLabel.bbcode_text = '[color=' + color + ']' + parsed_name + '[/color]'
+			color = character['color']
+		parsed_name = parse_definitions(parsed_name)
+		$TextBubble/NameLabel.visible = true
+		# Hack to reset the size
+		$TextBubble/NameLabel.rect_min_size = Vector2(0, 0)
+		$TextBubble/NameLabel.rect_size = Vector2(-1, 40)
+		# Setting the color and text
+		$TextBubble/NameLabel.text = parsed_name
+		$TextBubble/NameLabel.set('custom_colors/font_color', color)
 	else:
-		$TextBubble/NameLabel.bbcode_text = ''
-	return true
+		$TextBubble/NameLabel.visible = false
 
 
 func update_text(text):
 	# Updating the text and starting the animation from 0
-	$TextBubble/RichTextLabel.bbcode_text = text
+	$TextBubble/RichTextLabel.bbcode_text = parse_definitions(text)
 	$TextBubble/RichTextLabel.percent_visible = 0
-	
-	# The call to this function needs to be deferred. 
+
+	# The call to this function needs to be deferred.
 	# More info: https://github.com/godotengine/godot/issues/36381
 	call_deferred("start_text_tween")
 	return true
 
 
+func on_timeline_start():
+	if not Engine.is_editor_hint():
+		DialogicSingleton.save_definitions()
+		DialogicSingleton.set_current_timeline(current_timeline)
+	emit_signal("event_start", "timeline", current_timeline)
+
+
+func on_timeline_end():
+	if not Engine.is_editor_hint():
+		DialogicSingleton.save_definitions()
+		DialogicSingleton.set_current_timeline('')
+	emit_signal("event_end", "timeline")
+
+
 func load_dialog(skip_add = false):
-	# Hiding glossary
-	glossary_visible = false
-	$GlossaryInfo.visible = glossary_visible
-	
+	# Emitting signals
+	if dialog_script.has('events'):
+		if dialog_index == 0:
+			on_timeline_start()
+		elif dialog_index == dialog_script['events'].size():
+			on_timeline_end()
+
+	# Hiding definitions popup
+	definition_visible = false
+	$DefinitionInfo.visible = definition_visible
+
 	# This will load the next entry in the dialog_script array.
 	if dialog_script.has('events'):
 		if dialog_index < dialog_script['events'].size():
@@ -246,7 +369,8 @@ func load_dialog(skip_add = false):
 
 
 func reset_dialog_extras():
-	$TextBubble/NameLabel.bbcode_text = ''
+	$TextBubble/NameLabel.text = ''
+	$TextBubble/NameLabel.visible = false
 
 
 func get_character(character_id):
@@ -257,11 +381,13 @@ func get_character(character_id):
 
 
 func event_handler(event: Dictionary):
-	# Handling an event and updating the available nodes accordingly. 
+	# Handling an event and updating the available nodes accordingly.
 	reset_dialog_extras()
+	
 	dprint('[D] Current Event: ', event)
 	match event:
 		{'text', 'character', 'portrait'}:
+			emit_signal("event_start", "text", event)
 			show_dialog()
 			finished = false
 			var character_data = get_character(event['character'])
@@ -269,6 +395,7 @@ func event_handler(event: Dictionary):
 			grab_portrait_focus(character_data, event)
 			update_text(event['text'])
 		{'question', 'question_id', 'options', ..}:
+			emit_signal("event_start", "question", event)
 			show_dialog()
 			finished = false
 			waiting_for_answer = true
@@ -279,15 +406,15 @@ func event_handler(event: Dictionary):
 				for o in event['options']:
 					add_choice_button(o)
 		{'choice', 'question_id'}:
+			emit_signal("event_start", "choice", event)
 			for q in questions:
 				if q['question_id'] == event['question_id']:
 					if q['answered']:
 						# If the option is for an answered question, skip to the end of it.
 						dialog_index = q['end_id']
 						load_dialog(true)
-			# It should never get here, but if it does, go to the next place.
-			#go_to_next_event()
 		{'input', ..}:
+			emit_signal("event_start", "input", event)
 			show_dialog()
 			finished = false
 			waiting_for_input = true
@@ -296,6 +423,7 @@ func event_handler(event: Dictionary):
 			$TextInputDialog.popup_centered()
 			$TextInputDialog.connect("confirmed", self, "_on_input_set", [event['variable']])
 		{'action', ..}:
+			emit_signal("event_start", "action", event)
 			if event['action'] == 'leaveall':
 				if event['character'] == '[All]':
 					for p in $Portraits.get_children():
@@ -304,7 +432,7 @@ func event_handler(event: Dictionary):
 					for p in $Portraits.get_children():
 						if p.character_data['file'] == event['character']:
 							p.fade_out()
-					
+
 				go_to_next_event()
 			elif event['action'] == 'join':
 				if event['character'] == '':
@@ -325,61 +453,76 @@ func event_handler(event: Dictionary):
 		{'scene'}:
 			get_tree().change_scene(event['scene'])
 		{'background'}:
+			emit_signal("event_start", "background", event)
 			$Background.visible = true
 			$Background.texture = load(event['background'])
-			dialog_index += 1
-			load_dialog(true)
+			go_to_next_event()
 		{'audio'}, {'audio', 'file'}:
-			if event['audio'] == 'play':
+			emit_signal("event_start", "audio", event)
+			if event['audio'] == 'play' and 'file' in event.keys() and not event['file'].empty():
 				$FX/AudioStreamPlayer.stream = load(event['file'])
 				$FX/AudioStreamPlayer.play()
-			# Todo: audio stop
+			else:
+				$FX/AudioStreamPlayer.stop()
+			go_to_next_event()
+		{'background-music'}, {'background-music', 'file'}:
+			emit_signal("event_start", "background-music", event)
+			if event['background-music'] == 'play' and 'file' in event.keys() and not event['file'].empty():
+				$FX/BackgroundMusic.crossfade_to(event['file'])
+			else:
+				$FX/BackgroundMusic.fade_out()
 			go_to_next_event()
 		{'endbranch', ..}:
+			emit_signal("event_start", "endbranch", event)
 			go_to_next_event()
 		{'change_scene'}:
 			get_tree().change_scene(event['change_scene'])
 		{'emit_signal', ..}:
-			print('[!] Emitting signal: dialogic_signal(', event['emit_signal'], ')')
+			dprint('[!] Emitting signal: dialogic_signal(', event['emit_signal'], ')')
 			emit_signal("dialogic_signal", event['emit_signal'])
 			go_to_next_event()
 		{'close_dialog'}:
+			emit_signal("event_start", "close_dialog", event)
+			on_timeline_end()
 			queue_free()
+		{'set_theme'}:
+			emit_signal("event_start", "set_theme", event)
+			if event['set_theme'] != '':
+				current_theme = load_theme(event['set_theme'])
+			go_to_next_event()
 		{'wait_seconds'}:
+			emit_signal("event_start", "wait", event)
 			wait_seconds(event['wait_seconds'])
+			waiting = true
 		{'change_timeline'}:
-			dialog_script = set_current_dialog('/' + event['change_timeline'])
+			dialog_script = set_current_dialog(event['change_timeline'])
 			dialog_index = -1
 			go_to_next_event()
-		{'condition', 'glossary', 'value', 'question_id', ..}:
+		{'condition', 'definition', 'value', 'question_id', ..}:
 			# Treating this conditional as an option on a regular question event
+			var def_value = null
 			var current_question = questions[event['question_id']]
-			#var g_var = DialogicUtil.get_glossary_by_file(event['glossary'])
-			var g_var = glossary[event['glossary'].replace('.json', '')]
 			
-			if g_var.has('type'):
-				if g_var['type'] == DialogicUtil.GLOSSARY_STRING:
-					if g_var['string'] == event['value']:
-						pass
-					else:
-						current_question['answered'] = true # This will abort the current conditional branch
-				if g_var['type'] == DialogicUtil.GLOSSARY_NUMBER:
-					if g_var['number'] == event['value']:
-						pass
-					else:
-						current_question['answered'] = true # This will abort the current conditional branch
+			for d in definitions['variables']:
+				if d['id'] == event['definition']:
+					def_value = d['value']
 			
+			var condition_met = def_value != null and _compare_definitions(def_value, event['value'], event['condition']);
 			
-			if current_question['answered']:
-				# If the option is for an answered question, skip to the end of it.
+			current_question['answered'] = !condition_met
+			if !condition_met:
+				# condition not met, skipping branch
 				dialog_index = current_question['end_id']
 				load_dialog(true)
 			else:
-				# It should never get here, but if it does, go to the next place.
+				# condition met, entering branch
 				go_to_next_event()
-		{'set_value', 'glossary'}:
-			glossary = DialogicUtil.set_var_by_id(event['glossary'], event['set_value'], glossary)
-			print(glossary)
+		{'set_value', 'definition', ..}:
+			emit_signal("event_start", "set_value", event)
+			var operation = '='
+			if 'operation' in event and not event['operation'].empty():
+				operation = event["operation"]
+			DialogicSingleton.set_variable_from_id(event['definition'], event['set_value'], operation)
 			go_to_next_event()
 		_:
 			visible = false
@@ -408,44 +551,47 @@ func reset_options():
 
 
 func add_choice_button(option):
+	var theme = current_theme
+
 	var button = ChoiceButton.instance()
 	button.text = option['label']
 	# Text
-	button.set('custom_fonts/font', load(settings['theme_font']))
-	
-	button.set('custom_colors/font_color', Color(settings['theme_text_color']))
-	button.set('custom_colors/font_color_hover', Color(settings['theme_text_color']))
-	button.set('custom_colors/font_color_pressed', Color(settings['theme_text_color']))
-	
-	# This part makes me cry
-	var current_color = settings['button_text_color']
-	
-	if settings['button_text_color_enabled']:
-		button.set('custom_colors/font_color', Color(settings['button_text_color']))
-		button.set('custom_colors/font_color_hover', Color(settings['button_text_color']))
-		button.set('custom_colors/font_color_pressed', Color(settings['button_text_color']))
-	# Background
-	
-	button.get_node('ColorRect').color = Color(settings['button_background'])
-	button.get_node('ColorRect').visible = settings['button_background_visible']
+	button.set('custom_fonts/font', load(theme.get_value('text', 'font', "res://addons/dialogic/Fonts/DefaultFont.tres")))
 
-	button.get_node('TextureRect').texture = load(settings['button_image'])
-	button.get_node('TextureRect').visible = settings['button_image_visible']
-	
-	button.get_node('ColorRect').set('margin_left', -1 * settings['button_offset_x'])
-	button.get_node('ColorRect').set('margin_right',  settings['button_offset_x'])
-	button.get_node('ColorRect').set('margin_top', -1 * settings['button_offset_y'])
-	button.get_node('ColorRect').set('margin_bottom', settings['button_offset_y'])
-	
-	button.get_node('TextureRect').set('margin_left', -1 * settings['button_offset_x'])
-	button.get_node('TextureRect').set('margin_right',  settings['button_offset_x'])
-	button.get_node('TextureRect').set('margin_top', -1 * settings['button_offset_y'])
-	button.get_node('TextureRect').set('margin_bottom', settings['button_offset_y'])
-	
-	$Options.set('custom_constants/separation', settings['button_separation'] + (settings['button_offset_y']*2))
+	var text_color = Color(theme.get_value('text', 'color', "#ffffffff"))
+	button.set('custom_colors/font_color', text_color)
+	button.set('custom_colors/font_color_hover', text_color)
+	button.set('custom_colors/font_color_pressed', text_color)
+
+	if theme.get_value('buttons', 'text_color_enabled', true):
+		var button_text_color = Color(theme.get_value('buttons', 'text_color', "#ffffffff"))
+		button.set('custom_colors/font_color', button_text_color)
+		button.set('custom_colors/font_color_hover', button_text_color)
+		button.set('custom_colors/font_color_pressed', button_text_color)
+
+	# Background
+	button.get_node('ColorRect').color = Color(theme.get_value('buttons', 'background_color', '#ff000000'))
+	button.get_node('ColorRect').visible = theme.get_value('buttons', 'use_background_color', false)
+
+	button.get_node('TextureRect').visible = theme.get_value('buttons', 'use_image', true)
+	if theme.get_value('buttons', 'use_image', true):
+		button.get_node('TextureRect').texture = load(theme.get_value('buttons', 'image', "res://addons/dialogic/Images/background/background-2.png"))
+
+	var padding = theme.get_value('buttons', 'padding', Vector2(5,5))
+	button.get_node('ColorRect').set('margin_left', -1 * padding.x)
+	button.get_node('ColorRect').set('margin_right',  padding.x)
+	button.get_node('ColorRect').set('margin_top', -1 * padding.y)
+	button.get_node('ColorRect').set('margin_bottom', padding.y)
+
+	button.get_node('TextureRect').set('margin_left', -1 * padding.x)
+	button.get_node('TextureRect').set('margin_right',  padding.x)
+	button.get_node('TextureRect').set('margin_top', -1 * padding.y)
+	button.get_node('TextureRect').set('margin_bottom', padding.y)
+
+	$Options.set('custom_constants/separation', theme.get_value('buttons', 'gap', 20) + (padding.y*2))
 
 	button.connect("pressed", self, "answer_question", [button, option['event_id'], option['question_id']])
-	
+
 	$Options.add_child(button)
 
 	if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:
@@ -472,7 +618,6 @@ func _on_option_selected(option, variable, value):
 	waiting_for_answer = false
 	reset_options()
 	load_dialog()
-	#print(dialog_resource.custom_variables)
 	dprint('[!] Option selected: ', option.text, ' value= ' , value)
 
 
@@ -505,7 +650,7 @@ func grab_portrait_focus(character_data, event: Dictionary = {}) -> bool:
 	return exists
 
 
-func get_character_position(positions):
+func get_character_position(positions) -> String:
 	if positions['0']:
 		return 'left'
 	if positions['1']:
@@ -516,93 +661,122 @@ func get_character_position(positions):
 		return 'center_right'
 	if positions['4']:
 		return 'right'
-	return 
+	return 'left'
 
 
-func load_theme() -> void:
-	# Loading theme properties and settings
-	settings = DialogicUtil.load_settings()
+func deferred_resize(current_size, result):
+	#var result = theme.get_value('box', 'size', Vector2(910, 167))
+	$TextBubble.rect_size = result
+	if current_size != $TextBubble.rect_size:
+		resize_main()
 
-	$TextBubble/RichTextLabel.set('custom_fonts/normal_font', load(settings['theme_font']))
-	$TextBubble/NameLabel.set('custom_fonts/normal_font', load(settings['theme_font']))
-	
-	# Glossary
-	$GlossaryInfo/VBoxContainer/Title.set('custom_fonts/normal_font', load(settings['theme_font']))
-	$GlossaryInfo/VBoxContainer/Content.set('custom_fonts/normal_font', load(settings['theme_font']))
-	$GlossaryInfo/VBoxContainer/Extra.set('custom_fonts/normal_font', load(settings['theme_font']))
-	
+
+func load_theme(filename):
+	var theme = DialogicResources.get_theme_config(filename)
+
+	# Box size
+	call_deferred('deferred_resize', $TextBubble.rect_size, theme.get_value('box', 'size', Vector2(910, 167)))
+
 	# Text
-	if settings.has('theme_text_color'):
-		$TextBubble/RichTextLabel.set('custom_colors/default_color', Color(settings['theme_text_color']))
-		$TextBubble/NameLabel.set('custom_colors/default_color', Color(settings['theme_text_color']))
+	var theme_font = load(theme.get_value('text', 'font', 'res://addons/dialogic/Fonts/DefaultFont.tres'))
+	$TextBubble/RichTextLabel.set('custom_fonts/normal_font', theme_font)
+	$TextBubble/NameLabel.set('custom_fonts/font', theme_font)
+
+	var text_color = Color(theme.get_value('text', 'color', '#ffffffff'))
+	$TextBubble/RichTextLabel.set('custom_colors/default_color', text_color)
+	$TextBubble/NameLabel.set('custom_colors/font_color', text_color)
 
 	$TextBubble/RichTextLabel.set('custom_colors/font_color_shadow', Color('#00ffffff'))
-	$TextBubble/NameLabel.set('custom_colors/font_color_shadow', Color('#00ffffff' ))
-	if settings.has('theme_text_shadow'):
-		if settings['theme_text_shadow']:
-			if settings.has('theme_text_shadow_color'):
-				$TextBubble/RichTextLabel.set('custom_colors/font_color_shadow', Color(settings['theme_text_shadow_color']))
-				$TextBubble/NameLabel.set('custom_colors/font_color_shadow', Color(settings['theme_text_shadow_color']))
-				
-	if settings.has('theme_shadow_offset_x'):
-		$TextBubble/RichTextLabel.set('custom_constants/shadow_offset_x', settings['theme_shadow_offset_x'])
-		$TextBubble/NameLabel.set('custom_constants/shadow_offset_x', settings['theme_shadow_offset_x'])
-	if settings.has('theme_shadow_offset_y'):
-		$TextBubble/RichTextLabel.set('custom_constants/shadow_offset_y', settings['theme_shadow_offset_y'])
-		$TextBubble/NameLabel.set('custom_constants/shadow_offset_y', settings['theme_shadow_offset_y'])
+	$TextBubble/NameLabel.set('custom_colors/font_color_shadow', Color('#00ffffff'))
+
+	if theme.get_value('text', 'shadow', false):
+		var text_shadow_color = Color(theme.get_value('text', 'shadow_color', '#9e000000'))
+		$TextBubble/RichTextLabel.set('custom_colors/font_color_shadow', text_shadow_color)
+
+	var shadow_offset = theme.get_value('text', 'shadow_offset', Vector2(2,2))
+	$TextBubble/RichTextLabel.set('custom_constants/shadow_offset_x', shadow_offset.x)
+	$TextBubble/RichTextLabel.set('custom_constants/shadow_offset_y', shadow_offset.y)
+	
+
 	# Text speed
-	if settings.has('theme_text_speed'):
-		text_speed = settings['theme_text_speed'] * 0.01
+	text_speed = theme.get_value('text','speed', 2) * 0.01
+
 	# Margin
-	if settings.has('theme_text_margin'):
-		$TextBubble/RichTextLabel.set('margin_top', settings['theme_text_margin'])
-		$TextBubble/RichTextLabel.set('margin_bottom', settings['theme_text_margin'] * -1)
-	if settings.has('theme_text_margin_h'):
-		$TextBubble/RichTextLabel.set('margin_left', settings['theme_text_margin_h'])
-		$TextBubble/RichTextLabel.set('margin_right', settings['theme_text_margin_h'] * -1)
-	
+	var text_margin = theme.get_value('text', 'margin', Vector2(20, 10))
+	$TextBubble/RichTextLabel.set('margin_left', text_margin.x)
+	$TextBubble/RichTextLabel.set('margin_right', text_margin.x * -1)
+	$TextBubble/RichTextLabel.set('margin_top', text_margin.y)
+	$TextBubble/RichTextLabel.set('margin_bottom', text_margin.y * -1)
+
 	# Backgrounds
-	$TextBubble/TextureRect.texture = load(settings['theme_background_image'])
-	$TextBubble/ColorRect.color = Color(settings['theme_background_color'])
-	
-	$TextBubble/ColorRect.visible = settings['theme_background_color_visible']
-	$TextBubble/TextureRect.visible = settings['background_texture_button_visible']
-	
+	$TextBubble/TextureRect.texture = load(theme.get_value('background','image', "res://addons/dialogic/Images/background/background-2.png"))
+	$TextBubble/ColorRect.color = Color(theme.get_value('background','color', "#ff000000"))
+
+	$TextBubble/ColorRect.visible = theme.get_value('background', 'use_color', false)
+	$TextBubble/TextureRect.visible = theme.get_value('background', 'use_image', true)
+
 	# Next image
-	$TextBubble/NextIndicator.texture = load(settings['theme_next_image'])
-	input_next = settings['theme_action_key']
+	$TextBubble/NextIndicator.texture = load(theme.get_value('next_indicator', 'image', 'res://addons/dialogic/Images/next-indicator.png'))
+	input_next = theme.get_value('settings', 'action_key', 'ui_accept')
+
+	# Definitions
+	var definitions_font = load(theme.get_value('definitions', 'font', 'res://addons/dialogic/Fonts/GlossaryFont.tres'))
+	$DefinitionInfo/VBoxContainer/Title.set('custom_fonts/normal_font', definitions_font)
+	$DefinitionInfo/VBoxContainer/Content.set('custom_fonts/normal_font', definitions_font)
+	$DefinitionInfo/VBoxContainer/Extra.set('custom_fonts/normal_font', definitions_font)
 	
-	# Glossary
-	$GlossaryInfo/VBoxContainer/Title.set('custom_fonts/normal_font', load(settings['glossary_font']))
-	$GlossaryInfo/VBoxContainer/Content.set('custom_fonts/normal_font', load(settings['glossary_font']))
-	$GlossaryInfo/VBoxContainer/Extra.set('custom_fonts/normal_font', load(settings['glossary_font']))
+	# Character Name
+	$TextBubble/NameLabel/ColorRect.visible = theme.get_value('name', 'background_visible', false)
+	$TextBubble/NameLabel/ColorRect.color = Color(theme.get_value('name', 'background', '#282828'))
+	$TextBubble/NameLabel/TextureRect.visible = theme.get_value('name', 'image_visible', false)
+	$TextBubble/NameLabel/TextureRect.texture = load(theme.get_value('name','image', "res://addons/dialogic/Images/background/background-2.png"))
+	var name_shadow_offset = theme.get_value('name', 'shadow_offset', Vector2(2,2))
+	if theme.get_value('name', 'shadow_visible', false):
+		$TextBubble/NameLabel.set('custom_colors/font_color_shadow', Color(theme.get_value('name', 'shadow', '#9e000000')))
+		$TextBubble/NameLabel.set('custom_constants/shadow_offset_x', name_shadow_offset.x)
+		$TextBubble/NameLabel.set('custom_constants/shadow_offset_y', name_shadow_offset.y)
+	$TextBubble/NameLabel.rect_position.y = theme.get_value('name', 'bottom_gap', 48) * -1
+	
+	
+	# Setting next indicator animation
+	$TextBubble/NextIndicator.self_modulate = Color('#ffffff')
+	$TextBubble/NextIndicator/AnimationPlayer.play(
+		theme.get_value('next_indicator', 'animation', 'Up and down')
+	)
+	
+	return theme
 
 
 func _on_RichTextLabel_meta_hover_started(meta):
 	var correct_type = false
-	for g in glossary:
-		if glossary[g]['name'] == meta:
-			$GlossaryInfo.load_preview(glossary[g])
-			if glossary[g]['type'] == DialogicUtil.GLOSSARY_EXTRA:
-				correct_type = true
+	for d in definitions['glossary']:
+		if d['id'] == meta:
+			$DefinitionInfo.load_preview({
+				'title': d['title'],
+				'body': d['text'],
+				'extra': d['extra'],
+				'color': current_theme.get_value('definitions', 'color', '#ffbebebe'),
+			})
+			correct_type = true
+			print(d)
 
 	if correct_type:
-		glossary_visible = true
-		$GlossaryInfo.visible = glossary_visible
+		definition_visible = true
+		$DefinitionInfo.visible = definition_visible
 		# Adding a timer to avoid a graphical glitch
-		$GlossaryInfo/Timer.stop()
-	
+		$DefinitionInfo/Timer.stop()
+
 
 func _on_RichTextLabel_meta_hover_ended(meta):
 	# Adding a timer to avoid a graphical glitch
-	
-	$GlossaryInfo/Timer.start(0.1)
+
+	$DefinitionInfo/Timer.start(0.1)
 
 
-func _on_Glossary_Timer_timeout():
+func _on_Definition_Timer_timeout():
 	# Adding a timer to avoid a graphical glitch
-	glossary_visible = false
-	$GlossaryInfo.visible = glossary_visible
+	definition_visible = false
+	$DefinitionInfo.visible = definition_visible
 
 
 func wait_seconds(seconds):
@@ -611,13 +785,39 @@ func wait_seconds(seconds):
 
 
 func _on_WaitSeconds_timeout():
+	emit_signal("event_end", "wait")
+	waiting = false
 	$WaitSeconds.stop()
 	$TextBubble.visible = true
 	load_dialog()
 
 
 func dprint(string, arg1='', arg2='', arg3='', arg4='' ):
-	# HAHAHA if you are here wondering what this is... 
+	# HAHAHA if you are here wondering what this is...
 	# I ask myself the same question :')
 	if debug_mode:
 		print(str(string) + str(arg1) + str(arg2) + str(arg3) + str(arg4))
+
+
+func _compare_definitions(def_value: String, event_value: String, condition: String):
+	var condition_met = false;
+	if def_value != null and event_value != null:
+		var converted_def_value = def_value
+		var converted_event_value = event_value
+		if def_value.is_valid_float() and event_value.is_valid_float():
+			converted_def_value = float(def_value)
+			converted_event_value = float(event_value)
+		match condition:
+			"==":
+				condition_met = converted_def_value == converted_event_value
+			"!=":
+				condition_met = converted_def_value != converted_event_value
+			">":
+				condition_met = converted_def_value > converted_event_value
+			">=":
+				condition_met = converted_def_value >= converted_event_value
+			"<":
+				condition_met = converted_def_value < converted_event_value
+			"<=":
+				condition_met = converted_def_value <= converted_event_value
+	return condition_met

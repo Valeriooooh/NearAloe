@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://addons/dialogic/Images/next-indicator.png" type="Texture" id=1]
 [ext_resource path="res://addons/dialogic/Images/background/background-2.png" type="Texture" id=2]
@@ -6,11 +6,32 @@
 [ext_resource path="res://addons/dialogic/Fonts/GlossaryFont.tres" type="DynamicFont" id=4]
 [ext_resource path="res://addons/dialogic/Nodes/glossary_info.gd" type="Script" id=5]
 [ext_resource path="res://addons/dialogic/Nodes/dialog_node.gd" type="Script" id=6]
+[ext_resource path="res://addons/dialogic/Nodes/BackgroundMusic.tscn" type="PackedScene" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 1, 1, 0 )
+expand_margin_left = 10.0
 
 [sub_resource type="Animation" id=2]
+resource_name = "Pulse"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Static"
+
+[sub_resource type="Animation" id=4]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:margin_bottom")
@@ -25,7 +46,13 @@ tracks/0/keys = {
 "values": [ 12.0, 55.0 ]
 }
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=5]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color( 1, 1, 1, 0 )
+expand_margin_left = 10.0
+
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.196078, 0.196078, 0.196078, 0 )
 
 [node name="DialogNode" type="Control"]
@@ -33,7 +60,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 6 )
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -62,11 +88,10 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -455.0
-margin_top = -209.488
+margin_top = -207.0
 margin_right = 455.0
-margin_bottom = -42.4877
+margin_bottom = -40.0
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -122,7 +147,7 @@ anchor_bottom = 1.0
 margin_left = -36.4279
 margin_top = -35.9016
 margin_right = 14.5721
-margin_bottom = 12.0
+margin_bottom = 29.4015
 rect_scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 1 )
 stretch_mode = 4
@@ -131,25 +156,49 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TextBubble/NextIndicator"]
-autoplay = "IDLE"
-anims/IDLE = SubResource( 2 )
+autoplay = "Up and down"
+anims/Pulse = SubResource( 2 )
+anims/Static = SubResource( 3 )
+"anims/Up and down" = SubResource( 4 )
 
-[node name="NameLabel" type="RichTextLabel" parent="TextBubble"]
-margin_left = 2.0
-margin_top = -37.0
-margin_right = 369.0
-rect_clip_content = false
-custom_styles/normal = SubResource( 1 )
-custom_fonts/normal_font = ExtResource( 3 )
-custom_colors/default_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 0 )
+[node name="NameLabel" type="Label" parent="TextBubble"]
+margin_top = -48.0
+margin_right = 58.0
+margin_bottom = -8.0
+size_flags_vertical = 1
+custom_styles/normal = SubResource( 5 )
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.619608 )
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
-custom_constants/shadow_as_outline = 10
-bbcode_enabled = true
-bbcode_text = "Name Here"
-text = "Name Here"
-scroll_active = false
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="TextBubble/NameLabel"]
+visible = false
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 15
+size_flags_vertical = 15
+color = Color( 0.156863, 0.156863, 0.156863, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="TextBubble/NameLabel"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -214,20 +263,22 @@ __meta__ = {
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="FX"]
 
-[node name="GlossaryInfo" type="PanelContainer" parent="."]
+[node name="BackgroundMusic" parent="FX" instance=ExtResource( 7 )]
+
+[node name="DefinitionInfo" type="PanelContainer" parent="."]
 visible = false
 margin_right = 208.0
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 6 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="GlossaryInfo"]
+[node name="ColorRect" type="ColorRect" parent="DefinitionInfo"]
 mouse_filter = 1
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -236,7 +287,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GlossaryInfo"]
+[node name="VBoxContainer" type="VBoxContainer" parent="DefinitionInfo"]
 margin_right = 208.0
 margin_bottom = 143.0
 size_flags_horizontal = 3
@@ -245,7 +296,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="RichTextLabel" parent="GlossaryInfo/VBoxContainer"]
+[node name="Title" type="RichTextLabel" parent="DefinitionInfo/VBoxContainer"]
 margin_right = 208.0
 margin_bottom = 27.0
 size_flags_horizontal = 3
@@ -257,7 +308,7 @@ text = "This is the title"
 fit_content_height = true
 scroll_active = false
 
-[node name="Content" type="RichTextLabel" parent="GlossaryInfo/VBoxContainer"]
+[node name="Content" type="RichTextLabel" parent="DefinitionInfo/VBoxContainer"]
 margin_top = 31.0
 margin_right = 208.0
 margin_bottom = 112.0
@@ -271,7 +322,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Extra" type="RichTextLabel" parent="GlossaryInfo/VBoxContainer"]
+[node name="Extra" type="RichTextLabel" parent="DefinitionInfo/VBoxContainer"]
 self_modulate = Color( 1, 1, 1, 0.345098 )
 margin_top = 116.0
 margin_right = 208.0
@@ -286,12 +337,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Timer" type="Timer" parent="GlossaryInfo"]
+[node name="Timer" type="Timer" parent="DefinitionInfo"]
 
 [node name="WaitSeconds" type="Timer" parent="."]
-
 [connection signal="meta_hover_ended" from="TextBubble/RichTextLabel" to="." method="_on_RichTextLabel_meta_hover_ended"]
 [connection signal="meta_hover_started" from="TextBubble/RichTextLabel" to="." method="_on_RichTextLabel_meta_hover_started"]
 [connection signal="tween_completed" from="TextBubble/Tween" to="." method="_on_Tween_tween_completed"]
-[connection signal="timeout" from="GlossaryInfo/Timer" to="." method="_on_Glossary_Timer_timeout"]
+[connection signal="timeout" from="DefinitionInfo/Timer" to="." method="_on_Definition_Timer_timeout"]
 [connection signal="timeout" from="WaitSeconds" to="." method="_on_WaitSeconds_timeout"]

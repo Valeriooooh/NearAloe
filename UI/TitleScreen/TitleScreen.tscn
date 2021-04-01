@@ -56,13 +56,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="."]
+[node name="Continue" type="Button" parent="."]
 margin_left = 64.0
 margin_top = 64.7071
 margin_right = 140.0
 margin_bottom = 96.7071
 theme = ExtResource( 1 )
-disabled = true
 action_mode = 0
 text = "Continue"
 clip_text = true
@@ -79,6 +78,9 @@ size_flags_vertical = 2
 theme = ExtResource( 1 )
 action_mode = 0
 text = "New Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button2" type="Button" parent="."]
 margin_left = 64.0
@@ -89,6 +91,9 @@ size_flags_vertical = 2
 theme = ExtResource( 1 )
 action_mode = 0
 text = "Options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button3" type="Button" parent="."]
 margin_left = 184.0
@@ -103,7 +108,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Continue" to="." method="_on_Continue_pressed"]
 [connection signal="pressed" from="Button4" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
 [connection signal="pressed" from="Button3" to="." method="_on_Button3_pressed"]

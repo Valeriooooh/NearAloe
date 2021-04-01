@@ -8,10 +8,6 @@ func _ready():
 	pass
 
 
-func _process(_delta):
-	pass
-
-
 func _on_ButtonDelete_pressed():
 	if $NameEdit.text == 'Default':
 		$PathEdit.text = ''
@@ -29,7 +25,7 @@ func _on_file_selected(path, target):
 	update_preview(path)
 	$PathEdit.text = path
 	if $NameEdit.text == '':
-		$NameEdit.text = DialogicUtil.get_filename_from_path(path)
+		$NameEdit.text = DialogicResources.get_filename_from_path(path)
 
 
 func _on_focus_entered():

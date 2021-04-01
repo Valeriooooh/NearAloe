@@ -97,6 +97,7 @@ tracks/0/keys = {
 collision_layer = 16
 script = ExtResource( 3 )
 EnemyDeathEffect = ExtResource( 12 )
+MAX_SPEED = 60
 heart = ExtResource( 11 )
 
 [node name="BeeShadow" type="Sprite" parent="."]
@@ -106,7 +107,6 @@ texture = ExtResource( 4 )
 material = SubResource( 1 )
 frames = SubResource( 7 )
 animation = "Fly"
-frame = 1
 playing = true
 offset = Vector2( 0, -12 )
 
@@ -126,6 +126,7 @@ shape = SubResource( 9 )
 MaxHealth = 4
 
 [node name="PlayerDetectionZone" parent="." instance=ExtResource( 8 )]
+visible = false
 
 [node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
 self_modulate = Color( 1, 1, 1, 0.321569 )

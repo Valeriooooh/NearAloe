@@ -10,7 +10,8 @@ enum {
 
 export var ACCELERATION = 100
 export var MAX_SPEED = 30
-
+export(bool) var dropHeart = false
+export var heart:PackedScene
 var velocity = Vector2.ZERO
 var knockback = Vector2.ZERO
 export var FRICTION = 200
@@ -76,6 +77,10 @@ func _on_Stats_no_health():
 	var enemyDeathEffect = EnemyDeathEffect.instance()
 	get_parent().add_child(enemyDeathEffect)
 	enemyDeathEffect.global_position = global_position - Vector2(0, 8)
+	if dropHeart:
+		var Heart = heart.instance()
+		get_parent().call_deferred("add_child",Heart)
+		Heart.global_position = global_position - Vector2(0,5)
 
 func state_timer():
 	if wanderController.get_time_left() == 0:

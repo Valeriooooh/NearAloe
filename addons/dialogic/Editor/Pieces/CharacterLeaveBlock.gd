@@ -12,7 +12,6 @@ var event_data = {
 
 
 func _ready():
-	$PanelContainer/VBoxContainer/Header/VisibleToggle.disabled()
 	$PanelContainer/VBoxContainer/Header/CharacterDropdown.get_popup().connect("index_pressed", self, '_on_character_selected')
 
 
@@ -21,7 +20,7 @@ func _on_CharacterDropdown_about_to_show():
 	Dropdown.get_popup().clear()
 	Dropdown.get_popup().add_item("[All]")
 	var index = 1
-	for c in DialogicUtil.get_character_list():
+	for c in DialogicUtil.get_sorted_character_list():
 		Dropdown.get_popup().add_item(c['name'])
 		Dropdown.get_popup().set_item_metadata(index, {'file': c['file'], 'color': c['color']})
 		index += 1
@@ -38,6 +37,6 @@ func load_data(data):
 	event_data = data
 	if data['character'] != '[All]':
 		if data['character'] != '':
-			var character_data = DialogicUtil.load_json(DialogicUtil.get_path('CHAR_DIR', data['character']))
+			var character_data = DialogicResources.get_character_json(data['character'])
 			if character_data.has('name'):
 				$PanelContainer/VBoxContainer/Header/CharacterDropdown.text = character_data['name']

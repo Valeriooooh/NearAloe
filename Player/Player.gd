@@ -5,6 +5,7 @@ const ACCELERATION = 500
 const MAX_SPEED = 70
 const ROLL_SPEED = MAX_SPEED * 1.5
 const FRICTION = 500
+export var DeathScreen:PackedScene 
 #const playerHurtSound = preload("res://Player/Sounds/PlayerHurtSound.tscn")
 export var playerHurtSound:PackedScene
 enum {
@@ -93,8 +94,9 @@ func die():
 	# warning-ignore:return_value_discarded
 #	get_tree().change_scene("res://Levels/World.tscn")
 #	set_deferred("stats:health","stats:MaxHealth")
-	get_tree().call_deferred("change_scene","res://Levels/World.tscn")
 	stats.health = stats.MaxHealth
+#	get_tree().call_deferred("change_scene", "res://UI/DeathScreen/DeathScreen.tscn")
+	
 
 
 func _on_Hurtbox_area_entered(area):
@@ -124,4 +126,21 @@ func _on_Hurtbox_invincibility_started() -> void:
 	hurtAnimation.play("Start")
 
 
+func get_save_stats():
+	return {
+		'filename' : get_filename(),
+		'parent' : get_parent().get_path(),
+		'xpos' : global_transform.origin.x,
+		'ypos' : global_transform.origin.y,
+		'stats':{
+		'maxHearts': stats.MaxHealth,
+		'Hearts': stats.health
+		}
+	}
+
+func load_save_stats(save):
+	global_transform.origin = Vector2(save.xpos, save.ypos)
+	stats.MaxHealth = save.stats.maxHearts
+	stats.health = save.stats.Hearts
+	
 #TODO Animação não parece fluida, Braços precisam de ser melhorados a andar
