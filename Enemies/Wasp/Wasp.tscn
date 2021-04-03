@@ -99,6 +99,7 @@ tracks/0/keys = {
 }
 
 [node name="Wasp" type="KinematicBody2D"]
+pause_mode = 1
 z_index = 2
 collision_layer = 16
 script = ExtResource( 2 )

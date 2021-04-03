@@ -2,8 +2,8 @@ extends KinematicBody2D
 
 
 const ACCELERATION = 500
-const MAX_SPEED = 70
-const ROLL_SPEED = MAX_SPEED * 1.5
+var MAX_SPEED = 70
+var ROLL_SPEED = MAX_SPEED * 1.5
 const FRICTION = 500
 export var DeathScreen:PackedScene 
 #const playerHurtSound = preload("res://Player/Sounds/PlayerHurtSound.tscn")
@@ -35,13 +35,13 @@ func _ready():
 
 	
 func _physics_process(delta):
-	match state:
-		MOVE:
-			call_deferred("move_state",delta)
-		ROLL:
-			call_deferred("roll_state")
-		ATTACK:
-			call_deferred("attack_state")
+		match state:
+			MOVE:
+				call_deferred("move_state",delta)
+			ROLL:
+				call_deferred("roll_state")
+			ATTACK:
+				call_deferred("attack_state")
 			
 func move_state(delta):
 	var input_vector = Vector2.ZERO
@@ -94,8 +94,8 @@ func die():
 	# warning-ignore:return_value_discarded
 #	get_tree().change_scene("res://Levels/World.tscn")
 #	set_deferred("stats:health","stats:MaxHealth")
-	stats.health = stats.MaxHealth
-#	get_tree().call_deferred("change_scene", "res://UI/DeathScreen/DeathScreen.tscn")
+#	stats.health = stats.MaxHealth
+	get_tree().call_deferred("change_scene", "res://UI/DeathScreen/DeathScreen.tscn")
 	
 
 
@@ -107,8 +107,6 @@ func _on_Hurtbox_area_entered(area):
 		var PlayerHurtSounds = playerHurtSound.instance()
 		get_tree().current_scene.add_child(PlayerHurtSounds)
 	elif area.nameCheck == "golden":
-		stats.MaxHealth += 1
-		stats.health = stats.MaxHealth
 		hurtBox.start_invincibility(0.5)
 	elif area.nameCheck == "heart":
 		if stats.MaxHealth > stats.health:
@@ -116,7 +114,7 @@ func _on_Hurtbox_area_entered(area):
 			hurtBox.start_invincibility(0.5)
 	else:
 		pass
-		
+
 
 func _on_Hurtbox_invincibility_ended() -> void:
 	hurtAnimation.play("Stop")
@@ -132,6 +130,13 @@ func get_save_stats():
 		'parent' : get_parent().get_path(),
 		'xpos' : global_transform.origin.x,
 		'ypos' : global_transform.origin.y,
+		'Story':{
+			'AloeFirstEncouter': stats.FirstEncounter,
+			'BeeDefeated': stats.BossBeeDefeated,
+			'BugDefeated': stats.BossBugDefeated,
+			'SpikeDefeated': stats.BossSpikeDefeated,
+			'AloeLeaves': stats.AloeLeaves
+		},
 		'stats':{
 		'maxHearts': stats.MaxHealth,
 		'Hearts': stats.health
@@ -142,5 +147,12 @@ func load_save_stats(save):
 	global_transform.origin = Vector2(save.xpos, save.ypos)
 	stats.MaxHealth = save.stats.maxHearts
 	stats.health = save.stats.Hearts
+	stats.AloeLeaves = save.Story.AloeLeaves
+	stats.FirstEncounter = save.Story.AloeFirstEncouter
+	stats.BossBeeDefeated = save.Story.BeeDefeated
+	stats.BossBugDefeated = save.Story.BugDefeated
+	stats.BossSpikeDefeated = save.Story.SpikeDefeated
 	
+
+
 #TODO Animação não parece fluida, Braços precisam de ser melhorados a andar

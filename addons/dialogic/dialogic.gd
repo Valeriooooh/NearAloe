@@ -1,6 +1,8 @@
 tool
 extends EditorPlugin
 
+
+
 var _editor_view
 var _parts_inspector
 

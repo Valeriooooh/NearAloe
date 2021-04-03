@@ -805,6 +805,7 @@ height = 3.81429
 [node name="Player" type="KinematicBody2D" groups=[
 "Saved",
 ]]
+pause_mode = 1
 collision_layer = 2
 script = ExtResource( 2 )
 DeathScreen = ExtResource( 8 )
@@ -882,7 +883,6 @@ HitEffect = ExtResource( 20 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( 0.544001, -0.371984 )
 shape = SubResource( 45 )
-disabled = true
 
 [node name="Timer" type="Timer" parent="Hurtbox"]
 process_mode = 0
@@ -907,10 +907,10 @@ volume_db = 0.575
 [node name="PauseNode" parent="." instance=ExtResource( 18 )]
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-[connection signal="invincibility_ended" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
-[connection signal="invincibility_started" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_started"]
+[connection signal="invincibility_ended" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
+[connection signal="invincibility_started" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_started"]
 [connection signal="timeout" from="Hurtbox/Timer" to="Hurtbox" method="_on_Timer_timeout"]
 
 [editable path="SwordPivot/SwordHitbox"]

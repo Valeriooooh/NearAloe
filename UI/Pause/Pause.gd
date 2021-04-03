@@ -10,12 +10,16 @@ func _input(event):
 		var pause_state = not get_tree().paused
 		get_tree().paused = pause_state
 		visible = pause_state
+		if pause_state:
+			Dialogic.set_variable("InDialog",1)
+		else:
+			Dialogic.set_variable("InDialog",0)
 
 
 func _on_Button_pressed():
-	var pause_state = not get_tree().paused
-	get_tree().paused = pause_state
-	visible = pause_state
+	get_tree().set_pause(false)
+	Dialogic.set_variable("InDialog",0)
+	visible = false
 
 
 func _on_Button3_pressed():

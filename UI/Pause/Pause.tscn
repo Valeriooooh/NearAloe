@@ -4,8 +4,10 @@
 [ext_resource path="res://UI/Theme/DefaultTheme.tres" type="Theme" id=2]
 
 [node name="PauseNode" type="Node"]
+pause_mode = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+pause_mode = 2
 layer = 100
 
 [node name="Pause" type="Control" parent="CanvasLayer"]

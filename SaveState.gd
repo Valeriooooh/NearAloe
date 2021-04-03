@@ -30,5 +30,5 @@ func load_game():
 	while save_file.get_position() < save_file.get_len():
 		var node_data = parse_json(save_file.get_line())
 		var new_obj = load(node_data.filename).instance()
-		get_node(node_data.parent).call_deferred('add_child',new_obj)
+		get_node(node_data.parent).add_child(new_obj)
 		new_obj.load_save_stats(node_data)

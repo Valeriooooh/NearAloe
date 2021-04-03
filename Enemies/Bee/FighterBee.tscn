@@ -94,6 +94,7 @@ tracks/0/keys = {
 }
 
 [node name="Bee" type="KinematicBody2D"]
+pause_mode = 1
 collision_layer = 16
 script = ExtResource( 3 )
 EnemyDeathEffect = ExtResource( 11 )
@@ -107,7 +108,7 @@ self_modulate = Color( 0.913725, 0.0705882, 0.0705882, 1 )
 material = SubResource( 1 )
 frames = SubResource( 7 )
 animation = "Fly"
-frame = 1
+frame = 4
 playing = true
 offset = Vector2( 0, -12 )
 

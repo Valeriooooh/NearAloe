@@ -94,6 +94,7 @@ tracks/0/keys = {
 }
 
 [node name="Bee" type="KinematicBody2D"]
+pause_mode = 1
 collision_layer = 16
 script = ExtResource( 3 )
 EnemyDeathEffect = ExtResource( 12 )

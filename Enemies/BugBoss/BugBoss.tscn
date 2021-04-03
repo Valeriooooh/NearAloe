@@ -17,40 +17,40 @@ resource_local_to_scene = true
 shader = ExtResource( 7 )
 shader_param/active = false
 
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 4 )
-region = Rect2( 32, 0, 16, 24 )
-
-[sub_resource type="AtlasTexture" id=14]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 16, 24 )
 
-[sub_resource type="AtlasTexture" id=15]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 4 )
 region = Rect2( 16, 0, 16, 24 )
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 4 )
 region = Rect2( 32, 0, 16, 24 )
 
-[sub_resource type="SpriteFrames" id=17]
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
+region = Rect2( 32, 0, 16, 24 )
+
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
-"frames": [ SubResource( 18 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
 "name": "Attack",
 "speed": 2.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=21]
+[sub_resource type="CapsuleShape2D" id=7]
 radius = 12.0
 height = 28.0
 
-[sub_resource type="CapsuleShape2D" id=20]
+[sub_resource type="CapsuleShape2D" id=8]
 radius = 12.0
 height = 28.0
 
@@ -61,7 +61,7 @@ radius = 68.7546
 radius = 12.0
 height = 28.293
 
-[sub_resource type="CapsuleShape2D" id=19]
+[sub_resource type="CapsuleShape2D" id=11]
 radius = 8.0
 height = 28.0
 
@@ -98,6 +98,7 @@ tracks/0/keys = {
 }
 
 [node name="BugBoss" type="KinematicBody2D"]
+pause_mode = 1
 scale = Vector2( 2, 2 )
 z_index = 2
 collision_layer = 16
@@ -127,7 +128,7 @@ __meta__ = {
 material = SubResource( 1 )
 position = Vector2( 16.4063, 7.39694 )
 scale = Vector2( 3.77653, 2.97487 )
-frames = SubResource( 17 )
+frames = SubResource( 6 )
 animation = "Idle"
 playing = true
 offset = Vector2( 0, -12 )
@@ -135,7 +136,7 @@ offset = Vector2( 0, -12 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 16, -16 )
 rotation = 1.5708
-shape = SubResource( 21 )
+shape = SubResource( 7 )
 
 [node name="Hurtbox" parent="." instance=ExtResource( 10 )]
 collision_layer = 8
@@ -143,7 +144,7 @@ collision_layer = 8
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2( 16, -16 )
 rotation = 1.5708
-shape = SubResource( 20 )
+shape = SubResource( 8 )
 
 [node name="Stats" parent="." instance=ExtResource( 9 )]
 MaxHealth = 50
@@ -174,7 +175,7 @@ collision_mask = 32
 [node name="CollisionShape2D" parent="SoftCollision" index="0"]
 position = Vector2( 16, -16 )
 rotation = 1.5708
-shape = SubResource( 19 )
+shape = SubResource( 11 )
 
 [node name="WanderControl" parent="." instance=ExtResource( 5 )]
 visible = false

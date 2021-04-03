@@ -5,6 +5,7 @@ var save_file_path = "user://save.sav"
 
 
 func _ready() -> void:
+	get_tree().set_pause(false)
 	var save_file = File.new()
 	if !save_file.file_exists(save_file_path):
 		$Continue.disabled = true
@@ -26,6 +27,4 @@ func _on_Button3_pressed():
 
 func _on_Continue_pressed() -> void:
 #	SaveState.load_game()
-#	get_tree().call_deferred("change_scene", "res://Levels/WorldContinue.tscn")
-	var new_dialog = Dialogic.start('AloeMeet')
-	add_child(new_dialog)
+	get_tree().call_deferred("change_scene", "res://Levels/WorldContinue.tscn")

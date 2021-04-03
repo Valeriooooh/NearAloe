@@ -1,0 +1,1 @@
+{"events":[{"definition":"1617323949-787","operation":"=","set_value":"1"},{"options":[],"question":"Do you want to get in?"},{"choice":"Yes"},{"change_scene":""},{"choice":"No"},{"close_dialog":""},{"endbranch":""},{"definition":"1617323949-787","operation":"=","set_value":"0"}],"metadata":{"dialogic-version":"1.0","file":"timeline-1617331422.json","name":"SpikePortal"}}
