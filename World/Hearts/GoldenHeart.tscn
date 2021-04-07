@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://World/Hearts/GoldenHeartArea.gd" type="Script" id=1]
-[ext_resource path="res://World/AloeLeaf/AloeLeaf.png" type="Texture" id=2]
+[ext_resource path="res://World/Hearts/AloeLeaf.png" type="Texture" id=2]
 [ext_resource path="res://World/Hearts/GoldenHeartHitbox.gd" type="Script" id=3]
 [ext_resource path="res://World/Hearts/GoldenHeart.gd" type="Script" id=4]
 

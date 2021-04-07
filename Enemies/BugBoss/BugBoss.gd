@@ -114,26 +114,25 @@ func _on_Hurtbox_invincibility_started() -> void:
 	animationPlayer.play("Start")
 
 func damage75():
-		var Child = childBug.instance()
-		get_parent().add_child(Child)
-		Child.global_position = global_position - Vector2(0,5)
-		percent75=true
+	var Child = childBug.instance()
+	get_parent().call_deferred("add_child", Child)
+	Child.global_position = global_position - Vector2(0,5)
+	set_deferred("percent75",true)
 func damage50():
 	sprite.self_modulate = Color(1, 1, 0.047059)
 	for _i in range(0,2):
 		var Child = childBugGreen.instance()
-		get_parent().add_child(Child)
+		get_parent().call_deferred("add_child", Child)
 		Child.global_position = global_position - Vector2(0,5)
-		
 	for _i in range(0,1):
 		var Heart = heart.instance()
-		get_parent().add_child(Heart)
+		get_parent().call_deferred("add_child", Heart)
 		Heart.global_position = global_position - Vector2(0,5)
-	percent50=true
+	set_deferred("percent50",true)
 func damage25():
 	sprite.self_modulate = Color(0.952941, 0.105882, 0.105882)
 	for _i in range(0,3):
 		var Child = childBugRed.instance()
-		get_parent().add_child(Child)
+		get_parent().call_deferred("add_child", Child)
 		Child.global_position = global_position - Vector2(0,5)
-	percent25=true
+	set_deferred("percent25",true)

@@ -29,13 +29,15 @@ func start_invincibility(duration):
 
 
 func _on_Timer_timeout() -> void:
-	self.invincible = false
+	self.set_deferred("invincible",false)
 
 
 func _on_Hurtbox_invincibility_ended() -> void:
-	collisionShape.set_deferred("disabled", false)
+#	collisionShape.set_deferred("disabled", false)
+	collisionShape.call_deferred("set_disabled", false)
 
 
 func _on_Hurtbox_invincibility_started() -> void:
-	collisionShape.set_deferred("disabled", true)
+#	collisionShape.set_deferred("disabled", true)
+	collisionShape.call_deferred("set_disabled", true)
 	

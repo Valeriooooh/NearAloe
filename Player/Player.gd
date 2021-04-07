@@ -35,6 +35,8 @@ func _ready():
 
 	
 func _physics_process(delta):
+		
+		Dialogic.set_variable("Leafs", stats.AloeLeaves)
 		match state:
 			MOVE:
 				call_deferred("move_state",delta)
@@ -45,8 +47,8 @@ func _physics_process(delta):
 			
 func move_state(delta):
 	var input_vector = Vector2.ZERO
-	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-	input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	input_vector = input_vector.normalized()
 	if input_vector != Vector2.ZERO:
 		roll_vector = input_vector
@@ -107,7 +109,10 @@ func _on_Hurtbox_area_entered(area):
 		var PlayerHurtSounds = playerHurtSound.instance()
 		get_tree().current_scene.add_child(PlayerHurtSounds)
 	elif area.nameCheck == "golden":
-		hurtBox.start_invincibility(0.5)
+		PlayerStats.set_max_health(PlayerStats.MaxHealth +1)
+		PlayerStats.set_health(PlayerStats.MaxHealth)
+		PlayerStats.AloeLeaves = PlayerStats.AloeLeaves+1
+		Dialogic.set_variable("Left", str(3 - PlayerStats.AloeLeaves))
 	elif area.nameCheck == "heart":
 		if stats.MaxHealth > stats.health:
 			stats.health -= area.damage
@@ -144,7 +149,6 @@ func get_save_stats():
 	}
 
 func load_save_stats(save):
-	global_transform.origin = Vector2(save.xpos, save.ypos)
 	stats.MaxHealth = save.stats.maxHearts
 	stats.health = save.stats.Hearts
 	stats.AloeLeaves = save.Story.AloeLeaves
@@ -152,7 +156,7 @@ func load_save_stats(save):
 	stats.BossBeeDefeated = save.Story.BeeDefeated
 	stats.BossBugDefeated = save.Story.BugDefeated
 	stats.BossSpikeDefeated = save.Story.SpikeDefeated
-	
 
-
+func load_save_pos(save):
+	global_transform.origin = Vector2(save.xpos, save.ypos)
 #TODO Animação não parece fluida, Braços precisam de ser melhorados a andar

@@ -4,8 +4,8 @@ extends AnimatedSprite
 func _ready():
 	# warning-ignore:return_value_discarded
 	connect("animation_finished",self, "animation_finished" )
-	frame = 0
-	play("Animate")
+	set_deferred("frame", 0)
+	call_deferred("play","Animate")
 
 func animation_finished():
-	queue_free()
+	call_deferred("queue_free")

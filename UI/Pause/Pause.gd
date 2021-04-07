@@ -6,7 +6,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func _input(event):
-	if event.is_action_pressed("pause"):
+	if event.is_action_pressed("pause") && int(Dialogic.get_variable("inDialog")) == 0:
 		var pause_state = not get_tree().paused
 		get_tree().paused = pause_state
 		visible = pause_state

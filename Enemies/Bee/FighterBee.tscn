@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Player/Hitbox/HitboxEnemy.gd" type="Script" id=1]
 [ext_resource path="res://Player/Hurtbox/Hurtbox.tscn" type="PackedScene" id=2]
@@ -93,11 +93,15 @@ tracks/0/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="OccluderPolygon2D" id=15]
+polygon = PoolVector2Array( -4.33624, -12.5671, 4.68956, -12.8621, 6.5773, -14.8678, 5.75141, -17.316, 3.71618, -18.6728, 1.62196, -19.8822, -0.383768, -19.9117, -3.53985, -18.6728, -5.4276, -17.316, -6.9319, -16.1657, -7.72829, -15.4283, -6.25349, -13.334 )
+
 [node name="Bee" type="KinematicBody2D"]
 pause_mode = 1
 collision_layer = 16
 script = ExtResource( 3 )
 EnemyDeathEffect = ExtResource( 11 )
+MAX_SPEED = 60
 heart = ExtResource( 12 )
 
 [node name="BeeShadow" type="Sprite" parent="."]
@@ -108,7 +112,6 @@ self_modulate = Color( 0.913725, 0.0705882, 0.0705882, 1 )
 material = SubResource( 1 )
 frames = SubResource( 7 )
 animation = "Fly"
-frame = 4
 playing = true
 offset = Vector2( 0, -12 )
 
@@ -161,6 +164,9 @@ shape = SubResource( 12 )
 playback_process_mode = 0
 anims/Start = SubResource( 13 )
 anims/Stop = SubResource( 14 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource( 15 )
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]

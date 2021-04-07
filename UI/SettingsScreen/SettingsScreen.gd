@@ -10,8 +10,8 @@ func _ready() -> void:
 	add_scrn()
 	
 func add_scrn():
-	Scrn.add_item("Fullscreen")
-	Scrn.add_item("Windowed")
+	Scrn.add_item("Ecrã Cheio")
+	Scrn.add_item("Janela")
 
 func _on_Apply_pressed() -> void:
 	OS.window_fullscreen = full

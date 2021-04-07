@@ -33,85 +33,13 @@ _global_script_classes=[ {
 "class": "DialogicUtil",
 "language": "GDScript",
 "path": "res://addons/dialogic/Other/DialogicUtil.gd"
-}, {
-"base": "Area2D",
-"class": "Dialogue2D",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/DialogueDialogue2D.gd"
-}, {
-"base": "Area",
-"class": "Dialogue3D",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/DialogueDialogue3D.gd"
-}, {
-"base": "Resource",
-"class": "DialogueActor",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/model/DialogueActor.gd"
-}, {
-"base": "Resource",
-"class": "DialogueData",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/model/DialogueData.gd"
-}, {
-"base": "Resource",
-"class": "DialogueDialogue",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/model/DialogueDialogue.gd"
-}, {
-"base": "EditorProperty",
-"class": "DialogueDialogueInspectorEditor",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/inspectors/DialogueMangerDialoguesInspectorPluginEditor.gd"
-}, {
-"base": "Resource",
-"class": "DialogueEmpty",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/model/DialogueEmpty.gd"
-}, {
-"base": "Reference",
-"class": "DialogueMangerDialogues",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/DialogueMangerDialogues.gd"
-}, {
-"base": "Reference",
-"class": "DialogueMangerEvents",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/DialogueMangerEvents.gd"
-}, {
-"base": "Resource",
-"class": "DialogueNode",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/model/DialogueNode.gd"
-}, {
-"base": "PanelContainer",
-"class": "DialoguePanelSentence",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/scenes/dialogues/nodes_view/nodes/node_sentence/PanelSentence.gd"
-}, {
-"base": "Resource",
-"class": "DialogueSentence",
-"language": "GDScript",
-"path": "res://addons/dialogue_editor/model/DialogueSentence.gd"
 } ]
 _global_script_class_icons={
 "Dialogic": "",
 "DialogicBackgroundMusic": "",
 "DialogicDefinitionsUtil": "",
 "DialogicResources": "",
-"DialogicUtil": "",
-"Dialogue2D": "",
-"Dialogue3D": "",
-"DialogueActor": "res://addons/dialogue_editor/icons/Actor.png",
-"DialogueData": "",
-"DialogueDialogue": "res://addons/dialogue_editor/icons/Dialogue.png",
-"DialogueDialogueInspectorEditor": "",
-"DialogueEmpty": "",
-"DialogueMangerDialogues": "",
-"DialogueMangerEvents": "",
-"DialogueNode": "res://addons/dialogue_editor/icons/Node.png",
-"DialoguePanelSentence": "",
-"DialogueSentence": "res://addons/dialogue_editor/icons/Sentence.png"
+"DialogicUtil": ""
 }
 
 [application]
@@ -203,17 +131,13 @@ ui_accept={
 }
 ui_left={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"unicode":0,"echo":false,"script":null)
-, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":14,"pressure":0.0,"pressed":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":14,"pressure":0.0,"pressed":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":-1.0,"script":null)
  ]
 }
 ui_right={
 "deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"unicode":0,"echo":false,"script":null)
-, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":15,"pressure":0.0,"pressed":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":15,"pressure":0.0,"pressed":false,"script":null)
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":1.0,"script":null)
  ]
 }
@@ -221,16 +145,12 @@ ui_up={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":12,"pressure":0.0,"pressed":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"unicode":0,"echo":false,"script":null)
-, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":-1.0,"script":null)
  ]
 }
 ui_down={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777234,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":13,"pressure":0.0,"pressed":false,"script":null)
-, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
-, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":1.0,"script":null)
  ]
 }
 Roll={
@@ -261,6 +181,30 @@ pause={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":11,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
+move_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":-1.0,"script":null)
+ ]
+}
+move_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":1.0,"script":null)
+ ]
+}
+move_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":-1.0,"script":null)
+ ]
+}
+move_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":1.0,"script":null)
+ ]
+}
 
 [layer_names]
 
@@ -280,19 +224,25 @@ common/physics_jitter_fix=1.0
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
 quality/driver/fallback_to_gles2=true
 2d/options/use_nvidia_rect_flicker_workaround=true
-quality/intended_usage/framebuffer_allocation=0
-quality/intended_usage/framebuffer_allocation.mobile=0
+quality/intended_usage/framebuffer_allocation=1
+quality/intended_usage/framebuffer_allocation.mobile=1
 2d/snapping/use_gpu_pixel_snap=true
 threads/thread_model=2
 vram_compression/import_bptc=true
+quality/shadows/filter_mode=2
+quality/shading/force_vertex_shading=true
 quality/filters/use_nearest_mipmap_filter=true
-gles2/compatibility/disable_half_float=true
+2d/options/ninepatch_mode=0
+batching/parameters/max_join_item_commands=32
 gles2/compatibility/enable_high_float.Android=true
-quality/subsurface_scattering/quality=2
+quality/filters/msaa=4
 quality/filters/use_fxaa=true
+quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"
+quality/subsurface_scattering/quality=2
 quality/2d/use_nvidia_rect_flicker_workaround=true
 quality/2d/use_pixel_snap=true
 quality/2d/ninepatch_mode=1

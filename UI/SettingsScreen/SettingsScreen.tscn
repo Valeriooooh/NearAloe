@@ -39,18 +39,18 @@ __meta__ = {
 }
 
 [node name="DropdownLabel" type="Label" parent="HBoxContainer"]
-margin_right = 96.0
+margin_right = 104.0
 margin_bottom = 32.0
 rect_clip_content = true
-text = "Screen Mode"
+text = "Modo de Ecrã"
 
 [node name="Dropdown" type="OptionButton" parent="HBoxContainer"]
-margin_left = 100.0
-margin_right = 208.0
+margin_left = 108.0
+margin_right = 216.0
 margin_bottom = 32.0
 size_flags_vertical = 2
 theme = ExtResource( 1 )
-text = "Fullscreen"
+text = "Ecrã Cheio"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
 margin_left = 106.429
@@ -62,16 +62,16 @@ __meta__ = {
 }
 
 [node name="Vsync" type="CheckButton" parent="."]
-margin_left = 56.5705
-margin_top = 72.7071
-margin_right = 265.57
-margin_bottom = 104.707
+margin_left = 56.0
+margin_top = 73.0
+margin_right = 286.0
+margin_bottom = 105.0
 size_flags_vertical = 2
 theme = ExtResource( 1 )
 shortcut_in_tooltip = false
 pressed = true
 action_mode = 0
-text = "Vsync"
+text = "Sincronização Vertical"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -84,7 +84,7 @@ margin_bottom = 159.0
 size_flags_vertical = 2
 theme = ExtResource( 1 )
 action_mode = 0
-text = "Back"
+text = "Voltar"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -97,7 +97,7 @@ margin_bottom = 159.0
 size_flags_vertical = 2
 theme = ExtResource( 1 )
 action_mode = 0
-text = "Apply"
+text = "Aplicar"
 __meta__ = {
 "_edit_use_anchors_": false
 }

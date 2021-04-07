@@ -19,15 +19,15 @@ shader_param/active = false
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 16, 24 )
+region = Rect2( 32, 0, 16, 24 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 4 )
-region = Rect2( 16, 0, 16, 24 )
+region = Rect2( 0, 0, 16, 24 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 4 )
-region = Rect2( 32, 0, 16, 24 )
+region = Rect2( 16, 0, 16, 24 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 4 )
@@ -35,15 +35,15 @@ region = Rect2( 32, 0, 16, 24 )
 
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
-"loop": true,
-"name": "Attack",
-"speed": 2.0
-}, {
-"frames": [ SubResource( 5 ) ],
+"frames": [ SubResource( 2 ) ],
 "loop": true,
 "name": "Idle",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": true,
+"name": "Attack",
+"speed": 2.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=7]

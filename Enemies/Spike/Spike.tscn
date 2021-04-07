@@ -18,23 +18,23 @@ shader_param/active = false
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 5 )
-region = Rect2( 0, 0, 16, 24 )
+region = Rect2( 16, 0, 16, 24 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 5 )
-region = Rect2( 16, 0, 16, 24 )
+region = Rect2( 0, 0, 16, 24 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
 "frames": [ SubResource( 2 ) ],
-"loop": false,
-"name": "Attack",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 3 ) ],
 "loop": true,
 "name": "Idle",
 "speed": 2.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": false,
+"name": "Attack",
+"speed": 5.0
 } ]
 
 [sub_resource type="CircleShape2D" id=5]
@@ -86,9 +86,8 @@ tracks/0/keys = {
 pause_mode = 1
 collision_layer = 16
 script = ExtResource( 3 )
-ACCELERATION = 10
-MAX_SPEED = 80
-FRICTION = 124
+ACCELERATION = 20
+MAX_SPEED = 60
 
 [node name="SpikeShadow" type="Sprite" parent="."]
 position = Vector2( 0.125, 0.551052 )

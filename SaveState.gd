@@ -31,4 +31,6 @@ func load_game():
 		var node_data = parse_json(save_file.get_line())
 		var new_obj = load(node_data.filename).instance()
 		get_node(node_data.parent).add_child(new_obj)
-		new_obj.load_save_stats(node_data)
+		new_obj.load_save_pos(node_data)
+		if !PlayerStats.wasInGame:
+			new_obj.load_save_stats(node_data)

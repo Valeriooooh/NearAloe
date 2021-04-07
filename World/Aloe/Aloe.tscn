@@ -1,18 +1,18 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://World/Aloe/Aloe.png" type="Texture" id=1]
 [ext_resource path="res://World/Aloe/Aloe.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 24.2671
+radius = 32.6482
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 32, 32 )
+region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 1 )
-region = Rect2( 32, 0, 32, 32 )
+region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 1 )
@@ -26,13 +26,13 @@ region = Rect2( 96, 0, 32, 32 )
 animations = [ {
 "frames": [ SubResource( 2 ) ],
 "loop": true,
-"name": "0",
-"speed": 1.0
+"name": "1",
+"speed": 5.0
 }, {
 "frames": [ SubResource( 3 ) ],
 "loop": true,
-"name": "1",
-"speed": 5.0
+"name": "0",
+"speed": 1.0
 }, {
 "frames": [ SubResource( 4 ) ],
 "loop": true,
@@ -45,6 +45,9 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="CircleShape2D" id=7]
+radius = 16.0
+
 [node name="Aloe" type="Area2D"]
 pause_mode = 2
 script = ExtResource( 2 )
@@ -55,7 +58,14 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
 animation = "0"
+playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
 
+[node name="InnerAloe" type="Area2D" parent="."]
+
+[node name="innerCollisionShape2D" type="CollisionShape2D" parent="InnerAloe"]
+shape = SubResource( 7 )
+
 [connection signal="body_entered" from="." to="." method="_on_Aloe_body_entered"]
+[connection signal="body_entered" from="InnerAloe" to="." method="_on_InnerAloe_body_entered"]
