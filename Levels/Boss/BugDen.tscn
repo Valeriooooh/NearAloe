@@ -1,4 +1,4 @@
-[gd_scene load_steps=206 format=2]
+[gd_scene load_steps=208 format=2]
 
 [ext_resource path="res://Enemies/bug/Bug.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/Tileset/CliffTilemap.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Enemies/bug/BugRed.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Enemies/BugBoss/BugBoss.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Enemies/bug/BugGreen.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Player/Light2D.tscn" type="PackedScene" id=16]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -1839,8 +1840,12 @@ resource_local_to_scene = true
 } ]
 4/z_index = 0
 
+[sub_resource type="OccluderPolygon2D" id=191]
+polygon = PoolVector2Array( 768, -352, 768, -448, 800, -448, 800, -480, 864, -480, 864, -448, 896, -448, 896, -384, 960, -384, 960, -320, 928, -320, 928, -288, 896, -288, 896, -256, 864, -256, 864, -224, 832, -224, 832, -160, 768, -160, 768, -128, 672, -128, 672, -64, 640, -64, 640, 24, 640, 32, 608, 32, 608, 192, 640, 192, 640, 384, 608, 384, 608, 448, 608, 448, 544, 448, 544, 480, 512, 480, 512, 512, 448, 512, 448, 480, 288, 480, 288, 512, 192, 512, 192, 544, 128, 544, 128, 512, 64, 512, 64, 480, 0, 480, 0, 448, -32, 448, -32, 416, -64, 416, -64, 384, -32, 384, -32, 288, -64, 288, -64, 256, -128, 256, -128, 224, -160, 224, -160, 192, -184, 192, -192, 192, -192, 160, -224, 160, -224, 128, -256, 128, -256, 0, -288, 0, -288, -128, -224, -128, -224, -160, -128, -160, -128, -192, 0, -192, 0, -160, 128, -160, 128, -128, 192, -128, 192, -96, 216, -96, 224, -96, 224, -64, 256, -64, 256, -32, 288, -32, 288, 0, 320, 0, 320, 32, 288, 32, 288, 64, 256, 64, 256, 96, 224, 96, 224, 160, 160, 160, 160, 192, 64, 192, 64, 288, 96, 288, 96, 352, 128, 352, 128, 384, 224, 384, 224, 352, 256, 352, 256, 320, 288, 320, 288, 288, 416, 288, 416, 352, 448, 352, 448, 384, 512, 384, 512, -32, 480, -32, 480, -160, 512, -160, 512, -192, 544, -192, 544, -224, 608, -224, 608, -256, 640, -256, 640, -288, 672, -288, 672, -320, 704, -320, 704, -352 )
+
 [node name="BugDen" type="Node2D"]
-pause_mode = 2
+pause_mode = 1
+modulate = Color( 0.34902, 0.313726, 0.313726, 1 )
 script = ExtResource( 12 )
 
 [node name="GroundTileset" parent="." instance=ExtResource( 9 )]
@@ -1864,6 +1869,9 @@ GoldenHeart = ExtResource( 6 )
 [node name="Player" parent="YSort" instance=ExtResource( 10 )]
 position = Vector2( 832.544, -368 )
 
+[node name="Light2D" parent="YSort/Player" instance=ExtResource( 16 )]
+energy = 1.26
+
 [node name="Bug" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 544, -40 )
 dropHeart = true
@@ -1881,3 +1889,6 @@ position = Vector2( 600, 272 )
 [node name="Bug5" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 648, -176 )
 dropHeart = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource( 191 )

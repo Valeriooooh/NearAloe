@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/WanderControl.tscn" type="PackedScene" id=2]
@@ -87,6 +87,9 @@ tracks/0/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="OccluderPolygon2D" id=13]
+polygon = PoolVector2Array( -5.79113, -8.44276, -4.90625, -8.94419, -3.49044, -10.1535, -1.95664, -10.596, -0.983273, -10.596, 0.580019, -10.596, 2.2318, -10.183, 3.47063, -9.56361, 4.79796, -8.76722, 5.09292, -7.76435, 4.94544, -6.70249, 4.09005, -5.78812, 1.64188, -5.61114, 0.19657, -5.31618, -2.19261, -5.37517, -4.25734, -6.20106, -5.82063, -7.17443 )
+
 [node name="Bug" type="KinematicBody2D"]
 pause_mode = 1
 collision_layer = 16
@@ -161,6 +164,10 @@ wait_time = 10.0
 playback_process_mode = 0
 anims/Start = SubResource( 11 )
 anims/Stop = SubResource( 12 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2( 0.176976, -0.147481 )
+occluder = SubResource( 13 )
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]

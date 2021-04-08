@@ -8,6 +8,7 @@ onready var vsync = true
 
 func _ready() -> void:
 	add_scrn()
+	$HSlider.set_value(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master")))
 	
 func add_scrn():
 	Scrn.add_item("Ecrã Cheio")
@@ -30,3 +31,7 @@ func _on_Dropdown_item_selected(index: int) -> void:
 func _on_Vsync_toggled(button_pressed: bool) -> void:
 	vsync = button_pressed
 	print("vsync -> " + str(vsync))
+
+
+func _on_HSlider_value_changed(value: float) -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), value)

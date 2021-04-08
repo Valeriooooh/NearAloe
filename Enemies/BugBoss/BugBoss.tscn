@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Shadows/SmallShadow.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/BugBoss/BugBoss.gd" type="Script" id=2]
@@ -11,6 +11,12 @@
 [ext_resource path="res://Player/Stats/Stats.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Player/Hurtbox/Hurtbox.tscn" type="PackedScene" id=10]
 [ext_resource path="res://UI/Theme/DefaultTheme.tres" type="Theme" id=11]
+[ext_resource path="res://Effects/EnemyDeathEffect.tscn" type="PackedScene" id=12]
+[ext_resource path="res://World/Hearts/Heart.tscn" type="PackedScene" id=13]
+[ext_resource path="res://World/Hearts/GoldenHeart.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Enemies/bug/BugRed.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Enemies/bug/BugGreen.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Enemies/bug/Bug.tscn" type="PackedScene" id=17]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -62,8 +68,8 @@ radius = 12.0
 height = 28.293
 
 [sub_resource type="CapsuleShape2D" id=11]
-radius = 8.0
-height = 28.0
+radius = 6.87496
+height = 23.092
 
 [sub_resource type="Animation" id=12]
 resource_name = "Start"
@@ -97,12 +103,21 @@ tracks/0/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="OccluderPolygon2D" id=14]
+polygon = PoolVector2Array( 29.6777, -21.8994, 24.5564, -21.9695, 18.8038, -21.8994, 9.96442, -21.8994, 4.83542, -21.8653, -1.47066, -20.4261, -3.8559, -17.62, -4.27682, -16.1467, -3.92605, -13.972, -2.73343, -11.5166, 0.493645, -9.83289, 2.56335, -9.14931, 4.64904, -8.98245, 8.7718, -8.85074, 12.2795, -8.78058, 16.9097, -8.85074, 21.189, -8.99104, 24.7551, -9.06588, 28.8358, -9.48212, 32.5138, -10.359, 34.0572, -11.9441, 35.5004, -13.9018, 35.0795, -18.111, 33.466, -20.356 )
+
 [node name="BugBoss" type="KinematicBody2D"]
 pause_mode = 1
 scale = Vector2( 2, 2 )
 z_index = 2
 collision_layer = 16
 script = ExtResource( 2 )
+EnemyDeathEffect = ExtResource( 12 )
+childBug = ExtResource( 17 )
+childBugGreen = ExtResource( 16 )
+childBugRed = ExtResource( 15 )
+heart = ExtResource( 13 )
+GoldenHeart = ExtResource( 14 )
 
 [node name="BugBossShadow" type="Sprite" parent="."]
 position = Vector2( 16, -4 )
@@ -189,6 +204,9 @@ process_mode = 0
 playback_process_mode = 0
 anims/Start = SubResource( 12 )
 anims/Stop = SubResource( 13 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource( 14 )
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]

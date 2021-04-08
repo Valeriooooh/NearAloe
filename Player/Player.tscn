@@ -1118,13 +1118,15 @@ position = Vector2( 0, 7.336 )
 scale = Vector2( 0.335, 0.37 )
 amount = 4
 fixed_fps = 60
+draw_order = 1
 texture = ExtResource( 9 )
 emission_shape = 2
 emission_rect_extents = Vector2( 4, 0 )
 spread = 180.0
+gravity = Vector2( 0, 83.512 )
 angular_velocity = 3.0
 damping = 73.37
-scale_amount = 0.5
+scale_amount = 0.7
 color = Color( 0.745098, 0.329412, 0, 1 )
 anim_speed = 0.1
 anim_speed_random = 1.0
@@ -1132,10 +1134,10 @@ anim_offset = 1.0
 anim_offset_random = 1.0
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-[connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_ended" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_ended"]
-[connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
+[connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_started" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_started"]
+[connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
 [connection signal="timeout" from="Hurtbox/Timer" to="Hurtbox" method="_on_Timer_timeout"]
 
 [editable path="SwordPivot/SwordHitbox"]

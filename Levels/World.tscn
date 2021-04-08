@@ -1,4 +1,4 @@
-[gd_scene load_steps=236 format=2]
+[gd_scene load_steps=238 format=2]
 
 [ext_resource path="res://World/Tree/Tree.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/Flower/Flower.tscn" type="PackedScene" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://World/SwampTree/SwampTree.tscn" type="PackedScene" id=25]
 [ext_resource path="res://Enemies/Spike/Spike.tscn" type="PackedScene" id=26]
 [ext_resource path="res://World/Portal/SpikeCave/SpikeCave.tscn" type="PackedScene" id=27]
+[ext_resource path="res://World/DeadBush/DeadBush.tscn" type="PackedScene" id=28]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 8 )
@@ -91,6 +92,10 @@ animations = [ {
 [sub_resource type="SegmentShape2D" id=13]
 a = Vector2( -53.5508, -0.942795 )
 b = Vector2( 68, 0.625198 )
+
+[sub_resource type="SegmentShape2D" id=209]
+a = Vector2( -160, 0 )
+b = Vector2( 160, 0 )
 
 [sub_resource type="SegmentShape2D" id=14]
 a = Vector2( 0, -16 )
@@ -1946,23 +1951,31 @@ tile_data = PoolIntArray( -11142903, 0, 196608, -11142902, 0, 196609, -11142901,
 position = Vector2( 171, 49.5968 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 6 )
-frame = 5
 playing = true
 
 [node name="SpaceAnim" type="AnimatedSprite" parent="."]
 position = Vector2( 194.909, 61.3809 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 9 )
+frame = 1
 playing = true
 
 [node name="MouseAnim" type="AnimatedSprite" parent="."]
 position = Vector2( 214.318, 49.4659 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 12 )
-frame = 1
 playing = true
 
 [node name="Ground" type="YSort" parent="."]
+
+[node name="Heart" parent="Ground" instance=ExtResource( 21 )]
+position = Vector2( 1623.96, 998.1 )
+
+[node name="Heart2" parent="Ground" instance=ExtResource( 21 )]
+position = Vector2( -2064, 4 )
+
+[node name="Heart3" parent="Ground" instance=ExtResource( 21 )]
+position = Vector2( -2064, 4 )
 
 [node name="CheckPoint5" parent="Ground" instance=ExtResource( 11 )]
 position = Vector2( -1984, 65.5968 )
@@ -3144,6 +3157,259 @@ position = Vector2( 20.5587, 446.179 )
 [node name="Flower80" parent="Ground/Grass" instance=ExtResource( 2 )]
 position = Vector2( 20.856, 465.8 )
 
+[node name="DeadBush" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 240, 1216 )
+
+[node name="DeadBush2" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 236, 1240 )
+
+[node name="DeadBush3" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 236, 1264 )
+
+[node name="DeadBush4" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 236, 1300 )
+
+[node name="DeadBush5" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 472, 1248 )
+
+[node name="DeadBush6" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 432, 1256 )
+
+[node name="DeadBush7" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 388, 1248 )
+
+[node name="DeadBush8" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 468, 1292 )
+
+[node name="DeadBush9" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 472, 1324 )
+
+[node name="DeadBush10" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 416, 1432 )
+
+[node name="DeadBush11" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 376, 1388 )
+
+[node name="DeadBush12" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 356, 1420 )
+
+[node name="DeadBush13" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 469.741, 1516.79 )
+
+[node name="DeadBush14" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 469.741, 1516.79 )
+
+[node name="DeadBush15" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 200, 1508 )
+
+[node name="DeadBush16" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 184, 1544 )
+
+[node name="DeadBush17" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 224, 1568 )
+
+[node name="DeadBush18" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 236, 1588 )
+
+[node name="DeadBush19" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 224, 1604 )
+
+[node name="DeadBush20" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 464, 1652 )
+
+[node name="DeadBush21" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 500, 1668 )
+
+[node name="DeadBush22" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 528, 1716 )
+
+[node name="DeadBush23" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 628, 1704 )
+
+[node name="DeadBush24" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 576, 1752 )
+
+[node name="DeadBush25" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 648, 1840 )
+
+[node name="DeadBush26" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 592, 1928 )
+
+[node name="DeadBush27" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 720, 1972 )
+
+[node name="DeadBush28" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 688, 2000 )
+
+[node name="DeadBush29" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 688, 2020 )
+
+[node name="DeadBush30" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 664, 2060 )
+
+[node name="DeadBush31" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 644, 2068 )
+
+[node name="DeadBush32" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 608, 2068 )
+
+[node name="DeadBush33" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 576, 2068 )
+
+[node name="DeadBush34" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 540, 2068 )
+
+[node name="DeadBush35" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 508, 2068 )
+
+[node name="DeadBush36" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 356, 2068 )
+
+[node name="DeadBush37" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 308, 2100 )
+
+[node name="DeadBush82" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 180, 2024 )
+
+[node name="DeadBush84" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 144, 2120 )
+
+[node name="DeadBush83" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 240, 1964 )
+
+[node name="DeadBush38" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 308, 2128 )
+
+[node name="DeadBush39" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 176, 2228 )
+
+[node name="DeadBush40" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 224, 2260 )
+
+[node name="DeadBush41" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 276, 2292 )
+
+[node name="DeadBush42" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 464, 2252 )
+
+[node name="DeadBush43" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 364, 2216 )
+
+[node name="DeadBush44" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 304, 2352 )
+
+[node name="DeadBush45" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 400, 2388 )
+
+[node name="DeadBush46" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 692, 2376 )
+
+[node name="DeadBush47" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 724, 2444 )
+
+[node name="DeadBush48" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 592, 2544 )
+
+[node name="DeadBush49" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 756, 2536 )
+
+[node name="DeadBush50" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 792, 2572 )
+z_index = 1
+
+[node name="DeadBush51" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 624, 2696 )
+
+[node name="DeadBush52" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 620, 2660 )
+
+[node name="DeadBush53" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 624, 2624 )
+
+[node name="DeadBush54" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 624, 2588 )
+
+[node name="DeadBush55" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 812, 2668 )
+
+[node name="DeadBush56" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 752, 2716 )
+
+[node name="DeadBush57" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 700, 2736 )
+
+[node name="DeadBush58" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 728, 2672 )
+
+[node name="DeadBush59" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 636, 2764 )
+
+[node name="DeadBush60" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 848, 2808 )
+
+[node name="DeadBush61" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 596, 2816 )
+
+[node name="DeadBush62" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 564, 2872 )
+
+[node name="DeadBush63" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 532, 2928 )
+
+[node name="DeadBush64" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 532, 2964 )
+
+[node name="DeadBush65" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 536, 3000 )
+
+[node name="DeadBush66" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 559.381, 3056 )
+
+[node name="DeadBush67" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 560, 3084 )
+
+[node name="DeadBush68" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 564, 3116 )
+
+[node name="DeadBush69" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 852, 3124 )
+
+[node name="DeadBush70" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 852, 3072 )
+
+[node name="DeadBush71" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 628, 3100 )
+
+[node name="DeadBush72" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 796, 3060 )
+
+[node name="DeadBush73" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 656, 3000 )
+
+[node name="DeadBush74" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 636, 2928 )
+
+[node name="DeadBush75" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 740, 2936 )
+
+[node name="DeadBush76" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 808, 2992 )
+
+[node name="DeadBush77" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 728, 3000 )
+
+[node name="DeadBush78" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 796, 2852 )
+
+[node name="DeadBush79" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 796, 2892 )
+
+[node name="DeadBush80" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 648, 2872 )
+
+[node name="DeadBush81" parent="Ground/Grass" instance=ExtResource( 28 )]
+position = Vector2( 572, 3024 )
+
 [node name="Trees" type="YSort" parent="Ground"]
 
 [node name="Tree" parent="Ground/Trees" instance=ExtResource( 1 )]
@@ -3713,6 +3979,12 @@ position = Vector2( -984, 808 )
 [node name="SwampTree109" parent="Ground/Trees" instance=ExtResource( 25 )]
 position = Vector2( -984, 828 )
 
+[node name="SwampTree144" parent="Ground/Trees" instance=ExtResource( 25 )]
+position = Vector2( -904, 912 )
+
+[node name="SwampTree145" parent="Ground/Trees" instance=ExtResource( 25 )]
+position = Vector2( -904, 868 )
+
 [node name="SwampTree110" parent="Ground/Trees" instance=ExtResource( 25 )]
 position = Vector2( -980, 1076 )
 
@@ -3839,8 +4111,20 @@ position = Vector2( -1932, 276 )
 [node name="SwampTree33" parent="Ground/Trees" instance=ExtResource( 25 )]
 position = Vector2( -1808, 108 )
 
+[node name="SwampTree146" parent="Ground/Trees" instance=ExtResource( 25 )]
+position = Vector2( -1808, 108 )
+
 [node name="SwampTree34" parent="Ground/Trees" instance=ExtResource( 25 )]
 position = Vector2( -1808, 128 )
+
+[node name="SwampTree147" parent="Ground/Trees" instance=ExtResource( 25 )]
+position = Vector2( -1836, 12 )
+
+[node name="SwampTree148" parent="Ground/Trees" instance=ExtResource( 25 )]
+position = Vector2( -2068, 24 )
+
+[node name="SwampTree149" parent="Ground/Trees" instance=ExtResource( 25 )]
+position = Vector2( -2048, 24 )
 
 [node name="SwampTree35" parent="Ground/Trees" instance=ExtResource( 25 )]
 position = Vector2( -1808, 148 )
@@ -4169,7 +4453,7 @@ position = Vector2( -904, 688 )
 [node name="Spike" type="YSort" parent="Ground/Enemies"]
 
 [node name="Spike" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 278.236, 1261.65 )
+position = Vector2( 428, 1296 )
 
 [node name="Spike2" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
 position = Vector2( 326.29, 1340.41 )
@@ -4181,103 +4465,103 @@ position = Vector2( 246.2, 1391.13 )
 position = Vector2( 279.571, 1411.15 )
 
 [node name="Spike5" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 246.2, 1431.17 )
+position = Vector2( 385.741, 1596.79 )
 
 [node name="Spike6" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 298.259, 1463.21 )
+position = Vector2( 380, 1516 )
 
 [node name="Spike65" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 298.259, 1463.21 )
+position = Vector2( 380, 1516 )
 
 [node name="Spike66" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 298.259, 1463.21 )
+position = Vector2( 380, 1516 )
 
 [node name="Spike67" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 298.259, 1463.21 )
+position = Vector2( 380, 1516 )
 
 [node name="Spike68" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 298.259, 1463.21 )
+position = Vector2( 380, 1516 )
 
 [node name="Spike69" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 298.259, 1463.21 )
+position = Vector2( 380, 1516 )
 
 [node name="Spike70" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 298.259, 1463.21 )
+position = Vector2( 380, 1516 )
 
 [node name="Spike71" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 298.259, 1463.21 )
+position = Vector2( 380, 1516 )
 
 [node name="Spike72" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 298.259, 1463.21 )
+position = Vector2( 380, 1516 )
 
 [node name="Spike7" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 307.603, 1524.61 )
+position = Vector2( 389.344, 1577.4 )
 
 [node name="Spike9" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike45" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike46" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike47" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike48" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike49" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike50" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike51" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike52" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike53" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike54" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike55" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike56" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike57" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike58" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike59" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike60" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike61" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike62" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike63" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike64" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 358.326, 1532.62 )
+position = Vector2( 440.067, 1585.41 )
 
 [node name="Spike10" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 331.63, 1594.03 )
+position = Vector2( 413.371, 1646.82 )
 
 [node name="Spike11" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
 position = Vector2( 422.743, 1958.48 )
@@ -4382,7 +4666,13 @@ position = Vector2( 517.846, 2430.83 )
 position = Vector2( 350.7, 1956.36 )
 
 [node name="Spike8" parent="Ground/Enemies/Spike" instance=ExtResource( 26 )]
-position = Vector2( 351.652, 1480.41 )
+position = Vector2( 433.393, 1533.2 )
+
+[node name="CheckPoint6" parent="Ground" instance=ExtResource( 11 )]
+position = Vector2( 704, 3148 )
+
+[node name="CollisionShape2D" parent="Ground/CheckPoint6" index="0"]
+shape = SubResource( 209 )
 
 [node name="CheckPoint2" parent="Ground" instance=ExtResource( 11 )]
 
@@ -4399,9 +4689,6 @@ position = Vector2( -4.41711, 24.4987 )
 
 [node name="CollisionShape2D" parent="Ground/BeeTree/CheckPoint" index="0"]
 shape = SubResource( 15 )
-
-[node name="Heart" parent="Ground" instance=ExtResource( 21 )]
-position = Vector2( 1623.96, 998.1 )
 
 [node name="CliffTilemap" parent="Ground" instance=ExtResource( 20 )]
 tile_set = SubResource( 205 )
@@ -4429,9 +4716,20 @@ shape = SubResource( 208 )
 position = Vector2( -1966.78, 43.4737 )
 
 [node name="SpikeCave" parent="Ground" instance=ExtResource( 27 )]
+position = Vector2( 704, 3176 )
+
+[node name="Heart" parent="." instance=ExtResource( 21 )]
+position = Vector2( 664, 2072 )
+
+[node name="Heart2" parent="." instance=ExtResource( 21 )]
+position = Vector2( 664, 2072 )
+
+[node name="Heart3" parent="." instance=ExtResource( 21 )]
+position = Vector2( 792, 2560 )
 
 [editable path="Ground/CheckPoint5"]
 [editable path="Ground/Aloe"]
+[editable path="Ground/CheckPoint6"]
 [editable path="Ground/CheckPoint2"]
 [editable path="Ground/BeeTree"]
 [editable path="Ground/BeeTree/Portal"]
