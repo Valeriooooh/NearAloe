@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Player/Hitbox/HitboxEnemy.gd" type="Script" id=1]
 [ext_resource path="res://Player/Hurtbox/Hurtbox.tscn" type="PackedScene" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Enemies/WanderControl.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Effects/whiteShader.shader" type="Shader" id=10]
+[ext_resource path="res://World/Hearts/Heart.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Effects/EnemyDeathEffect.tscn" type="PackedScene" id=12]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -82,12 +84,17 @@ tracks/0/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="OccluderPolygon2D" id=12]
+polygon = PoolVector2Array( -3.77837, -0.049881, -3.77837, -2.82564, -2.83343, -3.55404, -1.90817, -4.42023, -1.38281, -4.83594, 1.77316, -4.85333, 2.285, -4.47929, 3.32837, -3.49498, 4.1552, -2.86502, 4.17488, 0.0288639, 2.99371, 0.993491, -2.63656, 1.03286 )
+
 [node name="Spike" type="KinematicBody2D"]
 pause_mode = 1
 collision_layer = 16
 script = ExtResource( 3 )
+EnemyDeathEffect = ExtResource( 12 )
 ACCELERATION = 20
 MAX_SPEED = 60
+heart = ExtResource( 11 )
 
 [node name="SpikeShadow" type="Sprite" parent="."]
 position = Vector2( 0.125, 0.551052 )
@@ -115,7 +122,7 @@ position = Vector2( 0.105114, -2.15454 )
 shape = SubResource( 6 )
 
 [node name="Stats" parent="." instance=ExtResource( 6 )]
-MaxHealth = 8
+MaxHealth = 4
 
 [node name="PlayerDetectionZone" parent="." instance=ExtResource( 8 )]
 
@@ -150,6 +157,9 @@ position = Vector2( 0.198425, 0 )
 playback_process_mode = 0
 anims/Start = SubResource( 10 )
 anims/Stop = SubResource( 11 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource( 12 )
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]

@@ -1,0 +1,208 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://Shadows/SmallShadow.png" type="Texture" id=1]
+[ext_resource path="res://Enemies/SpikeBoss/SpikeBoss.gd" type="Script" id=2]
+[ext_resource path="res://Player/Hitbox/HitboxEnemy.gd" type="Script" id=3]
+[ext_resource path="res://World/Hearts/GoldenHeart.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Enemies/WanderControl.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Effects/whiteShader.shader" type="Shader" id=7]
+[ext_resource path="res://Enemies/SoftCollision.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Player/Stats/Stats.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Player/Hurtbox/Hurtbox.tscn" type="PackedScene" id=10]
+[ext_resource path="res://UI/Theme/DefaultTheme.tres" type="Theme" id=11]
+[ext_resource path="res://Effects/EnemyDeathEffect.tscn" type="PackedScene" id=12]
+[ext_resource path="res://World/Hearts/Heart.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Enemies/Spike/Spike.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Enemies/SpikeBoss/Spike.png" type="Texture" id=16]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 7 )
+shader_param/active = false
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 16 )
+region = Rect2( 16, 0, 16, 24 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 16 )
+region = Rect2( 0, 0, 16, 24 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 4.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "Attack",
+"speed": 7.0
+} ]
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 17.4518
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 17.3144
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 68.7546
+
+[sub_resource type="CapsuleShape2D" id=8]
+radius = 19.7204
+height = 27.9997
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 18.6272
+
+[sub_resource type="Animation" id=10]
+resource_name = "Start"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpikeBoss:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true, false ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Stop"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpikeBoss:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="OccluderPolygon2D" id=12]
+cull_mode = 1
+polygon = PoolVector2Array( 12.3348, -18.9188, 21.2639, -19.1172, 25.5301, -21.796, 25.4308, -29.2369, 18.3868, -35.1897, 3.30644, -35.1897, -3.55929, -29.3593, -4.14428, -22.0391, -1.71976, -20.4406, 1.35583, -19.3493 )
+
+[node name="SpikeBoss" type="KinematicBody2D"]
+pause_mode = 1
+scale = Vector2( 3, 3 )
+z_index = 2
+collision_layer = 16
+script = ExtResource( 2 )
+EnemyDeathEffect = ExtResource( 12 )
+childBee = ExtResource( 14 )
+heart = ExtResource( 13 )
+GoldenHeart = ExtResource( 4 )
+
+[node name="WaspShadow" type="Sprite" parent="."]
+visible = false
+position = Vector2( 16.4824, 0.891143 )
+scale = Vector2( 5.61081, 1.8135 )
+texture = ExtResource( 1 )
+
+[node name="LifeBar" type="ProgressBar" parent="."]
+modulate = Color( 1, 0, 0, 1 )
+self_modulate = Color( 0.921569, 0.0470588, 0.0470588, 1 )
+show_behind_parent = true
+margin_left = -27.9678
+margin_top = -39.0293
+margin_right = 150.032
+margin_bottom = -27.0293
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 11 )
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpikeBoss" type="AnimatedSprite" parent="."]
+material = SubResource( 1 )
+position = Vector2( 17.7165, 12.4523 )
+scale = Vector2( 3.77653, 2.81037 )
+frames = SubResource( 4 )
+animation = "Idle"
+playing = true
+offset = Vector2( 0, -12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 11.5395, -24.5542 )
+shape = SubResource( 5 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 10 )]
+visible = false
+collision_layer = 8
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2( 5.00565, -20.0522 )
+shape = SubResource( 6 )
+
+[node name="Stats" parent="." instance=ExtResource( 9 )]
+MaxHealth = 50
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource( 6 )]
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+visible = false
+self_modulate = Color( 1, 1, 1, 0.321569 )
+position = Vector2( 14.6832, -28.0316 )
+shape = SubResource( 7 )
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource( 3 )
+damage = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+visible = false
+position = Vector2( 15.9212, -32.3202 )
+rotation = 0.720821
+shape = SubResource( 8 )
+
+[node name="SoftCollision" parent="." instance=ExtResource( 8 )]
+visible = false
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="SoftCollision" index="0"]
+position = Vector2( 6.72729, -22.5785 )
+shape = SubResource( 9 )
+
+[node name="WanderControl" parent="." instance=ExtResource( 5 )]
+visible = false
+position = Vector2( 17.8535, -26.8637 )
+wr = 50
+
+[node name="Timer" parent="WanderControl" index="0"]
+process_mode = 0
+
+[node name="HurtAnimation" type="AnimationPlayer" parent="."]
+playback_process_mode = 0
+anims/Start = SubResource( 10 )
+anims/Stop = SubResource( 11 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2( 6.97939, 16.9271 )
+occluder = SubResource( 12 )
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
+[connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
+[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
+
+[editable path="Hurtbox"]
+[editable path="PlayerDetectionZone"]
+[editable path="SoftCollision"]
+[editable path="WanderControl"]

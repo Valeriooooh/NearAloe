@@ -1,4 +1,4 @@
-[gd_scene load_steps=200 format=2]
+[gd_scene load_steps=203 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/Tileset/SandCliffTileset.png" type="Texture" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://World/Tileset/CliffTileset.png" type="Texture" id=7]
 [ext_resource path="res://Enemies/Spike/Spike.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Levels/Boss/WorldBoss.gd" type="Script" id=9]
+[ext_resource path="res://Enemies/SpikeBoss/SpikeBoss.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Player/Light2D.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -1833,7 +1835,10 @@ resource_local_to_scene = true
 } ]
 4/z_index = 0
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id=191]
+
 [node name="SpikeCave" type="Node2D"]
+modulate = Color( 0.501961, 0.482353, 0.482353, 1 )
 script = ExtResource( 9 )
 
 [node name="GroundTileset" parent="." instance=ExtResource( 5 )]
@@ -1846,166 +1851,49 @@ tile_data = PoolIntArray( -327688, 3, 0, -327687, 3, 1, -327686, 3, 1, -327685, 
 
 [node name="YSort" type="YSort" parent="."]
 
+[node name="SpikeBoss" parent="YSort" instance=ExtResource( 10 )]
+position = Vector2( -11.6143, 120.835 )
+
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( -1028.13, 576.292 )
+
+[node name="Shadow" parent="YSort/Player" index="0"]
+modulate = Color( 1, 1, 1, 0.490196 )
+
+[node name="AnimationTree" parent="YSort/Player" index="5"]
+parameters/playback = SubResource( 191 )
+
+[node name="Light2D" parent="YSort/Player" instance=ExtResource( 11 )]
+energy = 0.97
 
 [node name="Enemies" type="YSort" parent="YSort"]
 
 [node name="Spike" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -1091.59, 117.512 )
+position = Vector2( -854.656, -4.62586 )
+dropHeart = true
 
 [node name="Spike2" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -996.26, 90.6119 )
+position = Vector2( -940.864, -31.5259 )
+dropHeart = true
 
 [node name="Spike13" parent="YSort/Enemies" instance=ExtResource( 8 )]
 position = Vector2( -931.604, -94.3874 )
 
-[node name="Spike14" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike15" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike16" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike17" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike18" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike19" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike20" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike21" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike22" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike23" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike24" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike25" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike26" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike27" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike28" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike29" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
-[node name="Spike30" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
-
 [node name="Spike31" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -906.12, -92.0277 )
+position = Vector2( -846.72, -29.9577 )
 
 [node name="Spike3" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -1070.83, 85.4206 )
+position = Vector2( -886.622, -42.0566 )
 
 [node name="Spike4" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -1033.54, 104.77 )
-
-[node name="Spike5" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -993.9, 31.1478 )
-
-[node name="Spike6" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -1001.45, -34.9234 )
-
-[node name="Spike42" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -1001.45, -34.9234 )
-
-[node name="Spike43" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -1001.45, -34.9234 )
-
-[node name="Spike44" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -1001.45, -34.9234 )
-
-[node name="Spike45" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -1001.45, -34.9234 )
-
-[node name="Spike46" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -1001.45, -34.9234 )
-
-[node name="Spike47" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -1001.45, -34.9234 )
-
-[node name="Spike48" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -1001.45, -34.9234 )
+position = Vector2( -999.502, 7.9941 )
 
 [node name="Spike7" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -939.155, -40.5866 )
-
-[node name="Spike8" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -917.446, 9.43869 )
-
-[node name="Spike32" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -917.446, 9.43869 )
-
-[node name="Spike33" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -917.446, 9.43869 )
-
-[node name="Spike34" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -917.446, 9.43869 )
-
-[node name="Spike35" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -917.446, 9.43869 )
-
-[node name="Spike36" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -917.446, 9.43869 )
-
-[node name="Spike37" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -917.446, 9.43869 )
-
-[node name="Spike38" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -917.446, 9.43869 )
-
-[node name="Spike39" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -917.446, 9.43869 )
-
-[node name="Spike40" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -917.446, 9.43869 )
-
-[node name="Spike41" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -917.446, 9.43869 )
+position = Vector2( -875.083, -18.5617 )
 
 [node name="Spike9" parent="YSort/Enemies" instance=ExtResource( 8 )]
 position = Vector2( -842.408, -89.6681 )
-
-[node name="Spike10" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -714.807, 147.073 )
-
-[node name="Spike56" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -714.807, 147.073 )
-
-[node name="Spike57" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -714.807, 147.073 )
-
-[node name="Spike58" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -714.807, 147.073 )
-
-[node name="Spike59" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -714.807, 147.073 )
-
-[node name="Spike60" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -714.807, 147.073 )
-
-[node name="Spike61" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -714.807, 147.073 )
+dropHeart = true
 
 [node name="Spike62" parent="YSort/Enemies" instance=ExtResource( 8 )]
 position = Vector2( -687.435, 325.937 )
@@ -2060,27 +1948,7 @@ position = Vector2( -687.907, 325.937 )
 
 [node name="Spike11" parent="YSort/Enemies" instance=ExtResource( 8 )]
 position = Vector2( -824.114, -67.2082 )
+dropHeart = true
 
-[node name="Spike12" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -804.758, -16.4843 )
-
-[node name="Spike49" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -804.758, -16.4843 )
-
-[node name="Spike50" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -804.758, -16.4843 )
-
-[node name="Spike51" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -804.758, -16.4843 )
-
-[node name="Spike52" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -804.758, -16.4843 )
-
-[node name="Spike53" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -804.758, -16.4843 )
-
-[node name="Spike54" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -804.758, -16.4843 )
-
-[node name="Spike55" parent="YSort/Enemies" instance=ExtResource( 8 )]
-position = Vector2( -804.758, -16.4843 )
+[editable path="YSort/Player"]
+[editable path="YSort/Player/SwordPivot/SwordHitbox"]
