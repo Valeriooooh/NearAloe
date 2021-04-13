@@ -215,6 +215,10 @@ move_right={
 2d_physics/layer_5="Enemy"
 2d_physics/layer_6="SoftCollisions"
 
+[memory]
+
+limits/command_queue/multithreading_queue_size_kb=1024
+
 [physics]
 
 common/physics_fps=120

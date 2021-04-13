@@ -92,6 +92,7 @@
 
 [node name="GroundTileset" type="TileMap"]
 position = Vector2( 1, 0 )
+z_index = -2
 tile_set = SubResource( 1 )
 cell_size = Vector2( 16, 16 )
 cell_y_sort = true

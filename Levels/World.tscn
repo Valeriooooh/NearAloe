@@ -1951,7 +1951,7 @@ tile_data = PoolIntArray( -11142903, 0, 196608, -11142902, 0, 196609, -11142901,
 position = Vector2( 171, 49.5968 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 6 )
-frame = 6
+frame = 4
 playing = true
 
 [node name="SpaceAnim" type="AnimatedSprite" parent="."]

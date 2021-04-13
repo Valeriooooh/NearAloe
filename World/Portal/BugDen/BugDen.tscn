@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://World/Portal/BugDen/BugDen.png" type="Texture" id=1]
 [ext_resource path="res://Shadows/LargeShadow.png" type="Texture" id=2]
 [ext_resource path="res://World/Portal/Portal.tscn" type="PackedScene" id=3]
+[ext_resource path="res://World/Portal/BugDen/BugDen.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15.4018, 11.2633 )
@@ -11,6 +12,7 @@ extents = Vector2( 15.4018, 11.2633 )
 extents = Vector2( 13.2191, 10 )
 
 [node name="BeeTree" type="Area2D"]
+script = ExtResource( 4 )
 
 [node name="Sprite2" type="Sprite" parent="."]
 position = Vector2( 0.0761448, 0.0900955 )
