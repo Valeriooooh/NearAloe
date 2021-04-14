@@ -7,7 +7,6 @@ func _ready() -> void:
 	PlayerStats.wasInGame = true
 
 func _physics_process(_delta: float) -> void:
-	Dialogic.set_variable("Left", PlayerStats.AloeLeaves)
 	if int(Dialogic.get_variable("InDialog")) == 1:
 		get_tree().set_pause(true)
 	else:

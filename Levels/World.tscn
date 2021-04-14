@@ -1951,20 +1951,20 @@ tile_data = PoolIntArray( -11142903, 0, 196608, -11142902, 0, 196609, -11142901,
 position = Vector2( 171, 49.5968 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 6 )
-frame = 4
+frame = 3
 playing = true
 
 [node name="SpaceAnim" type="AnimatedSprite" parent="."]
 position = Vector2( 194.909, 61.3809 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 9 )
-frame = 1
 playing = true
 
 [node name="MouseAnim" type="AnimatedSprite" parent="."]
 position = Vector2( 214.318, 49.4659 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 12 )
+frame = 1
 playing = true
 
 [node name="Ground" type="YSort" parent="."]
@@ -1998,8 +1998,11 @@ collision_mask = 2
 position = Vector2( 3.54416, 0.561218 )
 
 [node name="InnerAloe" parent="Ground/Aloe" index="3"]
-collision_layer = 2
+collision_layer = 3
 collision_mask = 2
+
+[node name="innerCollisionShape2D" parent="Ground/Aloe/InnerAloe" index="0"]
+position = Vector2( 2, 1.39551 )
 
 [node name="Player" parent="Ground" instance=ExtResource( 7 )]
 position = Vector2( 243.275, 88.9292 )
@@ -3447,7 +3450,7 @@ position = Vector2( -56, 504 )
 position = Vector2( 15.3813, 510.959 )
 
 [node name="Tree93" parent="Ground/Trees" instance=ExtResource( 1 )]
-position = Vector2( 45.3639, 512 )
+position = Vector2( 44, 516 )
 
 [node name="Tree94" parent="Ground/Trees" instance=ExtResource( 1 )]
 position = Vector2( 72, 528 )

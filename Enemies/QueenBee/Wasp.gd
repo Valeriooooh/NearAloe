@@ -101,6 +101,7 @@ func _on_Stats_no_health():
 	queue_free()
 	get_parent().add_child(EnemyDeathEffect.instance())
 	EnemyDeathEffect.instance().global_position = global_position - Vector2(0, 8)
+	
 	get_parent().add_child(GoldenHeart.instance())
 	GoldenHeart.instance().global_position = global_position
 	PlayerStats.set_deferred("BossBeeDefeated",true)

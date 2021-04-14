@@ -35,8 +35,6 @@ func _ready():
 
 	
 func _physics_process(delta):
-		
-		Dialogic.set_variable("Leafs", stats.AloeLeaves)
 		match state:
 			MOVE:
 				call_deferred("move_state",delta)

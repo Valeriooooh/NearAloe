@@ -65,6 +65,7 @@ enable_audio_input=true
 PlayerStats="*res://Player/Stats/PlayerStats.tscn"
 SaveState="*res://SaveState.gd"
 DialogicSingleton="*res://addons/dialogic/Other/DialogicSingleton.gd"
+Transitions="*res://addons/transitions/Transitions.gd"
 
 [debug]
 

@@ -16,9 +16,6 @@ export var wasInGame = false
 signal no_health
 signal health_changed(value)
 signal max_health_changed(value)
-
-func _physics_process(_delta: float) -> void:
-	Dialogic.set_variable("Leafs", AloeLeaves)
 	
 func set_max_health(value):
 	MaxHealth = value

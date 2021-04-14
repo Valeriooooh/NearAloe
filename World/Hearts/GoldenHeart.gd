@@ -10,7 +10,6 @@ func _on_Heart_body_entered(_body):
 	canvas.add_child(new_dialog)
 	$golden/Sprite.set_deferred("visible", false)
 	$golden/CollisionShape2D.set_deferred("disabled", true)
-	Dialogic.set_variable("Leafs",PlayerStats.AloeLeaves)
 	
 func _on_Heart_area_entered(_body):
 	get_tree().current_scene.add_child(HeartSounds)
