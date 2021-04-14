@@ -20,7 +20,9 @@ func _on_Aloe_body_entered(_body: Node) -> void:
 		var new_dialog = Dialogic.start('AloeCall')
 		canvas.add_child(new_dialog)
 
-
+func _on_DialogNode_dialogic_signal(value):
+	if value == "is_in_dialog":
+		print("dialog")
 
 func _on_InnerAloe_body_entered(_body: Node) -> void:
 	if !PlayerStats.FirstEncounter:
