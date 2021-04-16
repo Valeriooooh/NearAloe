@@ -79,7 +79,6 @@ func seek_player():
 func pick_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front()
-
 		
 func _on_Hurtbox_area_entered(area):
 	knockback = area.knockback_vector * FRICTION
@@ -93,13 +92,15 @@ func _on_Hurtbox_area_entered(area):
 		damage50()		
 	elif stats.health <= stats.MaxHealth*0.75 && !percent75:
 		damage75()		
+
 func _on_Stats_no_health():
 	queue_free()
-	get_parent().add_child(EnemyDeathEffect.instance())
-	EnemyDeathEffect.instance().global_position = global_position - Vector2(0, 8)
-	get_parent().add_child(GoldenHeart.instance())
-	GoldenHeart.instance().global_position = global_position
-	
+	var enemyDeath = EnemyDeathEffect.instance()
+	get_parent().add_child(enemyDeath)
+	enemyDeath.global_position = global_position - Vector2(0, 8)
+	var Golden = GoldenHeart.instance()
+	get_parent().call_deferred("add_child", Golden)
+	Golden.global_position = global_position
 
 func state_timer():
 	if wanderController.get_time_left() == 0:

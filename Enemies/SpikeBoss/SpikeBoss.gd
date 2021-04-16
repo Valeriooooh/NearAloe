@@ -99,11 +99,12 @@ func _on_Hurtbox_area_entered(area):
 		damage75()		
 func _on_Stats_no_health():
 	queue_free()
-	get_parent().add_child(EnemyDeathEffect.instance())
-	EnemyDeathEffect.instance().global_position = global_position - Vector2(0, 8)
-	
-	get_parent().add_child(GoldenHeart.instance())
-	GoldenHeart.instance().global_position = global_position
+	var enemyDeath = EnemyDeathEffect.instance()
+	get_parent().add_child(enemyDeath)
+	enemyDeath.global_position = global_position - Vector2(0, 8)
+	var Golden = GoldenHeart.instance()
+	get_parent().call_deferred("add_child", Golden)
+	Golden.global_position = global_position
 	PlayerStats.set_deferred("BossSpikeDefeated",true)
 	
 
@@ -122,12 +123,13 @@ func _on_Hurtbox_invincibility_started() -> void:
 #	play("Start")
 #TODO call defered instead of .add_child()
 func damage75():
+	for _i in range(0,4):
 		var Child = childBee.instance()
 		get_parent().call_deferred("add_child", Child)
 		Child.global_position = global_position - Vector2(0,5)
 		set_deferred("percent75",true)
 func damage50():
-	for _i in range(0,2):
+	for _i in range(0,7):
 		var Child = childBee.instance()
 		get_parent().call_deferred("add_child", Child)
 		Child.global_position = global_position - Vector2(0,5)
@@ -137,7 +139,7 @@ func damage50():
 		Heart.global_position = global_position - Vector2(0,5)
 	set_deferred("percent50",true)
 func damage25():
-	for _i in range(0,4):
+	for _i in range(0,10):
 		var Child = childBee.instance()
 		get_parent().call_deferred("add_child", Child)
 		Child.global_position = global_position - Vector2(0,5)
