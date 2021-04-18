@@ -37,7 +37,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		sprite.play("idle")
 	sprite.flip_h = velocity.x < 0
-
+	if PlayerStats.InBossLevel && PlayerStats.BossBugDefeated:
+		_on_Stats_no_health()
 	match state:
 		IDLE:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)

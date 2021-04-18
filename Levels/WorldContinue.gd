@@ -3,7 +3,7 @@ extends Node2D
 
 func _ready():
 	Dialogic.set_variable("InDialog",0)
-	SaveState.load_game()
+	SaveState.call_deferred("load_game")
 	PlayerStats.InBossLevel = false
 	PlayerStats.wasInGame = true
 #	PlayerStats.health = PlayerStats.MaxHealth

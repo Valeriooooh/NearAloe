@@ -31,23 +31,26 @@ func _ready():
 	stats.connect("no_health", self, 'die')
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
+	$HurtAnimation.play("Stop")
 	randomize()
 
 	
 func _physics_process(delta):
-		match state:
-			MOVE:
-				call_deferred("move_state",delta)
-			ROLL:
-				call_deferred("roll_state")
-			ATTACK:
-				call_deferred("attack_state")
+	match state:
+		MOVE:
+			call_deferred("move_state",delta)
+		ROLL:
+			call_deferred("roll_state")
+		ATTACK:
+			call_deferred("attack_state")
 			
 func move_state(delta):
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	input_vector = input_vector.normalized()
+	if Dialogic.get_variable("InDialog") == "1":
+		input_vector = Vector2.ZERO
 	if input_vector != Vector2.ZERO:
 		roll_vector = input_vector
 		swordHitbox.knockback_vector = input_vector
@@ -58,15 +61,16 @@ func move_state(delta):
 		animationState.travel("run")
 		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
 	else:
-		animationState.travel("idle")
+		animationState.call_deferred("travel","idle")
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	move()
-	if Input.is_action_just_pressed("Attack"):
-		velocity = Vector2.ZERO
-		state = ATTACK
-	if Input.is_action_just_pressed("Roll"):
-		state = ROLL
-
+	if Dialogic.get_variable("InDialog") == "0":
+		if Input.is_action_just_pressed("Attack"):
+			velocity = Vector2.ZERO
+			state = ATTACK
+		if Input.is_action_just_pressed("Roll"):
+			state = ROLL
+	
 
 func roll_state():
 	velocity = roll_vector * ROLL_SPEED
@@ -78,7 +82,6 @@ func roll_state():
 func attack_state():
 	velocity = Vector2.ZERO
 	animationState.call_deferred("travel","attack")
-#	animationState.travel("attack")
 	
 
 
@@ -91,10 +94,6 @@ func move():
 	
 func die():
 	print("dead")
-	# warning-ignore:return_value_discarded
-#	get_tree().change_scene("res://Levels/World.tscn")
-#	set_deferred("stats:health","stats:MaxHealth")
-#	stats.health = stats.MaxHealth
 	get_tree().call_deferred("change_scene", "res://UI/DeathScreen/DeathScreen.tscn")
 	
 

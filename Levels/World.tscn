@@ -1,4 +1,4 @@
-[gd_scene load_steps=238 format=2]
+[gd_scene load_steps=239 format=2]
 
 [ext_resource path="res://World/Tree/Tree.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/Flower/Flower.tscn" type="PackedScene" id=2]
@@ -28,6 +28,7 @@
 [ext_resource path="res://Enemies/Spike/Spike.tscn" type="PackedScene" id=26]
 [ext_resource path="res://World/Portal/SpikeCave/SpikeCave.tscn" type="PackedScene" id=27]
 [ext_resource path="res://World/DeadBush/DeadBush.tscn" type="PackedScene" id=28]
+[ext_resource path="res://Music and Sounds/WorldMusic.tscn" type="PackedScene" id=29]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 8 )
@@ -1951,7 +1952,7 @@ tile_data = PoolIntArray( -11142903, 0, 196608, -11142902, 0, 196609, -11142901,
 position = Vector2( 171, 49.5968 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 6 )
-frame = 3
+frame = 5
 playing = true
 
 [node name="SpaceAnim" type="AnimatedSprite" parent="."]
@@ -4735,6 +4736,8 @@ position = Vector2( 664, 2072 )
 
 [node name="Heart3" parent="." instance=ExtResource( 21 )]
 position = Vector2( 792, 2560 )
+
+[node name="AudioStreamPlayer" parent="." instance=ExtResource( 29 )]
 
 [editable path="Ground/CheckPoint5"]
 [editable path="Ground/Aloe"]

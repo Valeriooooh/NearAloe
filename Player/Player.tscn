@@ -805,7 +805,7 @@ height = 3.81429
 [node name="Player" type="KinematicBody2D" groups=[
 "Saved",
 ]]
-pause_mode = 1
+pause_mode = 2
 collision_layer = 2
 script = ExtResource( 2 )
 DeathScreen = ExtResource( 8 )
@@ -820,7 +820,7 @@ material = SubResource( 1 )
 position = Vector2( 0.823223, -5.47446 )
 texture = ExtResource( 1 )
 hframes = 60
-frame = 6
+frame = 39
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.529495, -0.342488 )
@@ -828,6 +828,7 @@ rotation = -6.28319
 shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+pause_mode = 2
 anims/Attack_down = SubResource( 3 )
 anims/Attack_left = SubResource( 4 )
 anims/Attack_right = SubResource( 5 )

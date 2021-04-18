@@ -33,7 +33,8 @@ func _physics_process(delta: float) -> void:
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta) 
 	knockback = move_and_slide(knockback)
 	sprite.flip_h = velocity.x < 0
-
+	if PlayerStats.InBossLevel && PlayerStats.BossSpikeDefeated:
+		_on_Stats_no_health()
 	match state:
 		IDLE:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)

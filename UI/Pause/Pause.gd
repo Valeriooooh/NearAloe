@@ -24,11 +24,9 @@ func _on_Button_pressed():
 
 func _on_Button3_pressed():
 	# warning-ignore:return_value_discarded
-	get_tree().paused = false
-	get_tree().change_scene("res://UI/TitleScreen/TitleScreen.tscn")
-
-#START Save system
-
+	get_tree().set_deferred("pause", false)
+	get_tree().call_deferred("change_scene","res://UI/TitleScreen/TitleScreen.tscn")
+#	get_tree().change_scene("res://UI/TitleScreen/TitleScreen.tscn")
 
 func _on_Button2_pressed() -> void:
 	SaveState.save_game()

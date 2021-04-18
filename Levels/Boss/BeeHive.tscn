@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Levels/Boss/WorldBoss.gd" type="Script" id=1]
 [ext_resource path="res://Enemies/QueenBee/Wasp.tscn" type="PackedScene" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://World/Tileset/GroundTileset.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Player/Light2D.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Music and Sounds/LevelBossMusic.wav" type="AudioStream" id=9]
+[ext_resource path="res://Music and Sounds/WorldMusic.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -535,3 +537,6 @@ tile_data = PoolIntArray( -458758, 2, 0, -458757, 2, 1, -458756, 2, 1, -458755, 
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource( 49 )
+
+[node name="AudioStreamPlayer" parent="." instance=ExtResource( 10 )]
+stream = ExtResource( 9 )
