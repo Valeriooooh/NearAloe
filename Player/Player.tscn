@@ -22,7 +22,7 @@
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 17 )
-shader_param/active = false
+shader_param/active = true
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 3.90527
@@ -820,7 +820,7 @@ material = SubResource( 1 )
 position = Vector2( 0.823223, -5.47446 )
 texture = ExtResource( 1 )
 hframes = 60
-frame = 39
+frame = 36
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.529495, -0.342488 )

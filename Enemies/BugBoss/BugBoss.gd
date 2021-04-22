@@ -101,6 +101,7 @@ func _on_Stats_no_health():
 	var Golden = GoldenHeart.instance()
 	get_parent().call_deferred("add_child", Golden)
 	Golden.global_position = global_position
+	PlayerStats.set_deferred("BossBugDefeated",true)
 
 func state_timer():
 	if wanderController.get_time_left() == 0:
