@@ -105,6 +105,7 @@ MAX_SPEED = 60
 heart = ExtResource( 12 )
 
 [node name="BeeShadow" type="Sprite" parent="."]
+visible = false
 texture = ExtResource( 4 )
 
 [node name="Bee" type="AnimatedSprite" parent="."]
@@ -112,10 +113,12 @@ self_modulate = Color( 0.913725, 0.0705882, 0.0705882, 1 )
 material = SubResource( 1 )
 frames = SubResource( 7 )
 animation = "Fly"
+frame = 3
 playing = true
 offset = Vector2( 0, -12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( -0.493859, -7.28432 )
 shape = SubResource( 8 )
 

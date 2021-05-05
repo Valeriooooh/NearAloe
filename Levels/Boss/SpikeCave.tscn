@@ -1,4 +1,4 @@
-[gd_scene load_steps=205 format=2]
+[gd_scene load_steps=206 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/Tileset/SandCliffTileset.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Enemies/SpikeBoss/SpikeBoss.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Player/Light2D.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Music and Sounds/WorldMusic.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Enemies/Spike/Spike.tscn" type="PackedScene" id=13]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -1873,7 +1874,62 @@ energy = 0.49
 
 [node name="Enemies" type="YSort" parent="YSort"]
 
+[node name="Spike" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -904, -40 )
+
+[node name="Spike2" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -904, -40 )
+
+[node name="Spike3" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -904, -40 )
+
+[node name="Spike4" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -920, -64 )
+
+[node name="Spike11" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -920, -64 )
+
+[node name="Spike12" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -920, -64 )
+
+[node name="Spike13" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -920, -64 )
+
+[node name="Spike5" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -888, -8 )
+
+[node name="Spike6" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -792, 0 )
+
+[node name="Spike14" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -672, 200 )
+
+[node name="Spike15" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -712, 264 )
+
+[node name="Spike16" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -712, 264 )
+
+[node name="Spike17" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -664, 264 )
+
+[node name="Spike18" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -720, 232 )
+
+[node name="Spike7" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -816, -80 )
+
+[node name="Spike8" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -888, -88 )
+
+[node name="Spike9" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -944, 0 )
+
+[node name="Spike10" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -992, -32 )
+
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
 occluder = SubResource( 192 )
 
 [node name="AudioStreamPlayer" parent="." instance=ExtResource( 12 )]

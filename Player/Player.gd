@@ -113,7 +113,7 @@ func _on_Hurtbox_area_entered(area):
 	elif area.nameCheck == "heart":
 		if stats.MaxHealth > stats.health:
 			stats.health -= area.damage
-			hurtBox.start_invincibility(0.5)
+			hurtBox.start_invincibility(3)
 	else:
 		pass
 
@@ -133,7 +133,7 @@ func get_save_stats():
 		'xpos' : global_transform.origin.x,
 		'ypos' : global_transform.origin.y,
 		'Story':{
-			'AloeFirstEncouter': stats.FirstEncounter,
+			'AloeFirstEncounter': stats.FirstEncounter,
 			'BeeDefeated': stats.BossBeeDefeated,
 			'BugDefeated': stats.BossBugDefeated,
 			'SpikeDefeated': stats.BossSpikeDefeated,
@@ -146,14 +146,20 @@ func get_save_stats():
 	}
 
 func load_save_stats(save):
-	stats.MaxHealth = save.stats.maxHearts
-	stats.health = save.stats.Hearts
-	stats.AloeLeaves = save.Story.AloeLeaves
-	stats.FirstEncounter = save.Story.AloeFirstEncouter
-	stats.BossBeeDefeated = save.Story.BeeDefeated
-	stats.BossBugDefeated = save.Story.BugDefeated
-	stats.BossSpikeDefeated = save.Story.SpikeDefeated
+	#	stats.MaxHealth = save.stats.maxHearts
+	stats.set_deferred("MaxHealth",save.stats.maxHearts)
+#	stats.health = save.stats.Hearts
+	stats.set_deferred("health", save.stats.Hearts)
+#	stats.AloeLeaves = save.Story.AloeLeaves
+	stats.set_deferred("AloeLeaves", save.Story.AloeLeaves)
+	# stats.FirstEncounter = save.Story.AloeFirstEncouter
+	stats.set_deferred("FirstEncounter", save.Story.AloeFirstEncounter)
+	# stats.BossBeeDefeated = save.Story.BeeDefeated
+	stats.set_deferred("BossBeeDefeated", save.Story.BeeDefeated)
+	# stats.BossBugDefeated = save.Story.BugDefeated
+	stats.set_deferred("BossBugDefeated", save.Story.BugDefeated)
+	# stats.BossSpikeDefeated = save.Story.SpikeDefeated
+	stats.set_deferred("BossSpikeDefeated", save.Story.SpikeDefeated)
 
 func load_save_pos(save):
 	global_transform.origin = Vector2(save.xpos, save.ypos)
-#TODO Animação não parece fluida, Braços precisam de ser melhorados a andar

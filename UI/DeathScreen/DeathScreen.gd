@@ -8,7 +8,7 @@ func _ready() -> void:
 func _on_Apply_pressed() -> void:
 # warning-ignore:return_value_discarded
 	PlayerStats.health = PlayerStats.MaxHealth
-	get_tree().change_scene("res://Levels/WorldContinue.tscn")
+	get_tree().call_deferred("change_scene","res://Levels/WorldContinue.tscn")
 func _on_Back_pressed() -> void:
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene_to(TitleScreen)

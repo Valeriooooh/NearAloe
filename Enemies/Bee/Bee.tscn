@@ -15,7 +15,6 @@
 [ext_resource path="res://Effects/Particles/64/spotlight_7.png" type="Texture" id=13]
 
 [sub_resource type="CanvasItemMaterial" id=1]
-blend_mode = 1
 particles_animation = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
@@ -114,6 +113,7 @@ EnemyDeathEffect = ExtResource( 12 )
 heart = ExtResource( 11 )
 
 [node name="BeeShadow" type="Sprite" parent="."]
+self_modulate = Color( 1, 1, 1, 0.584314 )
 material = SubResource( 1 )
 texture = ExtResource( 4 )
 
@@ -121,7 +121,7 @@ texture = ExtResource( 4 )
 material = SubResource( 2 )
 frames = SubResource( 8 )
 animation = "Fly"
-frame = 4
+frame = 1
 playing = true
 offset = Vector2( 0, -12 )
 
@@ -131,6 +131,7 @@ position = Vector2( -0.140305, 0.14031 )
 shape = SubResource( 9 )
 
 [node name="Hurtbox" parent="." instance=ExtResource( 2 )]
+visible = false
 collision_layer = 8
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
@@ -148,6 +149,7 @@ self_modulate = Color( 1, 1, 1, 0.321569 )
 shape = SubResource( 11 )
 
 [node name="Hitbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 4
 script = ExtResource( 1 )
@@ -175,6 +177,7 @@ anims/Start = SubResource( 14 )
 anims/Stop = SubResource( 15 )
 
 [node name="Particles2D" type="CPUParticles2D" parent="."]
+modulate = Color( 1.5, 1.5, 1.5, 1 )
 self_modulate = Color( 0.713726, 0.639216, 0.0666667, 0.262745 )
 material = SubResource( 16 )
 position = Vector2( 0.174107, -13.4502 )

@@ -6,7 +6,7 @@ func _ready():
 	SaveState.call_deferred("load_game")
 	PlayerStats.InBossLevel = false
 	PlayerStats.wasInGame = true
-#	PlayerStats.health = PlayerStats.MaxHealth
+	#	PlayerStats.health = PlayerStats.MaxHealth
 
 func _physics_process(_delta: float) -> void:
 	if int(Dialogic.get_variable("InDialog")) == 1:

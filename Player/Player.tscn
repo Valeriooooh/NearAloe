@@ -610,7 +610,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=14]
 length = 0.6
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:material:shader_param/active")
 tracks/0/interp = 1
@@ -636,6 +635,18 @@ tracks/1/keys = {
 "args": [  ],
 "method": "back_to_run"
 } ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Hurtbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.0134676 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -665,6 +676,18 @@ tracks/1/keys = {
 "args": [  ],
 "method": "back_to_run"
 } ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Hurtbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.00961971 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="AnimationNodeAnimation" id=16]
@@ -884,6 +907,7 @@ HitEffect = ExtResource( 20 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( 0.544001, -0.371984 )
 shape = SubResource( 45 )
+disabled = true
 
 [node name="Timer" type="Timer" parent="Hurtbox"]
 process_mode = 0

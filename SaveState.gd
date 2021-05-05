@@ -1,10 +1,11 @@
 extends Node
-
+#TODO crash leva a save corrompido
+#TODO já não crasha mas perde
 var save_file_path = "user://save.sav"
 
 func _ready() -> void:
 	pass
-
+var node_data
 func save_game():
 	var save_file  = File.new()	
 	save_file.open(save_file_path, File.WRITE)
@@ -21,16 +22,14 @@ func save_game():
 
 func load_game():
 	var save_file = File.new()
+
 	if !save_file.file_exists(save_file_path):
 		return
 	var saved_nodes = get_tree().get_nodes_in_group("Saved")
-	for node in saved_nodes:
-		node.queue_free()
 	save_file.open(save_file_path, File.READ)
-	while save_file.get_position() < save_file.get_len():
-		var node_data = parse_json(save_file.get_line())
-		var new_obj = load(node_data.filename).instance()
-		get_node(node_data.parent).add_child(new_obj)
-		new_obj.load_save_pos(node_data)
-		if !PlayerStats.wasInGame:
-			new_obj.load_save_stats(node_data)
+	for node in saved_nodes:
+		while save_file.get_position() < save_file.get_len():
+			node_data = parse_json(save_file.get_line())
+			node.load_save_pos(node_data)
+			node.load_save_stats(node_data)
+			

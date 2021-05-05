@@ -35,6 +35,8 @@ func _physics_process(delta: float) -> void:
 	sprite.flip_h = velocity.x < 0
 	if PlayerStats.InBossLevel && PlayerStats.BossSpikeDefeated:
 		_on_Stats_no_health()
+	if PlayerStats.BossSpikeDefeated:
+		$Hitbox.nameCheck = "good"
 	match state:
 		IDLE:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
@@ -48,11 +50,12 @@ func _physics_process(delta: float) -> void:
 			var direction = global_position.direction_to(wanderController.targetPosition)
 			velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 		CHASE:
-			sprite.play("Attack")
-			var player = PlayerDetectionZone.player
-			if player != null:
-				var direction = global_position.direction_to(player.global_position)
-				velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+			if !PlayerStats.BossSpikeDefeated:
+				sprite.play("Attack")
+				var player = PlayerDetectionZone.player
+				if player != null:
+					var direction = global_position.direction_to(player.global_position)
+					velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 			else: state = IDLE
 	if softCollision.is_colliding():
 		velocity += softCollision.get_push_vector() * delta * 400

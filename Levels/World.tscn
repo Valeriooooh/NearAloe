@@ -1,4 +1,4 @@
-[gd_scene load_steps=239 format=2]
+[gd_scene load_steps=240 format=2]
 
 [ext_resource path="res://World/Tree/Tree.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/Flower/Flower.tscn" type="PackedScene" id=2]
@@ -1941,6 +1941,10 @@ b = Vector2( 0, 15.91 )
 a = Vector2( -29.8315, 3.72998 )
 b = Vector2( 34.1685, 3.72998 )
 
+[sub_resource type="Environment" id=210]
+glow_enabled = true
+glow_hdr_threshold = 1.5
+
 [node name="World" type="Node2D"]
 pause_mode = 2
 script = ExtResource( 24 )
@@ -1952,7 +1956,7 @@ tile_data = PoolIntArray( -11142903, 0, 196608, -11142902, 0, 196609, -11142901,
 position = Vector2( 171, 49.5968 )
 scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 6 )
-frame = 5
+frame = 7
 playing = true
 
 [node name="SpaceAnim" type="AnimatedSprite" parent="."]
@@ -4738,6 +4742,9 @@ position = Vector2( 664, 2072 )
 position = Vector2( 792, 2560 )
 
 [node name="AudioStreamPlayer" parent="." instance=ExtResource( 29 )]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 210 )
 
 [editable path="Ground/CheckPoint5"]
 [editable path="Ground/Aloe"]
