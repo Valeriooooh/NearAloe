@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	sprite.flip_h = velocity.x < 0
 	if PlayerStats.InBossLevel && PlayerStats.BossBugDefeated:
 		_on_Stats_no_health()
-	if PlayerStats.BossBeeDefeated:
+	if PlayerStats.BossBugDefeated:
 		$Hitbox.nameCheck = "good"
 	match state:
 		IDLE:
@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 			var direction = global_position.direction_to(wanderController.targetPosition)
 			velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 		CHASE:
-			if !PlayerStats.BossBeeDefeated:
+			if !PlayerStats.BossBugDefeated:
 				var player = PlayerDetectionZone.player
 				if player != null:
 					var direction = global_position.direction_to(player.global_position)

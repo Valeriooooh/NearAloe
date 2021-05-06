@@ -25,6 +25,7 @@ func load_game():
 
 	if !save_file.file_exists(save_file_path):
 		return
+	
 	var saved_nodes = get_tree().get_nodes_in_group("Saved")
 	save_file.open(save_file_path, File.READ)
 	for node in saved_nodes:
