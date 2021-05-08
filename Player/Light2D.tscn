@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Player/light.png" type="Texture" id=1]
+
+[node name="Light2D" type="Light2D"]
+pause_mode = 2
+process_priority = 2
+show_behind_parent = true
+z_index = 4
+z_as_relative = false
+texture = ExtResource( 1 )
+texture_scale = 0.2
+energy = 0.54
+range_height = 2048.0
+range_layer_min = -2
+range_layer_max = 22
+shadow_enabled = true
+shadow_filter = 5
+shadow_filter_smooth = 12.1

@@ -1,0 +1,131 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://UI/Theme/DefaultTheme.tres" type="Theme" id=1]
+[ext_resource path="res://UI/SettingsScreen/SettingsScreen.gd" type="Script" id=2]
+[ext_resource path="res://UI/SettingsScreen/TitleBackground.png" type="Texture" id=3]
+[ext_resource path="res://UI/TitleScreen/TitleScreen.tscn" type="PackedScene" id=4]
+
+[node name="SettingsScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.707108
+margin_bottom = -0.707108
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+TitleScene = ExtResource( 4 )
+scrn = NodePath("HBoxContainer/Dropdown")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 56.0
+margin_top = 8.70711
+margin_right = 272.0
+margin_bottom = 40.7071
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DropdownLabel" type="Label" parent="HBoxContainer"]
+margin_right = 104.0
+margin_bottom = 32.0
+rect_clip_content = true
+text = "Modo de Ecrã"
+
+[node name="Dropdown" type="OptionButton" parent="HBoxContainer"]
+margin_left = 108.0
+margin_right = 216.0
+margin_bottom = 32.0
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+text = "Ecrã Cheio"
+
+[node name="Vsync" type="CheckButton" parent="."]
+margin_left = 56.0
+margin_top = 48.7071
+margin_right = 286.0
+margin_bottom = 80.7071
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+shortcut_in_tooltip = false
+pressed = true
+action_mode = 0
+text = "Sincronização Vertical"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+margin_left = 106.429
+margin_top = 127.372
+margin_right = 214.429
+margin_bottom = 167.372
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="Button" parent="."]
+margin_left = 56.5705
+margin_top = 127.0
+margin_right = 148.57
+margin_bottom = 159.0
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+action_mode = 0
+text = "Voltar"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Apply" type="Button" parent="."]
+margin_left = 157.0
+margin_top = 127.0
+margin_right = 265.0
+margin_bottom = 159.0
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+action_mode = 0
+text = "Aplicar"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSlider" type="HSlider" parent="."]
+margin_left = 136.0
+margin_top = 96.7071
+margin_right = 272.0
+margin_bottom = 112.707
+min_value = -80.0
+max_value = 0.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 61.0
+margin_top = 85.0
+margin_right = 109.0
+margin_bottom = 117.0
+text = "Audio"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="item_selected" from="HBoxContainer/Dropdown" to="." method="_on_Dropdown_item_selected"]
+[connection signal="toggled" from="Vsync" to="." method="_on_Vsync_toggled"]
+[connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="Apply" to="." method="_on_Apply_pressed"]
+[connection signal="value_changed" from="HSlider" to="." method="_on_HSlider_value_changed"]

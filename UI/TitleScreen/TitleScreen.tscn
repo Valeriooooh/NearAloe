@@ -1,0 +1,98 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://UI/Theme/DefaultTheme.tres" type="Theme" id=1]
+[ext_resource path="res://UI/TitleScreen/TitleScreen.gd" type="Script" id=2]
+[ext_resource path="res://UI/Logo/NearAloeLogo.png" type="Texture" id=3]
+[ext_resource path="res://UI/SettingsScreen/TitleBackground.png" type="Texture" id=4]
+
+[node name="TitleScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.707108
+margin_bottom = -0.707108
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Logo" type="TextureRect" parent="."]
+margin_left = 120.0
+margin_top = 8.70711
+margin_right = 200.0
+margin_bottom = 55.7072
+size_flags_horizontal = 5
+size_flags_vertical = 5
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Continue" type="Button" parent="."]
+margin_left = 64.0
+margin_top = 65.0
+margin_right = 152.0
+margin_bottom = 97.0
+theme = ExtResource( 1 )
+action_mode = 0
+text = "Continuar"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button4" type="Button" parent="."]
+margin_left = 168.0
+margin_top = 65.0
+margin_right = 256.0
+margin_bottom = 97.0
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+action_mode = 0
+text = "Novo Jogo"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="."]
+margin_left = 64.0
+margin_top = 129.0
+margin_right = 152.0
+margin_bottom = 161.0
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+action_mode = 0
+text = "Opções"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Button" parent="."]
+margin_left = 168.0
+margin_top = 129.0
+margin_right = 252.0
+margin_bottom = 161.0
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+action_mode = 0
+text = "Sair"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Continue" to="." method="_on_Continue_pressed"]
+[connection signal="pressed" from="Button4" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
+[connection signal="pressed" from="Button3" to="." method="_on_Button3_pressed"]

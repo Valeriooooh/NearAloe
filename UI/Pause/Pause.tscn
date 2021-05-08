@@ -1,0 +1,79 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://UI/Pause/Pause.gd" type="Script" id=1]
+[ext_resource path="res://UI/Theme/DefaultTheme.tres" type="Theme" id=2]
+
+[node name="PauseNode" type="Node"]
+pause_mode = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+pause_mode = 1
+layer = 100
+
+[node name="Pause" type="Control" parent="CanvasLayer"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="BlackOvelay" type="ColorRect" parent="CanvasLayer/Pause"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.388235 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="CanvasLayer/Pause"]
+margin_left = 120.0
+margin_top = 32.0
+margin_right = 196.0
+margin_bottom = 64.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Continue"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="CanvasLayer/Pause"]
+margin_left = 120.0
+margin_top = 72.0
+margin_right = 196.0
+margin_bottom = 104.0
+text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Button" parent="CanvasLayer/Pause"]
+margin_left = 120.0
+margin_top = 112.0
+margin_right = 196.0
+margin_bottom = 144.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/Pause"]
+margin_left = 104.0
+margin_right = 208.0
+margin_bottom = 32.0
+text = "Game Paused"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="CanvasLayer/Pause/Button" to="CanvasLayer/Pause" method="_on_Button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/Button2" to="CanvasLayer/Pause" method="_on_Button2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause/Button3" to="CanvasLayer/Pause" method="_on_Button3_pressed"]
