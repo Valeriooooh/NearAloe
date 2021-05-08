@@ -13,4 +13,4 @@ func _physics_process(_delta: float) -> void:
 		get_tree().set_pause(true)
 	else:
 		get_tree().set_pause(false)
-	
+

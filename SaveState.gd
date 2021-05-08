@@ -33,7 +33,11 @@ func load_game():
 		var node_data = parse_json(save_file.get_line())
 #		var new_obj = load(node_data.filename).instance()
 #		get_node(node_data.parent).add_child(new_obj)
-		nodenew.load_save_pos(node_data)
-		nodenew.load_save_stats(node_data)
 		if !PlayerStats.wasInGame:
 			nodenew.load_save_stats(node_data)
+		if PlayerStats.InBossLevel:
+			nodenew.load_save_pos(node_data)
+		else:
+			nodenew.load_save_stats(node_data)
+			nodenew.load_save_pos(node_data)
+			

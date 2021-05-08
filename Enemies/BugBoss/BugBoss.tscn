@@ -14,9 +14,9 @@
 [ext_resource path="res://Effects/EnemyDeathEffect.tscn" type="PackedScene" id=12]
 [ext_resource path="res://World/Hearts/Heart.tscn" type="PackedScene" id=13]
 [ext_resource path="res://World/Hearts/GoldenHeart.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Enemies/bug/BugRed.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Enemies/bug/BugGreen.tscn" type="PackedScene" id=16]
-[ext_resource path="res://Enemies/bug/Bug.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Enemies/bug/BugRedShadowless.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Enemies/bug/BugGreenShadowless.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Enemies/bug/BugShadowless.tscn" type="PackedScene" id=17]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -25,15 +25,15 @@ shader_param/active = false
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 4 )
-region = Rect2( 32, 0, 16, 24 )
+region = Rect2( 0, 0, 16, 24 )
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 16, 24 )
+region = Rect2( 16, 0, 16, 24 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 4 )
-region = Rect2( 16, 0, 16, 24 )
+region = Rect2( 32, 0, 16, 24 )
 
 [sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 4 )
@@ -41,15 +41,15 @@ region = Rect2( 32, 0, 16, 24 )
 
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
-"frames": [ SubResource( 2 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
 "name": "Attack",
 "speed": 2.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=7]
@@ -120,6 +120,7 @@ heart = ExtResource( 13 )
 GoldenHeart = ExtResource( 14 )
 
 [node name="BugBossShadow" type="Sprite" parent="."]
+visible = false
 position = Vector2( 16, -4 )
 scale = Vector2( 5.92768, 2.66001 )
 texture = ExtResource( 1 )

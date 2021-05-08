@@ -32,6 +32,9 @@ func _ready():
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
 	$HurtAnimation.play("Stop")
+	if PlayerStats.Dead:
+		PlayerStats.health = PlayerStats.MaxHealth
+		PlayerStats.Dead = false
 	randomize()
 
 	
@@ -93,7 +96,7 @@ func move():
 	velocity = move_and_slide(velocity)
 	
 func die():
-	print("dead")
+	PlayerStats.Dead = true
 	get_tree().call_deferred("change_scene", "res://UI/DeathScreen/DeathScreen.tscn")
 	
 

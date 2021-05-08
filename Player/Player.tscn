@@ -78,7 +78,7 @@ tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0.007471, 0.1, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
+"update": 0,
 "values": [ true, false, true ]
 }
 tracks/4/type = "audio"
@@ -282,7 +282,7 @@ tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0.00961971, 0.1, 0.302886 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
+"update": 0,
 "values": [ true, false, true ]
 }
 tracks/4/type = "audio"
@@ -790,7 +790,7 @@ states/run/node = SubResource( 35 )
 states/run/position = Vector2( -1013, -164 )
 transitions = [ "roll", "idle", SubResource( 36 ), "attack", "idle", SubResource( 37 ), "idle", "run", SubResource( 38 ), "run", "idle", SubResource( 39 ), "idle", "roll", SubResource( 40 ), "idle", "attack", SubResource( 41 ) ]
 start_node = "idle"
-graph_offset = Vector2( -1785.35, -245.238 )
+graph_offset = Vector2( -1766.35, -298.044 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=43]
 
@@ -817,10 +817,11 @@ texture = ExtResource( 13 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 1 )
-position = Vector2( 0.823223, -5.47446 )
+position = Vector2( 0.823223, -5.33247 )
+scale = Vector2( 1, 0.993594 )
 texture = ExtResource( 1 )
 hframes = 60
-frame = 36
+frame = 28
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.529495, -0.342488 )
@@ -862,7 +863,7 @@ parameters/run/blend_position = Vector2( 0, 1 )
 
 [node name="SwordPivot" type="Position2D" parent="."]
 position = Vector2( 0, -4 )
-rotation = 1.5708
+rotation = 4.71239
 
 [node name="SwordHitbox" parent="SwordPivot" instance=ExtResource( 10 )]
 position = Vector2( 17.5797, -0.589916 )
@@ -903,14 +904,15 @@ margin_bottom = 29.2102
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 16 )
+bus = "FX"
 
 [node name="PauseNode" parent="." instance=ExtResource( 18 )]
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-[connection signal="invincibility_ended" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
-[connection signal="invincibility_started" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_started"]
+[connection signal="invincibility_ended" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
+[connection signal="invincibility_started" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_invincibility_started"]
 [connection signal="timeout" from="Hurtbox/Timer" to="Hurtbox" method="_on_Timer_timeout"]
 
 [editable path="SwordPivot/SwordHitbox"]

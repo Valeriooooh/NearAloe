@@ -10,6 +10,7 @@ var InBossLevel = false
 var BossBeeDefeated = false  
 var BossBugDefeated = false
 var BossSpikeDefeated = false
+var Dead = false
 export var wasInGame = false
 
 

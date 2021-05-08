@@ -97,6 +97,7 @@ MAX_SPEED = 60
 heart = ExtResource( 11 )
 
 [node name="SpikeShadow" type="Sprite" parent="."]
+visible = false
 position = Vector2( 0.125, 0.551052 )
 texture = ExtResource( 4 )
 
