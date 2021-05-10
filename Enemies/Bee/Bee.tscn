@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Player/Hitbox/HitboxEnemy.gd" type="Script" id=1]
 [ext_resource path="res://Player/Hurtbox/Hurtbox.tscn" type="PackedScene" id=2]
@@ -14,16 +14,10 @@
 [ext_resource path="res://Effects/EnemyDeathEffect.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Effects/Particles/64/spotlight_7.png" type="Texture" id=13]
 
-[sub_resource type="CanvasItemMaterial" id=1]
-blend_mode = 1
-particles_animation = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
 [sub_resource type="ShaderMaterial" id=2]
 resource_local_to_scene = true
 shader = ExtResource( 10 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/active = false
 
 [sub_resource type="AtlasTexture" id=3]
@@ -114,14 +108,13 @@ EnemyDeathEffect = ExtResource( 12 )
 heart = ExtResource( 11 )
 
 [node name="BeeShadow" type="Sprite" parent="."]
-material = SubResource( 1 )
 texture = ExtResource( 4 )
 
 [node name="Bee" type="AnimatedSprite" parent="."]
 material = SubResource( 2 )
 frames = SubResource( 8 )
 animation = "Fly"
-frame = 4
+frame = 2
 playing = true
 offset = Vector2( 0, -12 )
 

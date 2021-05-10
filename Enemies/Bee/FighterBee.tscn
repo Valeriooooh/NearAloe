@@ -16,6 +16,7 @@
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 10 )
+shader_param/flash_color = Color( 100, 100, 100, 1 )
 shader_param/active = false
 
 [sub_resource type="AtlasTexture" id=2]
@@ -108,10 +109,11 @@ heart = ExtResource( 12 )
 texture = ExtResource( 4 )
 
 [node name="Bee" type="AnimatedSprite" parent="."]
-self_modulate = Color( 0.913725, 0.0705882, 0.0705882, 1 )
+self_modulate = Color( 0.803922, 0.0627451, 0.0901961, 1 )
 material = SubResource( 1 )
 frames = SubResource( 7 )
 animation = "Fly"
+frame = 1
 playing = true
 offset = Vector2( 0, -12 )
 

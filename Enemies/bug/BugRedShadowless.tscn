@@ -16,6 +16,7 @@
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 6 )
+shader_param/flash_color = Color( 100, 100, 100, 1 )
 shader_param/active = false
 
 [sub_resource type="AtlasTexture" id=2]
@@ -59,6 +60,7 @@ radius = 6.11381
 radius = 4.78548
 
 [sub_resource type="Animation" id=11]
+resource_name = "Start"
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Bug:material:shader_param/active")
@@ -96,7 +98,7 @@ heart = ExtResource( 11 )
 FRICTION = 125
 
 [node name="Bug" type="AnimatedSprite" parent="."]
-self_modulate = Color( 0.952941, 0.105882, 0.105882, 1 )
+modulate = Color( 0.94902, 0.133333, 0.133333, 0.996078 )
 material = SubResource( 1 )
 position = Vector2( -0.0787468, 0.0787449 )
 frames = SubResource( 5 )
@@ -160,6 +162,7 @@ wr = 10
 wait_time = 10.0
 
 [node name="HurtAnimation" type="AnimationPlayer" parent="."]
+pause_mode = 1
 playback_process_mode = 0
 anims/Start = SubResource( 11 )
 anims/Stop = SubResource( 12 )

@@ -11,10 +11,12 @@
 [ext_resource path="res://Effects/whiteShader.shader" type="Shader" id=9]
 [ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=10]
 [ext_resource path="res://World/Hearts/Heart.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Enemies/bug/StartGreen.tres" type="Animation" id=12]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 9 )
+shader_param/flash_color = Color( 100, 100, 100, 1 )
 shader_param/active = false
 
 [sub_resource type="AtlasTexture" id=2]
@@ -58,21 +60,6 @@ radius = 6.11381
 radius = 4.78548
 
 [sub_resource type="Animation" id=11]
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("Bug:material:shader_param/active")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ true, false, true, false, true, false ]
-}
-
-[sub_resource type="Animation" id=12]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Bug:material:shader_param/active")
@@ -95,7 +82,7 @@ heart = ExtResource( 11 )
 FRICTION = 125
 
 [node name="Bug" type="AnimatedSprite" parent="."]
-self_modulate = Color( 1, 1, 0.0470588, 1 )
+modulate = Color( 0.545098, 0.796078, 0.027451, 1 )
 material = SubResource( 1 )
 position = Vector2( -0.0787468, 0.0787449 )
 frames = SubResource( 5 )
@@ -158,9 +145,10 @@ wr = 10
 wait_time = 10.0
 
 [node name="HurtAnimation" type="AnimationPlayer" parent="."]
+pause_mode = 1
 playback_process_mode = 0
-anims/Start = SubResource( 11 )
-anims/Stop = SubResource( 12 )
+anims/Start = ExtResource( 12 )
+anims/Stop = SubResource( 11 )
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]

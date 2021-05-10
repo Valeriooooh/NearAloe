@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/WanderControl.tscn" type="PackedScene" id=2]
@@ -11,10 +11,12 @@
 [ext_resource path="res://Enemies/bug/Bug.gd" type="Script" id=9]
 [ext_resource path="res://Enemies/SoftCollision.tscn" type="PackedScene" id=10]
 [ext_resource path="res://World/Hearts/Heart.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Enemies/bug/StartGreen.tres" type="Animation" id=12]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = ExtResource( 6 )
+shader_param/flash_color = Color( 13.01, 53.83, 100, 1 )
 shader_param/active = false
 
 [sub_resource type="AtlasTexture" id=2]
@@ -58,6 +60,7 @@ radius = 6.11381
 radius = 4.78548
 
 [sub_resource type="Animation" id=11]
+resource_name = "Startx"
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Bug:material:shader_param/active")
@@ -95,7 +98,7 @@ heart = ExtResource( 11 )
 FRICTION = 125
 
 [node name="Bug" type="AnimatedSprite" parent="."]
-self_modulate = Color( 0.952941, 0.105882, 0.105882, 1 )
+self_modulate = Color( 0.94902, 0.133333, 0.133333, 0.996078 )
 material = SubResource( 1 )
 position = Vector2( -0.0787468, 0.0787449 )
 frames = SubResource( 5 )
@@ -159,7 +162,8 @@ wait_time = 10.0
 
 [node name="HurtAnimation" type="AnimationPlayer" parent="."]
 playback_process_mode = 0
-anims/Start = SubResource( 11 )
+anims/Start = ExtResource( 12 )
+anims/Startx = SubResource( 11 )
 anims/Stop = SubResource( 12 )
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
